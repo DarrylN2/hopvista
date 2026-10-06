@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HopVista visual path — planning prototype</title>
+<style>
+  :root { font: 16px/1.45 system-ui, sans-serif; color: #1d2935; background: #f4f7f8; }
+  body { max-width: 980px; margin: 0 auto; padding: 2rem 1rem 5rem; }
+  h1 { margin-bottom: .3rem; } h2 { font-size: 1.1rem; margin: 0 0 .6rem; }
+  p { margin: .4rem 0 1rem; } .muted { color: #596a76; }
+  .note, .panel { background: white; border: 1px solid #d8e1e5; border-radius: 12px; padding: 1rem 1.2rem; margin: 1rem 0; }
+  .note { border-left: 5px solid #247b8a; } .controls { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+  select, label { font: inherit; } select { padding: .4rem; max-width: 100%; }
+  .path { list-style: none; margin: 0; padding: 0; } .path li { display: grid; grid-template-columns: 3rem minmax(0,1fr) auto; gap: .8rem; align-items: start; padding: .8rem 0; border-top: 1px solid #e5ecee; }
+  .hop { border-radius: 50%; background: #dcecf0; width: 2.2rem; height: 2.2rem; display: grid; place-items: center; font-weight: 700; }
+  .unknown .hop { background: #f5e9cb; } .status { font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: #176471; }
+  .unknown .status { color: #8c6500; } .line { font-weight: 650; } .detail { color: #596a76; font-size: .9rem; margin-top: .15rem; }
+  .rtt { font-variant-numeric: tabular-nums; white-space: nowrap; font-weight: 700; }
+  .tag { display: inline-block; background: #e8f0f2; border-radius: 5px; padding: .08rem .35rem; margin-top: .3rem; font-size: .82rem; }
+  .warning { background: #fff5dc; border-left: 4px solid #c99416; padding: .7rem .9rem; }
+  @media (max-width: 600px) { .path li { grid-template-columns: 2.5rem minmax(0,1fr); } .rtt { grid-column: 2; } }
+</style>
+<main>
+  <h1>Visual path: what can it claim?</h1>
+  <p class="muted">Throwaway planning prototype. Switch cases and inspect where an observed ICMP reply stops and an interpretation begins. This is not application code or a final UI design.</p>
+  <div class="note"><strong>Reading rule:</strong> Each numbered row is one ICMP request sent with that hop limit to the selected final-host IP. A reply identifies its responding address and round-trip time. The line between rows is reading order, not a verified physical link or proof of the route taken by HTTP.</div>
+  <div class="panel controls">
+    <label>Case <select id="case">
+      <option value="silent">Silent hop, later replies</option>
+      <option value="spike">One high-latency intermediate reply</option>
+      <option value="limit">Trace stops before destination; HTTP works</option>
+      <option value="ipv6">IPv6 path unavailable</option>
+    </select></label>
+  </div>
+  <section class="panel" aria-live="polite">
+    <h2 id="heading"></h2>
+    <p id="summary"></p>
+    <ol class="path" id="path"></ol>
+    <p class="warning" id="caveat"></p>
+  </section>
+  <section class="panel"><h2>Separate evidence</h2><p id="http"></p><p class="muted">Gateway measurement, when available, is shown separately from the hop sequence; the first responding hop is not automatically the default gateway. IPv4 and IPv6 receive separate paths and outcomes.</p></section>
+  <section class="panel"><h2>What to decide</h2><p>Is “observed ICMP replies toward the selected IP” a clear enough title? Is a numbered list preferable to a connected route diagram? Should an apparent latency rise be shown only as raw RTTs, or also highlighted with an explicit caution? Should optional ASN ownership sit inline or behind details?</p></section>
+</main>
+<script>
+const cases = {
+  silent: {
+    title: 'IPv4 · selected final-host IP 203.0.113.80',
+    summary: 'Destination replied at hop limit 5. Hop 3 did not answer this one request.',
+    rows: [
+      ['192.0.2.1', 'Transit-expired reply', '4 ms', 'AS 64510 · example lookup'],
+      ['198.51.100.1', 'Transit-expired reply', '12 ms', 'AS 64520 · example lookup'],
+      [null, 'No reply within 750 ms', '—', null],
+      ['198.51.100.9', 'Transit-expired reply', '21 ms', 'AS 64520 · example lookup'],
+      ['203.0.113.80', 'Destination echo reply', '24 ms', 'AS 64530 · example lookup']
+    ],
+    caveat: 'Unknown at hop 3 does not mean a broken connection or 100% packet loss. One probe may be filtered or rate limited.',
+    http: 'Separate HTTP exchange to 203.0.113.80: response received. This does not verify that HTTP packets used every address shown above.'
+  },
+  spike: {
+    title: 'IPv4 · selected final-host IP 203.0.113.80',
+    summary: 'All five ICMP requests received replies; the reply at hop limit 3 took longer.',
+    rows: [
+      ['192.0.2.1', 'Transit-expired reply', '4 ms', 'AS 64510 · example lookup'],
+      ['198.51.100.1', 'Transit-expired reply', '11 ms', 'AS 64520 · example lookup'],
+      ['198.51.100.5', 'Transit-expired reply', '140 ms', 'AS 64520 · example lookup'],
+      ['198.51.100.9', 'Transit-expired reply', '19 ms', 'AS 64520 · example lookup'],
+      ['203.0.113.80', 'Destination echo reply', '23 ms', 'AS 64530 · example lookup']
+    ],
+    caveat: 'The 140 ms value is one router’s response to one ICMP request. Later replies are lower. Do not label this hop a bottleneck or subtract adjacent RTTs as per-link delay.',
+    http: 'Separate HTTP exchange to 203.0.113.80: response received; time to first byte is reported in the HTTP measurements, not inferred from hop RTTs.'
+  },
+  limit: {
+    title: 'IPv4 · selected final-host IP 203.0.113.80',
+    summary: 'Illustrative excerpt: the trace reached its configured hop limit without a destination echo reply.',
+    rows: [
+      ['192.0.2.1', 'Transit-expired reply', '5 ms', 'AS 64510 · example lookup'],
+      [null, 'No reply within 750 ms', '—', null],
+      ['198.51.100.9', 'Transit-expired reply', '22 ms', 'AS 64520 · example lookup'],
+      [null, 'Hop limit reached (16)', '—', null]
+    ],
+    caveat: 'Destination not observed by this trace. This is not proof that the website is unreachable; the separate HTTP request succeeded.',
+    http: 'Separate HTTP exchange to 203.0.113.80: response received. The path result remains incomplete.'
+  },
+  ipv6: {
+    title: 'IPv6 · no usable selected address',
+    summary: 'No IPv6 path was measured in this run.',
+    rows: [],
+    caveat: 'Missing address family is unavailable, not zero hops or a failed website.',
+    http: 'IPv4 results, if available, remain separate. No IPv6 HTTP timing is implied.'
+  }
+};
+function render() {
+  const item = cases[document.querySelector('#case').value];
+  document.querySelector('#heading').textContent = item.title;
+  document.querySelector('#summary').textContent = item.summary;
+  document.querySelector('#caveat').textContent = item.caveat;
+  document.querySelector('#http').textContent = item.http;
+  const path = document.querySelector('#path'); path.replaceChildren();
+  item.rows.forEach(([address, status, rtt, asn], i) => {
+    const li = document.createElement('li'); if (!address) li.className = 'unknown';
+    const number = document.createElement('span'); number.className = 'hop'; number.textContent = status.startsWith('Hop limit') ? '16' : String(i + 1);
+    const info = document.createElement('div');
+    const state = document.createElement('div'); state.className = 'status'; state.textContent = status;
+    const line = document.createElement('div'); line.className = 'line'; line.textContent = address || 'No responding address observed';
+    info.append(state, line);
+    if (address && asn) {
+      const details = document.createElement('details');
+      const summary = document.createElement('summary'); summary.textContent = 'ASN ownership details';
+      const tag = document.createElement('div'); tag.className = 'tag'; tag.textContent = asn + ' · lookup context, not route proof';
+      details.append(summary, tag); info.append(details);
+    }
+    const time = document.createElement('span'); time.className = 'rtt'; time.textContent = rtt;
+    li.append(number, info, time); path.append(li);
+  });
+}
+document.querySelector('#case').addEventListener('change', render);
+render();
+</script>
+</html>
+
