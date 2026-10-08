@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HopVista — visual diagnosis layout prototype</title>
+<style>
+  :root { font: 16px/1.45 system-ui, sans-serif; color: #122735; background: #edf3f5; }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 0 0 7rem; }
+  header, main { max-width: 1160px; margin: auto; padding: 0 1.2rem; }
+  header { padding-top: 1.5rem; }
+  .brand { font-weight: 800; letter-spacing: .02em; color: #075f6b; }
+  .prototype { font-size: .75rem; font-weight: 800; letter-spacing: .1em; color: #8a5500; margin-left: .7rem; }
+  h1 { font-size: clamp(1.7rem, 4vw, 2.5rem); line-height: 1.12; margin: 1rem 0 .5rem; }
+  h2 { font-size: 1.2rem; margin: 0 0 .45rem; }
+  h3 { font-size: 1rem; margin: 0 0 .4rem; }
+  p { margin: .4rem 0 .8rem; }
+  .intro { max-width: 75ch; color: #47606c; }
+  .run { background: #dbe9ed; border-radius: 9px; padding: .7rem 1rem; margin: 1rem 0 1.5rem; font-size: .9rem; }
+  .card { background: white; border: 1px solid #d5e0e4; border-radius: 16px; padding: 1.2rem; box-shadow: 0 4px 18px #173d4808; }
+  .eyebrow { color: #087180; text-transform: uppercase; font-size: .73rem; font-weight: 800; letter-spacing: .08em; }
+  .quiet { color: #55707c; } .small { font-size: .85rem; }
+  .summary { background: #e5f3f3; border: 1px solid #b9dcdc; }
+  .summary strong { color: #075d67; }
+  .caution { background: #fff4d9; border-left: 4px solid #c58b1b; border-radius: 6px; padding: .65rem .85rem; color: #5a460e; }
+  .reading-rule { color: #405966; font-size: .86rem; margin: .65rem 0 1rem; }
+  .connector-key { font-size: .8rem; font-weight: 700; color: #46636e; white-space: nowrap; }
+  .connector-key::before { content: ''; display: inline-block; width: 1.5rem; border-top: 3px dotted #8eafb8; vertical-align: middle; margin-right: .35rem; }
+  .row-head { display: flex; justify-content: space-between; align-items: start; gap: 1rem; flex-wrap: wrap; }
+  .node-row { display: flex; gap: 0; overflow-x: auto; padding: 1.1rem .2rem .5rem; list-style: none; margin: 0; }
+  .node-row li { position: relative; flex: 1 0 145px; min-width: 145px; padding-right: .6rem; }
+  .node-row li:not(:last-child)::after { content: ''; position: absolute; top: 19px; left: 47px; right: 0; border-top: 3px dotted #94b5be; }
+  .node-dot { position: relative; z-index: 1; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: #087180; color: white; font-weight: 800; border: 3px solid white; outline: 2px solid #087180; }
+  .node-dot.no-reply { background: white; color: #815d0b; outline: 2px dashed #bd8c2b; }
+  .node-dot.destination { background: #14455b; outline-color: #14455b; }
+  .node-label { font-weight: 750; font-size: .89rem; margin-top: .9rem; }
+  .node-rtt { color: #075f6b; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .node-rtt.unknown { color: #805d15; }
+  .node-ip { font-size: .76rem; color: #55707c; overflow-wrap: anywhere; }
+  .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: .7rem; }
+  .metric { background: #f2f7f8; border-radius: 10px; padding: .8rem; }
+  .metric b { display: block; font-size: 1.3rem; font-variant-numeric: tabular-nums; }
+  .metric span { font-size: .82rem; color: #4f6874; }
+  details { border-top: 1px solid #dce7e9; padding: .7rem 0 0; margin-top: .8rem; }
+  summary { cursor: pointer; color: #075f6b; font-weight: 700; }
+  table { border-collapse: collapse; width: 100%; margin-top: .7rem; font-size: .9rem; }
+  td, th { border-bottom: 1px solid #e1e9ec; padding: .45rem; text-align: left; }
+  .a-grid { display: grid; gap: 1rem; }
+  .a-secondary { display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; }
+  .b-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(270px, .8fr); gap: 1rem; }
+  .b-path { min-height: 600px; }
+  .rail { list-style: none; padding: .7rem 0 0; margin: 0; }
+  .rail li { position: relative; display: grid; grid-template-columns: 50px 1fr auto; gap: .6rem; min-height: 90px; }
+  .rail li:not(:last-child)::after { content: ''; position: absolute; left: 19px; top: 42px; bottom: 0; border-left: 3px dotted #94b5be; }
+  .rail .node-label { margin-top: .1rem; }
+  .rail .node-ip { font-size: .82rem; }
+  .rail .node-rtt { padding-top: .3rem; }
+  .b-aside { display: grid; gap: 1rem; align-content: start; }
+  .c-signal { display: grid; grid-template-columns: 1.2fr 1fr; gap: 1rem; }
+  .c-columns { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-top: 1rem; }
+  .c-path .node-row li { flex-basis: 110px; min-width: 110px; }
+  .tradeoffs { margin-top: 1.2rem; border: 1px dashed #9ab6be; padding: 1rem; border-radius: 10px; background: #f8fbfb; }
+  .switcher { position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%); z-index: 5; display: flex; align-items: center; gap: .8rem; background: #142f3d; color: white; padding: .55rem .8rem; border-radius: 100px; box-shadow: 0 8px 25px #12273555; max-width: calc(100vw - 1rem); }
+  .switcher button { border: 0; border-radius: 50%; background: #d4eff0; color: #123746; width: 2.2rem; height: 2.2rem; font-size: 1.2rem; cursor: pointer; }
+  .switcher span { min-width: 170px; text-align: center; font-size: .85rem; font-weight: 750; }
+  [hidden] { display: none !important; }
+  @media (max-width: 760px) { .a-secondary, .b-grid, .c-signal, .c-columns { grid-template-columns: 1fr; } .metrics { grid-template-columns: repeat(2, 1fr); } .b-path { min-height: 0; } }
+</style>
+<header>
+  <div><span class="brand">HopVista</span><span class="prototype">PLANNING PROTOTYPE</span></div>
+  <h1>Why is this website slow for me?</h1>
+  <p class="intro">Three layout directions for a visual diagnosis. Switch variants with the bar below or the left and right arrow keys. All numbers and addresses are illustrative, and the diagnosis wording is provisional until the evidence rules are decided.</p>
+  <div class="run"><b>Example diagnostic run</b> · https://example.net/shop · IPv4 selected final-host IP 203.0.113.80 · five target echo replies from five requests · one request per hop limit</div>
+</header>
+<main>
+  <section id="variant-a" aria-label="Variant A: answer first">
+    <div class="a-grid">
+      <div class="card summary"><div class="eyebrow">A · Answer first</div><h2>The longest recorded step was waiting for the first HTTP response byte</h2><p>That wait was <strong>840 ms</strong> after the request was sent. The measurements do not establish whether website processing, network transit, or both caused it.</p><p class="small quiet">Next: inspect the timing evidence and the observed hop replies below.</p></div>
+      <div class="card"><div class="row-head"><div><h2>Observed hop replies</h2><p class="quiet small">One ICMP request at each hop limit, toward 203.0.113.80.</p></div><span class="connector-key">Dotted line = probe order only</span></div>
+        <ol class="node-row">
+          <li><span class="node-dot">1</span><div class="node-label">Router reply</div><div class="node-rtt">4 ms RTT</div><div class="node-ip">192.0.2.1</div></li>
+          <li><span class="node-dot">2</span><div class="node-label">Router reply</div><div class="node-rtt">12 ms RTT</div><div class="node-ip">198.51.100.1</div></li>
+          <li><span class="node-dot no-reply">3</span><div class="node-label">No reply</div><div class="node-rtt unknown">RTT unknown</div><div class="node-ip">750 ms timeout</div></li>
+          <li><span class="node-dot">4</span><div class="node-label">Router reply</div><div class="node-rtt">21 ms RTT</div><div class="node-ip">198.51.100.9</div></li>
+          <li><span class="node-dot destination">5</span><div class="node-label">Selected IP replied</div><div class="node-rtt">24 ms RTT</div><div class="node-ip">203.0.113.80</div></li>
+        </ol>
+        <p class="reading-rule">Connections group sequential observations. They do not verify physical links or the route used by HTTP. Hop 3 may have filtered or rate-limited this ICMP request.</p>
+      </div>
+      <div class="a-secondary"><div class="card"><h2>Measured website phases</h2><div class="metrics"><div class="metric"><b>18 ms</b><span>DNS lookup</span></div><div class="metric"><b>35 ms</b><span>TCP connect</span></div><div class="metric"><b>42 ms</b><span>TLS handshake</span></div><div class="metric"><b>840 ms</b><span>HTTP first byte</span></div></div><details><summary>Technical evidence</summary><p>HTTP connected to the selected IP while retaining the URL hostname for Host, TLS SNI, and certificate checking. ICMP target samples: 20, 21, 23, 24, 22 ms; 5/5 replied. No hop RTT is a per-link delay.</p></details></div><div class="card"><h2>What remains unknown</h2><p class="caution">The slow HTTP phase cannot be assigned to a specific hop from this trace.</p><details><summary>ASN ownership details</summary><p class="small">Optional lookup context would appear for a responding IP here, with source and lookup time. It would not prove route ownership or delay responsibility.</p></details></div></div>
+    </div>
+    <div class="tradeoffs"><b>Tradeoff:</b> Fastest path to a plain-language answer; the network graphic is secondary and could feel less like the application's centerpiece.</div>
+  </section>
+
+  <section id="variant-b" aria-label="Variant B: path first" hidden>
+    <div class="b-grid">
+      <div class="card b-path"><div class="eyebrow">B · Path first</div><div class="row-head"><div><h2>Hop observations toward the selected IP</h2><p class="quiet small">IPv4 · 203.0.113.80 · destination replied at hop limit 5</p></div><span class="connector-key">Probe order only</span></div>
+        <ol class="rail">
+          <li><span class="node-dot">1</span><div><div class="node-label">Router replied</div><div class="node-ip">192.0.2.1 · transit-expired</div></div><span class="node-rtt">4 ms RTT</span></li>
+          <li><span class="node-dot">2</span><div><div class="node-label">Router replied</div><div class="node-ip">198.51.100.1 · transit-expired</div></div><span class="node-rtt">12 ms RTT</span></li>
+          <li><span class="node-dot no-reply">3</span><div><div class="node-label">No reply to this request</div><div class="node-ip">No responding address · 750 ms timeout</div></div><span class="node-rtt unknown">Unknown</span></li>
+          <li><span class="node-dot">4</span><div><div class="node-label">Router replied</div><div class="node-ip">198.51.100.9 · transit-expired</div></div><span class="node-rtt">21 ms RTT</span></li>
+          <li><span class="node-dot destination">5</span><div><div class="node-label">Selected IP replied</div><div class="node-ip">203.0.113.80 · echo reply</div></div><span class="node-rtt">24 ms RTT</span></li>
+        </ol><p class="caution small">The dotted rail connects TTL observations for reading order. It is not a verified physical link or the path used by HTTP. A silent hop is unknown, not a failed link.</p>
+      </div>
+      <aside class="b-aside"><div class="card summary"><div class="eyebrow">Answer so far</div><h2>Waiting for the first HTTP byte took longest</h2><p><strong>840 ms</strong> after the request was sent. These observations do not pinpoint the cause of that wait.</p></div><div class="card"><h2>Timing evidence</h2><table><tr><th>Phase</th><th>Observed</th></tr><tr><td>DNS</td><td>18 ms</td></tr><tr><td>TCP</td><td>35 ms</td></tr><tr><td>TLS</td><td>42 ms</td></tr><tr><td>HTTP first byte</td><td>840 ms</td></tr></table><details><summary>Probe details</summary><p class="small">One ICMP request per hop limit; target echo 5/5 replies. Each RTT is round trip to that responding address, not incremental link delay. Optional ASN lookup stays in details.</p></details></div></aside>
+    </div>
+    <div class="tradeoffs"><b>Tradeoff:</b> Strongest network-visual identity and room for per-node inspection; the diagnosis may be missed if attention stays on the path. A vertical rail can look like a literal route unless its caveat remains adjacent.</div>
+  </section>
+
+  <section id="variant-c" aria-label="Variant C: evidence dashboard" hidden>
+    <div class="c-signal"><div class="card summary"><div class="eyebrow">C · Evidence dashboard</div><h2>What did this diagnostic run find?</h2><p>The <strong>first HTTP byte took 840 ms</strong>, the longest recorded step. The run did not identify a responsible hop or a single cause.</p><p class="small">Use the evidence cards to see what was measured and what remains unknown.</p></div><div class="card"><h2>Website timing</h2><div class="metrics"><div class="metric"><b>18</b><span>DNS ms</span></div><div class="metric"><b>35</b><span>TCP ms</span></div><div class="metric"><b>42</b><span>TLS ms</span></div><div class="metric"><b>840</b><span>First-byte ms</span></div></div></div></div>
+    <div class="c-columns"><div class="card"><div class="eyebrow">Signal 1</div><h3>Website response</h3><p>HTTP returned a response from the selected IP. The first-byte time includes transit and website processing.</p></div><div class="card"><div class="eyebrow">Signal 2</div><h3>Target echo</h3><p>5 of 5 requests replied: 20, 21, 23, 24, 22 ms. This measures ICMP response, not page load time.</p></div><div class="card"><div class="eyebrow">Signal 3</div><h3>Hop sequence</h3><p>Four addresses replied by hop limit 5. One request at hop limit 3 received no reply.</p></div></div>
+    <div class="card c-path" style="margin-top:1rem"><div class="row-head"><div><h2>Explore the observed hop sequence</h2><p class="quiet small">Selected final-host IP: 203.0.113.80 · labels show round-trip time to each reply</p></div><span class="connector-key">Probe order only</span></div><ol class="node-row"><li><span class="node-dot">1</span><div class="node-rtt">4 ms</div><div class="node-ip">192.0.2.1</div></li><li><span class="node-dot">2</span><div class="node-rtt">12 ms</div><div class="node-ip">198.51.100.1</div></li><li><span class="node-dot no-reply">3</span><div class="node-rtt unknown">No reply</div><div class="node-ip">RTT unknown</div></li><li><span class="node-dot">4</span><div class="node-rtt">21 ms</div><div class="node-ip">198.51.100.9</div></li><li><span class="node-dot destination">5</span><div class="node-rtt">24 ms</div><div class="node-ip">203.0.113.80</div></li></ol><p class="reading-rule">Dotted connectors show observation order. They do not establish physical links, per-link latency, or the HTTP route.</p><details><summary>Technical path evidence and ASN context</summary><p>Each hop limit had one ICMP request. Hop 3 timed out after 750 ms; that does not prove network loss. Any ASN lookup would identify ownership context for a replying IP, with source and time, and would not establish responsibility for delay.</p></details></div>
+    <div class="tradeoffs"><b>Tradeoff:</b> Easy to scan across independent evidence; the path becomes one signal among several and may feel more like a conventional dashboard than a distinct network-visual experience.</div>
+  </section>
+</main>
+<nav class="switcher" aria-label="Prototype variants"><button id="prev" aria-label="Previous variant">←</button><span id="variant-label"></span><button id="next" aria-label="Next variant">→</button></nav>
+<script>
+  const variants = [['a', 'Answer first'], ['b', 'Path first'], ['c', 'Evidence dashboard']];
+  function currentIndex() { const key = new URL(location.href).searchParams.get('variant'); return Math.max(0, variants.findIndex(([id]) => id === key)); }
+  function show(index, writeUrl = true) {
+    const next = (index + variants.length) % variants.length;
+    for (const [id] of variants) document.getElementById(`variant-${id}`).hidden = id !== variants[next][0];
+    document.getElementById('variant-label').textContent = `${variants[next][0].toUpperCase()} · ${variants[next][1]}`;
+    if (writeUrl) { const url = new URL(location.href); url.searchParams.set('variant', variants[next][0]); history.replaceState(null, '', url); }
+  }
+  document.getElementById('prev').onclick = () => show(currentIndex() - 1);
+  document.getElementById('next').onclick = () => show(currentIndex() + 1);
+  document.addEventListener('keydown', event => { if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName) || document.activeElement?.isContentEditable) return; if (event.key === 'ArrowLeft') show(currentIndex() - 1); if (event.key === 'ArrowRight') show(currentIndex() + 1); });
+  window.addEventListener('popstate', () => show(currentIndex(), false));
+  show(currentIndex(), false);
+</script>
+</html>
+
