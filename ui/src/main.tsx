@@ -172,7 +172,7 @@ function App() {
   const address = family && selectedIP(family);
   const path = family?.paths.at(-1);
   const finalFinding = run && terminal.has(run.state) ? run.findings.find((item) => item.family === "ipv4") : undefined;
-  const incomplete = run?.state === "completed" && [...evidence.values()].some((item) => ["deadline", "cancelled", "error", "unavailable"].includes(String(item.outcome)));
+  const incomplete = run?.state === "completed" && ((family && family.outcome !== "completed") || [...evidence.values()].some((item) => ["timeout", "deadline", "cancelled", "error", "unavailable"].includes(String(item.outcome))));
 
   return <main className={run || runID || submitting ? "has-run" : undefined} data-state={run?.state || (runID || submitting ? "running" : "ready")}>
     <a className="skip-link" href="#run-workspace">Skip to diagnostic run</a>

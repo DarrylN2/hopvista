@@ -29,14 +29,46 @@ func (c *journeyClock) Wait(ctx context.Context, d time.Duration) error {
 func runThroughAPI(t *testing.T, f *tlsJourney, url, pathIP string) result.Run {
 	t.Helper()
 	clock := &journeyClock{}
+	adapter := journeyAdapter(clock, pathIP)
+	e := &engine.Engine{HTTP: httpmeasure.ControlledTLSClient(f.roots, f.dial), Resolver: lookupFunc(f.resolve), Probe: adapter, Clock: clock}
+	snapshot := runEngineThroughAPI(t, run.NewManager(e), url, nil)
+	if snapshot.State != result.RunCompleted {
+		t.Fatalf("lifecycle: %+v", snapshot)
+	}
+	for range f.dials {
+		select {
+		case <-f.complete:
+		case <-time.After(6 * time.Second):
+			t.Fatal("TLS server did not finish")
+		}
+	}
+	sort.Slice(f.records, func(i, j int) bool { return f.records[i].index < f.records[j].index })
+	for _, c := range adapter.Calls() {
+		if c.Route != nil && c.Route.SelectedIP.String() != pathIP {
+			t.Fatalf("wrong route target: %+v", c)
+		}
+		if c.Echo != nil && c.Echo.SelectedIP.String() != pathIP {
+			t.Fatalf("wrong echo target: %+v", c)
+		}
+	}
+	return snapshot
+}
+
+func journeyAdapter(clock *journeyClock, pathIP string) *probefake.Adapter {
 	onLink, rtt := true, 1.0
 	echoes := make([]probefake.EchoStep, 6)
 	for i := range echoes {
 		echoes[i].Observation = result.Echo{Measurement: result.Measurement{Outcome: result.Completed}, Status: result.EchoReply, ReplyAddress: pathIP, RTTMS: &rtt}
 	}
-	adapter := probefake.New(clock.Now, []probefake.RouteStep{{Observation: result.Route{Measurement: result.Measurement{Outcome: result.Completed}, OnLink: &onLink}}}, echoes)
-	e := &engine.Engine{HTTP: httpmeasure.ControlledTLSClient(f.roots, f.dial), Resolver: lookupFunc(f.resolve), Probe: adapter, Clock: clock}
-	handler, err := localapi.NewHandler("127.0.0.1:8123", run.NewManager(e))
+	return probefake.New(clock.Now, []probefake.RouteStep{{Observation: result.Route{Measurement: result.Measurement{Outcome: result.Completed}, OnLink: &onLink}}}, echoes)
+
+}
+
+// Exercise the session/start/status boundary with the real manager and engine.
+// The optional observer can cancel a pending run through the same API.
+func runEngineThroughAPI(t *testing.T, manager *run.Manager, url string, observe func(result.Run, func())) result.Run {
+	t.Helper()
+	handler, err := localapi.NewHandler("127.0.0.1:8123", manager)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -76,25 +108,30 @@ func runThroughAPI(t *testing.T, f *tlsJourney, url, pathIP string) result.Run {
 		if err := json.Unmarshal(response.Body.Bytes(), &snapshot); err != nil {
 			t.Fatal(err)
 		}
+		if response.Code != http.StatusOK {
+			t.Fatalf("status: %d %s", response.Code, response.Body)
+		}
+		if observe != nil {
+			observe(snapshot, func() {
+				response := call("POST", started.StatusURL+"/cancel", "", credentials.Token)
+				if response.Code != http.StatusOK {
+					t.Fatalf("cancel: %d %s", response.Code, response.Body)
+				}
+				var stopping result.Run
+				if err := json.Unmarshal(response.Body.Bytes(), &stopping); err != nil {
+					t.Fatal(err)
+				}
+				if stopping.State == result.Stopping {
+					if len(stopping.Findings) != 0 {
+						t.Fatal("finding published while stopping")
+					}
+					writeCapture(t, "run-stopping", stopping)
+				}
+			})
+		}
 		if snapshot.State.Terminal() {
-			if snapshot.State != result.RunCompleted || snapshot.SchemaVersion != 1 || snapshot.ConnectionMode != "direct" || snapshot.TargetURL != url || len(snapshot.Families) != 2 {
+			if snapshot.SchemaVersion != 1 || snapshot.ConnectionMode != "direct" || snapshot.TargetURL != url || len(snapshot.Families) != 2 {
 				t.Fatalf("API contract: %+v", snapshot)
-			}
-			for range f.dials {
-				select {
-				case <-f.complete:
-				case <-time.After(6 * time.Second):
-					t.Fatal("TLS server did not finish")
-				}
-			}
-			sort.Slice(f.records, func(i, j int) bool { return f.records[i].index < f.records[j].index })
-			for _, c := range adapter.Calls() {
-				if c.Route != nil && c.Route.SelectedIP.String() != pathIP {
-					t.Fatalf("wrong route target: %+v", c)
-				}
-				if c.Echo != nil && c.Echo.SelectedIP.String() != pathIP {
-					t.Fatalf("prohibited/wrong echo target: %+v", c)
-				}
 			}
 			return snapshot
 		}

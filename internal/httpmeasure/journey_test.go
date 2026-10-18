@@ -59,17 +59,18 @@ type requestRecord struct {
 // Only DNS and the socket are simulated. Each dial creates a fresh TLS server
 // over net.Pipe with a claimed RemoteAddr, never a public network connection.
 type tlsJourney struct {
-	mu        sync.Mutex
-	cert      tls.Certificate
-	roots     *x509.CertPool
-	identity  string
-	responses []string
-	records   []requestRecord
-	dials     []string
-	lookups   []string
-	events    []string
-	complete  chan struct{}
-	headerGap time.Duration
+	mu              sync.Mutex
+	cert            tls.Certificate
+	roots           *x509.CertPool
+	identity        string
+	responses       []string
+	records         []requestRecord
+	dials           []string
+	lookups         []string
+	events          []string
+	complete        chan struct{}
+	headerGap       time.Duration
+	requestReceived chan struct{}
 }
 
 func newTLSJourney(t *testing.T, responses ...string) *tlsJourney {
@@ -140,6 +141,14 @@ func (f *tlsJourney) dial(ctx context.Context, network, address string) (net.Con
 		}
 		req, err := http.ReadRequest(bufio.NewReader(conn))
 		if err != nil {
+			return
+		}
+		if response == "" {
+			if f.requestReceived != nil {
+				close(f.requestReceived)
+			}
+			// Hold all response bytes until the client times out or cancels.
+			_, _ = io.Copy(io.Discard, conn)
 			return
 		}
 		record := requestRecord{index: index, Authority: req.Host, Path: req.URL.RequestURI(), SNI: conn.ConnectionState().ServerName, CertificateSHA256: f.identity, Dial: network + " " + address}

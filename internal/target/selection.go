@@ -115,7 +115,8 @@ func (s *Selector) Select(ctx context.Context, u URL) (Selection, *result.DNS, *
 	}
 	if err != nil {
 		problem := &Problem{Code: "dns_lookup_failed", Message: "The local IPv4 lookup failed."}
-		if errors.Is(err, context.DeadlineExceeded) {
+		var netErr net.Error
+		if errors.Is(err, context.DeadlineExceeded) || (errors.As(err, &netErr) && netErr.Timeout()) {
 			problem = &Problem{Code: "dns_timeout", Message: "No IPv4 lookup answer arrived within two seconds."}
 			dns.Outcome = result.Timeout
 		}

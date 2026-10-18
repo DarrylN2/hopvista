@@ -98,9 +98,19 @@ func (c *Client) MeasureWithProgress(ctx context.Context, rawURL string, selecto
 		j.Exchanges = append(j.Exchanges, x)
 		j.SelectedIP = selected.IP().String()
 		emit()
-		if x.HTTP.Outcome != result.Completed {
+		if x.HTTP.Outcome != result.Completed || x.HTTP.Error != nil {
 			j.StopReason = phaseStopReason(x)
 			j.Outcome = x.HTTP.Outcome
+			if j.Outcome == result.Completed {
+				// First byte may complete while the remaining headers time out.
+				j.Outcome = result.Error
+				if j.StopReason == "response_header_timeout" {
+					j.Outcome = result.Timeout
+				}
+				if ctx.Err() != nil {
+					j.Outcome = contextOutcome(ctx)
+				}
+			}
 			if j.Outcome == result.Unavailable {
 				if x.TCP.Outcome == result.Error || x.TCP.Outcome == result.Timeout || x.TCP.Outcome == result.Cancelled || x.TCP.Outcome == result.Deadline {
 					j.Outcome = x.TCP.Outcome
@@ -275,10 +285,19 @@ func (c *Client) exchange(ctx context.Context, index int, selected target.Select
 		return x
 	}
 	if roundErr != nil {
+		// A transport failure before the request is written belongs to TCP or
+		// TLS. Later phases were not attempted and keep their unavailable outcome.
+		if x.TCP.Error != nil || x.TLS.Error != nil {
+			return x
+		}
 		if x.HTTP.Outcome == result.Unavailable {
 			x.HTTP.Outcome = errorOutcome(roundErr, ctx)
 		}
-		x.HTTP.Error = &result.ErrorData{Code: roundErrorCode(roundErr, rec), Message: "The HTTP exchange did not return response headers."}
+		code := roundErrorCode(roundErr, rec)
+		if ctx.Err() != nil {
+			code = contextCode(ctx)
+		}
+		x.HTTP.Error = &result.ErrorData{Code: code, Message: "The HTTP exchange did not return complete response headers."}
 		return x
 	}
 	if response == nil {
@@ -329,7 +348,7 @@ func populatePhase(m *result.Measurement, start, end time.Time, phaseErr, roundE
 		m.Outcome = errorOutcome(roundErr, ctx)
 		return
 	}
-	if ctx.Err() != nil {
+	if !start.IsZero() && ctx.Err() != nil {
 		m.Outcome = contextOutcome(ctx)
 	}
 }

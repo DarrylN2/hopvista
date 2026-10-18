@@ -10,11 +10,27 @@ import (
 // findings chooses one conservative observation. Only measurements from the
 // same exchange are compared; ICMP RTTs never become website phase timings.
 func findings(f result.Family) []result.Finding {
+	if len(f.DNS) > 0 {
+		d := f.DNS[len(f.DNS)-1]
+		lastExchangeNeedsSelection := len(f.Exchanges) == 0 || (f.Exchanges[len(f.Exchanges)-1].RedirectStopReason != "" && f.Exchanges[len(f.Exchanges)-1].DNSRef != d.ID)
+		if d.SelectedIP == "" && lastExchangeNeedsSelection {
+			observation := fmt.Sprintf("This diagnostic run did not select a usable IPv4 address for %s.", d.Hostname)
+			if d.Outcome == result.Timeout {
+				observation = fmt.Sprintf("The IPv4 lookup for %s did not answer within its bound in this diagnostic run.", d.Hostname)
+			}
+			return []result.Finding{{Type: "ipv4_selection_incomplete", Family: "ipv4", Observation: observation, Limit: "This local resolver observation does not establish the hostname's availability elsewhere.", EvidenceRefs: []string{d.ID}}}
+		}
+	}
+
 	if len(f.Exchanges) > 0 {
 		x := f.Exchanges[len(f.Exchanges)-1]
-		if x.HTTP.Outcome != result.Completed {
+		if x.HTTP.Outcome != result.Completed || x.HTTP.Error != nil {
 			phase, m := stoppedPhase(x)
-			return []result.Finding{{Type: "http_phase_incomplete", Family: "ipv4", ExchangeRef: x.ID, Observation: fmt.Sprintf("This diagnostic run stopped during the %s phase for %s over IPv4.", phase, x.RequestedURL), Limit: "This direct attempt does not establish the website's general availability or the cause of the incomplete phase.", EvidenceRefs: []string{m.ID}}}
+			observation := fmt.Sprintf("This diagnostic run stopped during the %s phase for %s over IPv4.", phase, x.RequestedURL)
+			if x.HTTP.Outcome == result.Completed && x.HTTP.Error != nil {
+				observation = fmt.Sprintf("The first response-header byte was measured for %s over IPv4, but the remaining response headers did not complete in this diagnostic run.", x.RequestedURL)
+			}
+			return []result.Finding{{Type: "http_phase_incomplete", Family: "ipv4", ExchangeRef: x.ID, Observation: observation, Limit: "This direct attempt does not establish the website's general availability or the cause of the incomplete phase.", EvidenceRefs: []string{m.ID}}}
 		}
 		if x.ResponseStatus == nil {
 			return []result.Finding{}
@@ -30,14 +46,7 @@ func findings(f result.Family) []result.Finding {
 		}
 		return []result.Finding{{Type: "http_response_observed", Family: "ipv4", ExchangeRef: x.ID, Observation: fmt.Sprintf("This diagnostic run received HTTP status %d from %s over IPv4; no single measured phase met the dominant-wait rule.", status(x), x.RequestedURL), Limit: "This direct exchange does not establish browser timing or a cause for the observed waits.", EvidenceRefs: []string{x.HTTP.ID}}}
 	}
-	if len(f.DNS) > 0 {
-		d := f.DNS[len(f.DNS)-1]
-		observation := fmt.Sprintf("This diagnostic run did not select a usable IPv4 address for %s.", d.Hostname)
-		if d.Outcome == result.Timeout {
-			observation = fmt.Sprintf("The IPv4 lookup for %s did not answer within its bound in this diagnostic run.", d.Hostname)
-		}
-		return []result.Finding{{Type: "ipv4_selection_incomplete", Family: "ipv4", Observation: observation, Limit: "This local resolver observation does not establish the hostname's availability elsewhere.", EvidenceRefs: []string{d.ID}}}
-	}
+
 	return []result.Finding{}
 }
 

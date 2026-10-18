@@ -259,21 +259,31 @@ func TestInvalidRedirectStopsWithoutAnotherDial(t *testing.T) {
 }
 
 func TestConnectFailureHasNoNumericTiming(t *testing.T) {
-	selector := target.NewSelector(resolverFunc(func(context.Context, string) ([]netip.Addr, error) {
-		return []netip.Addr{netip.MustParseAddr("8.8.8.8")}, nil
-	}), nil)
-	c := NewClient()
-	c.dial = func(ctx context.Context, network, address string) (net.Conn, error) {
-		err := errors.New("controlled connect refusal")
-		if trace := httptrace.ContextClientTrace(ctx); trace != nil {
-			trace.ConnectStart(network, address)
-			trace.ConnectDone(network, address, err)
-		}
-		return nil, err
-	}
-	j := c.Measure(context.Background(), "http://example.com/", selector)
-	if j.StopReason != "tcp_connect_failed" || j.Outcome != result.Error || len(j.Exchanges) != 1 || j.Exchanges[0].TCP.DurationMS != nil || j.Exchanges[0].TCP.Error == nil || j.Exchanges[0].TCP.Error.Code != "tcp_connect_failed" || j.Exchanges[0].HTTP.DurationMS != nil || j.Exchanges[0].ResponseStatus != nil {
-		t.Fatalf("connect failure: %+v", j)
+	for _, tc := range []struct {
+		name, code string
+		err        error
+		outcome    result.Outcome
+	}{
+		{"refused", "tcp_connect_failed", errors.New("controlled connect refusal"), result.Error},
+		{"timeout", "tcp_connect_timeout", &net.DNSError{IsTimeout: true}, result.Timeout},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			selector := target.NewSelector(resolverFunc(func(context.Context, string) ([]netip.Addr, error) {
+				return []netip.Addr{netip.MustParseAddr("8.8.8.8")}, nil
+			}), nil)
+			c := NewClient()
+			c.dial = func(ctx context.Context, network, address string) (net.Conn, error) {
+				trace := httptrace.ContextClientTrace(ctx)
+				trace.ConnectStart(network, address)
+				trace.ConnectDone(network, address, tc.err)
+				return nil, tc.err
+			}
+			j := c.Measure(context.Background(), "https://example.com/", selector)
+			x := j.Exchanges[0]
+			if j.StopReason != tc.code || j.Outcome != tc.outcome || x.TCP.Outcome != tc.outcome || x.TCP.DurationMS != nil || x.TCP.Error == nil || x.TCP.Error.Code != tc.code || x.TCP.StartedAt == nil || x.TCP.EndedAt == nil || x.TCP.BoundMS == nil || *x.TCP.BoundMS != 2000 || x.HTTP.Outcome != result.Unavailable || x.HTTP.DurationMS != nil || x.HTTP.StartedAt != nil || x.TLS.Outcome != result.Unavailable || x.ResponseStatus != nil {
+				t.Fatalf("connect failure: journey=%+v exchange=%+v", j, x)
+			}
+		})
 	}
 }
 
@@ -305,14 +315,32 @@ func TestHeaderTimeoutHasNoFabricatedFirstByte(t *testing.T) {
 	}
 }
 
-func TestCancelledBeforeExchangeMakesNoConnection(t *testing.T) {
-	ctx, cancel := context.WithCancel(context.Background())
-	cancel()
-	lookups := 0
-	selector := target.NewSelector(resolverFunc(func(context.Context, string) ([]netip.Addr, error) { lookups++; return nil, nil }), nil)
-	c := NewClient()
-	j := c.Measure(ctx, "http://example.com/", selector)
-	if j.Outcome != result.Cancelled || j.StopReason != "cancelled" || lookups != 0 || len(j.Exchanges) != 0 {
-		t.Fatalf("cancelled: %+v lookups %d", j, lookups)
+func TestRejectedOrCancelledTargetMakesNoNetworkCalls(t *testing.T) {
+	for _, tc := range []struct {
+		name, url, code string
+		outcome         result.Outcome
+	}{
+		{"cancelled", "http://example.com/", "cancelled", result.Cancelled},
+		{"ipv6", "https://[::1]/", "ipv6_not_supported_in_v1", result.Unavailable},
+		{"mapped", "https://[::ffff:192.0.2.1]/", "ipv6_not_supported_in_v1", result.Unavailable},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			ctx, cancel := context.WithCancel(context.Background())
+			defer cancel()
+			if tc.name == "cancelled" {
+				cancel()
+			}
+			lookups, dials := 0, 0
+			selector := target.NewSelector(resolverFunc(func(context.Context, string) ([]netip.Addr, error) { lookups++; return nil, nil }), nil)
+			c := NewClient()
+			c.dial = func(context.Context, string, string) (net.Conn, error) {
+				dials++
+				return nil, errors.New("unexpected network work")
+			}
+			j := c.Measure(ctx, tc.url, selector)
+			if j.Outcome != tc.outcome || j.StopReason != tc.code || lookups != 0 || dials != 0 || len(j.Exchanges) != 0 {
+				t.Fatalf("validation started network work: %+v lookups=%d dials=%d", j, lookups, dials)
+			}
+		})
 	}
 }
