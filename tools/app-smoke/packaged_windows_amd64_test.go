@@ -3,10 +3,8 @@
 package appsmoke
 
 import (
-	"bufio"
 	"bytes"
 	"context"
-	"debug/pe"
 	"encoding/json"
 	"io"
 	"math"
@@ -30,82 +28,9 @@ import (
 // path. The copied child executable launches without the repository or a Go /
 // Node executable on PATH. This checks one local Windows environment only.
 func TestPackagedExecutableLoopback(t *testing.T) {
-	source := os.Getenv("HOPVISTA_PACKAGED_EXE")
-	if source == "" {
-		t.Skip("set HOPVISTA_PACKAGED_EXE to an absolute built executable")
-	}
-	if !filepath.IsAbs(source) {
-		t.Fatal("HOPVISTA_PACKAGED_EXE must be absolute")
-	}
-	image, err := pe.Open(source)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if image.FileHeader.Machine != pe.IMAGE_FILE_MACHINE_AMD64 {
-		t.Fatalf("unexpected PE machine: %#x", image.FileHeader.Machine)
-	}
-	image.Close()
-
-	dir := t.TempDir()
-	executable := filepath.Join(dir, "hopvista.exe")
-	from, err := os.Open(source)
-	if err != nil {
-		t.Fatal(err)
-	}
-	defer from.Close()
-	to, err := os.Create(executable)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if _, err = io.Copy(to, from); err != nil {
-		to.Close()
-		t.Fatal(err)
-	}
-	if err = to.Close(); err != nil {
-		t.Fatal(err)
-	}
-	if names, err := os.ReadDir(dir); err != nil || len(names) != 1 {
-		t.Fatalf("isolated directory: %v %v", names, err)
-	}
-
-	cmd := exec.Command(executable)
-	cmd.Dir = dir
-	cmd.Env = systemOnlyPATH(os.Environ())
-	stderr, err := cmd.StderrPipe()
-	if err != nil {
-		t.Fatal(err)
-	}
-	if err := cmd.Start(); err != nil {
-		t.Fatal(err)
-	}
-	t.Cleanup(func() { _ = cmd.Process.Kill(); _ = cmd.Wait() })
-	lines := make(chan string, 16)
-	go func() {
-		scanner := bufio.NewScanner(stderr)
-		for scanner.Scan() {
-			select {
-			case lines <- scanner.Text():
-			default:
-			}
-		}
-		close(lines)
-	}()
-	base := ""
-	deadline := time.After(10 * time.Second)
-	for base == "" {
-		select {
-		case line, ok := <-lines:
-			if !ok {
-				t.Fatal("packaged executable exited before announcing its listener")
-			}
-			if at := strings.Index(line, "HopVista: http://127.0.0.1:"); at >= 0 {
-				base = strings.TrimSpace(strings.TrimPrefix(line[at:], "HopVista: "))
-				base = strings.TrimSuffix(base, "/")
-			}
-		case <-deadline:
-			t.Fatal("packaged executable did not announce its listener")
-		}
-	}
+	executable := copyPackagedExecutable(t)
+	process := startPackagedProcess(t, executable)
+	base := process.base
 	client := &http.Client{Timeout: 5 * time.Second, Transport: &http.Transport{Proxy: nil}}
 	get := func(path string) *http.Response {
 		t.Helper()
