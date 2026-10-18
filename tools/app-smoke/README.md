@@ -14,6 +14,33 @@ $env:HOPVISTA_PACKAGED_EXE = (Resolve-Path -LiteralPath '.tools\hopvista.exe').P
 
 The check skips in ordinary `go test ./...` unless `HOPVISTA_PACKAGED_EXE` is set. It verifies this binary, pinned HTTP comparison, and one-hop `tracert` semantics on loopback on the current machine. It does not compare a remote route or its variable hop timings, or check signing, an installer, other Windows accounts or builds, VPNs, a genuinely stalled native route lookup, or the complete release acceptance matrix.
 
+## Packaged process restart and privacy
+
+With the executable built and `HOPVISTA_PACKAGED_EXE` set as above:
+
+```powershell
+.\.tools\go\bin\go.exe test ./tools/app-smoke -run 'TestPackagedExecutableLoopback|TestPackagedRestartPrivacy' -count=1 -v
+```
+
+`TestPackagedRestartPrivacy` launches the same isolated executable three times
+from the same temporary directory, with only Windows System32 on the child
+`PATH`. It uses a synthetic path/query marker on a real loopback HTTP redirect
+and 503 response, rejected input, and a connection closed before response
+headers. The real engine and native IPv4 adapter produce the run results.
+After each forced process exit it drains all stdout/stderr: stdout must be empty
+and stderr must contain exactly the timestamped listener announcement. Submitted
+markers, mutation tokens and run IDs must not appear. It checks the launch
+directory contains only the unchanged executable. Before starting any run after
+restart, earlier run IDs must return 404, the mutation token must change, and the
+first process's token must be rejected by the second process.
+
+This checks abrupt exit/relaunch, default process output and the launch
+directory, not OS-level file/network tracing, browser history, paging, crash
+dumps, graceful console-signal handling or secure memory erasure. The executable
+is stopped before the temporary directory is removed. The recorded conditions,
+outcomes and source review are in
+[the restart/privacy verification record](../../docs/implementation/packaged-restart-privacy.md).
+
 For the opt-in packaged cancellation check, set `HOPVISTA_PACKAGED_DRAIN_IP` to a candidate no-reply IPv4 address before the `go test` command above (for example, `$env:HOPVISTA_PACKAGED_DRAIN_IP = '192.0.2.1'` on the reviewed local network). After the loopback checks, this starts a run to that IP, cancels while a target echo is in flight, verifies `stopping` and a busy second start, and checks retained echo evidence after the native call returns. A network where the candidate replies promptly cannot satisfy this fixture and must use another controlled no-reply target. This is a finite observation, not a native latest-return bound.
 
 For a direct public HTTPS comparison, set `HOPVISTA_PACKAGED_HTTPS_URL` to an HTTPS target that returns a final response without redirecting (for example, `$env:HOPVISTA_PACKAGED_HTTPS_URL = 'https://example.com/'`) before the same `go test` command. The packaged app records the selected and actual peer IPv4 address, completed TCP/TLS/HTTP phases, response status, and a fresh connection. Independent system `curl.exe` then uses `--resolve` for that exact host, port, and selected IP with proxies disabled. The check compares peer, response status, certificate verification, and first-response timing within a broad two-second range. It requires direct public HTTPS access and is one live network observation.
