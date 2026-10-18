@@ -1,13 +1,14 @@
 // Replay API-captured controlled results in the unchanged production UI.
-// Generate captures using the command in docs/implementation/issue-11.md first.
+// Generate captures using docs/implementation/issue-11.md or issue-12.md first.
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const captureDir = path.join(root, '.tools', 'issue-11');
-const modes = new Set(['completed', 'invalid', 'ipv6', 'sensitive', 'limit', 'certificate']);
+const captureDir = process.env.HOPVISTA_JOURNEY_CAPTURE || path.join(root, '.tools', 'issue-11');
+const modes = new Set(fs.readdirSync(captureDir).map(name => /^run-([a-z0-9]+)\.json$/.exec(name)?.[1]).filter(Boolean));
+const instructions = [...modes].map(mode => `/${mode}`).join(', ');
 const runs = new Map([...modes].map(mode => [mode, JSON.parse(fs.readFileSync(path.join(captureDir, `run-${mode}.json`), 'utf8'))]));
 const server = http.createServer(async (req, res) => {
   const origin = `http://${server.address().address}:${server.address().port}`;
@@ -25,7 +26,7 @@ const server = http.createServer(async (req, res) => {
     }
     let mode;
     try { mode = new URL(JSON.parse(body).target_url).pathname.slice(1); } catch { /* rejected below */ }
-    if (!modes.has(mode)) { res.statusCode = 400; return json({error:{message:'Use https://fixture.example/completed, /invalid, /ipv6, /sensitive, /limit or /certificate.'}}); }
+    if (!modes.has(mode)) { res.statusCode = 400; return json({error:{message:`Use https://fixture.example with a captured path: ${instructions}.`}}); }
     res.statusCode = 202;
     return json({run_id: mode});
   }
@@ -35,7 +36,7 @@ const server = http.createServer(async (req, res) => {
   if (req.method !== 'GET' || !['index.html', 'app.js', 'style.css'].includes(asset)) { res.writeHead(404).end(); return; }
   let body = fs.readFileSync(path.join(root, 'internal', 'localapi', 'static', asset));
   if (asset === 'index.html') {
-    body = body.toString().replace('<body>', '<body><aside style="padding:8px 20px;background:#f5eddf;color:#745022;font:14px system-ui">Controlled HTTPS replay · simulated DNS/socket addresses and ICMP · real TLS/HTTP and API-captured results · enter https://fixture.example/completed, /invalid, /ipv6, /sensitive, /limit or /certificate</aside>');
+    body = body.toString().replace('<body>', `<body><aside style="padding:8px 20px;background:#f5eddf;color:#745022;font:14px system-ui">Controlled API replay - simulated DNS/socket addresses, failures, ICMP and rule timings - real engine/API results - enter https://fixture.example with ${instructions}</aside>`);
   }
   res.setHeader('Content-Type', asset.endsWith('.js') ? 'text/javascript' : asset.endsWith('.css') ? 'text/css' : 'text/html');
   res.end(body);

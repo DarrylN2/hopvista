@@ -3,6 +3,7 @@ package target_test
 import (
 	"context"
 	"errors"
+	"net"
 	"net/netip"
 	"reflect"
 	"sync"
@@ -159,10 +160,11 @@ func TestFirstUsableAAndCacheAgainstChangedAnswers(t *testing.T) {
 
 func TestUnavailableAndCancelledSelection(t *testing.T) {
 	f := &fakeResolver{replies: map[string][]resolverReply{
-		"only-v6.example":  {{addresses: ips("::1", "2001:db8::1")}},
-		"unusable.example": {{addresses: ips("0.0.0.0", "224.0.0.1")}},
-		"broken.example":   {{err: errors.New("private resolver detail")}},
-		"timeout.example":  {{err: context.DeadlineExceeded}},
+		"only-v6.example":          {{addresses: ips("::1", "2001:db8::1")}},
+		"unusable.example":         {{addresses: ips("0.0.0.0", "224.0.0.1")}},
+		"broken.example":           {{err: errors.New("private resolver detail")}},
+		"timeout.example":          {{err: context.DeadlineExceeded}},
+		"resolver-timeout.example": {{err: &net.DNSError{IsTimeout: true}}},
 	}}
 	s := target.NewSelector(f, nil)
 	for _, tc := range []struct {
@@ -173,6 +175,7 @@ func TestUnavailableAndCancelledSelection(t *testing.T) {
 		{"unusable.example", "ipv4_unavailable", result.Completed},
 		{"broken.example", "dns_lookup_failed", result.Error},
 		{"timeout.example", "dns_timeout", result.Timeout},
+		{"resolver-timeout.example", "dns_timeout", result.Timeout},
 	} {
 		selection, dns, p := s.Select(context.Background(), mustParse(t, "https://"+tc.host+"/"))
 		if p == nil || p.Code != tc.code || dns == nil || dns.Outcome != tc.outcome || selection.IP().IsValid() {
@@ -186,8 +189,18 @@ func TestUnavailableAndCancelledSelection(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	cancel()
 	_, dns, p := s.Select(ctx, mustParse(t, "https://cancel.example/"))
-	if p == nil || p.Code != "cancelled" || dns.Outcome != result.Cancelled || dns.StartedAt != nil || f.callCount() != 4 {
+	if p == nil || p.Code != "cancelled" || dns.Outcome != result.Cancelled || dns.StartedAt != nil || f.callCount() != 5 {
 		t.Fatalf("cancelled lookup started: %+v %v", dns, p)
+	}
+}
+
+func TestLookupBoundExpiresWithoutNumericTiming(t *testing.T) {
+	f := &fakeResolver{replies: map[string][]resolverReply{"held.example": {{}}}}
+	f.onCall = func(ctx context.Context) { <-ctx.Done() }
+	s := target.NewSelector(f, nil)
+	selection, dns, problem := s.Select(context.Background(), mustParse(t, "https://held.example/"))
+	if problem == nil || problem.Code != "dns_timeout" || dns.Outcome != result.Timeout || dns.DurationMS != nil || dns.StartedAt == nil || dns.EndedAt == nil || dns.BoundMS == nil || *dns.BoundMS <= 0 || *dns.BoundMS > 2000 || selection.IP().IsValid() || f.callCount() != 1 {
+		t.Fatalf("bounded lookup: %+v %+v %v", selection, dns, problem)
 	}
 }
 

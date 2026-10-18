@@ -1,5 +1,15 @@
 # HopVista v1 acceptance status
 
+Latest controlled follow-up: [issue #12 verification](issue-12.md) adds incomplete
+website-measurement cases through the real engine/local API and approved results
+view. DNS/TCP/TLS/HTTP stops, retained partial evidence, absent versus measured
+zero values, completed 404/503 responses, dominant-wait gaps and evidence
+navigation now have recorded checks. Full Go tests/vet, UI build, loopback TLS
+and packaged smoke pass; independent Standards and Spec reviews found no issues.
+Simulations and remaining human/platform limits are explicit in that record.
+This follow-up does not declare release acceptance or replace the historical
+matrix below.
+
 Reviewed 2026-10-15 against [GitHub issue #10](https://github.com/DarrylN2/hopvista/issues/10), its linked [acceptance plan](https://github.com/DarrylN2/hopvista/issues/7#issuecomment-6051380625), the current workspace, and milestone notes through [milestone 19](milestone-19.md). The IPv4-first and no-hard-native-drain revisions in issue #10 supersede the older dual-stack and hard-deadline wording in issue #7. The current issue specifies a 30-hop default and an advanced range of 1–64; [milestone 12](milestone-12.md) corrected the earlier 16-hop implementation.
 
 **Release acceptance: open.** The milestone 1 *development gate* passed under its approved tested-condition scope; it was not release acceptance. Current test evidence comes principally from one Windows 11 25H2 build 26200 x64 machine with an unelevated token and its current network. Keep any distribution claim experimental and tied to that condition until wider coverage is obtained. The 250 ms native start margin is empirical, and no hard terminal time or native drain bound is claimed.

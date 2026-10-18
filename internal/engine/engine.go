@@ -110,6 +110,26 @@ func journeyStopMessage(code string) string {
 		return "The URL uses an IPv6 address, which is not supported in v1. No IPv6 connection was attempted."
 	case "redirect_limit":
 		return "The diagnostic run reached the limit of three redirects (four exchanges). The next redirect was not followed."
+	case "dns_lookup_failed":
+		return "The local IPv4 lookup failed. No website connection was attempted for that hostname; earlier evidence remains available."
+	case "dns_timeout":
+		return "The local IPv4 lookup did not answer within its recorded bound. No website connection was attempted for that hostname."
+	case "ipv4_unavailable":
+		return "No usable IPv4 A address was found for this hostname. No IPv6 connection was attempted."
+	case "tcp_connect_failed":
+		return "The TCP connection to the selected IPv4 address failed. TLS and HTTP were not attempted for that exchange."
+	case "tcp_connect_timeout":
+		return "The TCP connection did not complete within its recorded bound. TLS and HTTP were not attempted for that exchange."
+	case "tls_handshake_failed":
+		return "The TLS handshake failed after the TCP connection. The HTTP request for that exchange was not sent."
+	case "tls_handshake_timeout":
+		return "The TLS handshake did not complete within its recorded bound. The HTTP request for that exchange was not sent."
+	case "response_header_timeout":
+		return "The HTTP response headers did not complete within the recorded bound. Inspect the first response-byte measurement for any retained timing."
+	case "cancelled":
+		return "Website measurement work was cancelled. Earlier completed evidence remains available."
+	case "deadline":
+		return "Website measurement work reached the diagnostic run cutoff. Earlier completed evidence remains available."
 	case "tls_verification_failed":
 		return "TLS certificate verification failed for the attempted URL. The HTTP request for that exchange was not sent; earlier exchanges remain available."
 	default:
