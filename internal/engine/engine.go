@@ -95,9 +95,26 @@ func (e *Engine) Run(ctx context.Context, input run.Input, publish func([]result
 func familyFromJourney(j httpmeasure.Journey) result.Family {
 	f := result.Family{Family: "ipv4", Outcome: j.Outcome, DNS: j.DNS, Exchanges: j.Exchanges, Paths: []result.Path{}, FinalURL: j.FinalURL, FinalHost: j.FinalHost}
 	if j.StopReason != "" {
-		f.Error = &result.ErrorData{Code: j.StopReason, Message: "The IPv4 measurement journey stopped before a final response."}
+		f.Error = &result.ErrorData{Code: j.StopReason, Message: journeyStopMessage(j.StopReason)}
 	}
 	return f
+}
+
+func journeyStopMessage(code string) string {
+	switch code {
+	case "redirect_requires_new_run":
+		return "The redirect selected a non-public IPv4 address on a different host. Enter that URL in a new diagnostic run to measure it; no connection was made for that redirect."
+	case "invalid_redirect":
+		return "The redirect Location is missing or is not an allowed HTTP or HTTPS URL without credentials. It was not followed."
+	case "ipv6_not_supported_in_v1":
+		return "The URL uses an IPv6 address, which is not supported in v1. No IPv6 connection was attempted."
+	case "redirect_limit":
+		return "The diagnostic run reached the limit of three redirects (four exchanges). The next redirect was not followed."
+	case "tls_verification_failed":
+		return "TLS certificate verification failed for the attempted URL. The HTTP request for that exchange was not sent; earlier exchanges remain available."
+	default:
+		return "The IPv4 measurement journey stopped before a final response."
+	}
 }
 
 func unsupportedIPv6() result.Family {

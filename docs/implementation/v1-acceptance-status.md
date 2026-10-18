@@ -24,6 +24,23 @@ Reviewed 2026-10-15 against [GitHub issue #10](https://github.com/DarrylN2/hopvi
 
 This matrix records evidence scope; it does not change issue #10 or declare release acceptance. Historical milestone notes remain as observations from their respective implementation stages.
 
+## Redirected HTTPS follow-up: 2026-10-17
+
+[Issue #11 evidence](issue-11.md) closes the controlled redirected-HTTPS gap in
+the URL-policy and direct HTTP/TLS rows above. Relative/same-host and allowed
+new-host journeys, per-exchange phase attribution and first-byte semantics,
+policy stops, a redirected certificate failure, API/engine result retention and
+final/attempted path identity now have repeatable checks. New-host public pins
+are simulated socket/DNS addresses with real TLS/HTTP; a separate loopback check
+uses real TCP and normal TLS verification. The current production view was
+checked with all six API-captured results at desktop and narrow widths, including
+evidence focus/return. The approved UI is preserved. Go now explains policy stops
+and retains the validated TCP peer if TLS verification fails. The existing
+single-exchange TLS/HTTP checks, full Go suite/vet, UI build and packaged smoke
+check pass. Other functional fixtures, privacy/restart review and human/release
+acceptance listed above remain open; the original ordered next-work list is
+historical, and its redirected-HTTPS item is now complete at this controlled scope.
+
 ## UI design follow-up: 2026-10-17
 
 The user-approved Clear field notes with guided reading direction has been implemented in React/Vite and plain CSS. See the [approved brief and verification record](../design/diagnostic-results.md). Production build, Go tests/vet and the final packaged loopback smoke check passed. Starting the preview outside the sandbox resolved the earlier browser access restriction. Live loopback results and explicitly labeled synthetic edge-state fixtures were inspected; an independent representative visual review requested no material fixes. DOM checks confirmed narrow ordering, evidence focus/return, stopping controls and no horizontal overflow across the recorded state/width matrix. Full accessibility, 200% zoom, human comprehension, and the other release gates above remain open; this follow-up does not declare release acceptance.
