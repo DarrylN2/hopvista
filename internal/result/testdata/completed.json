@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "run_id": "fixture-completed",
+  "target_url": "http://192.0.2.10/path",
+  "connection_mode": "direct",
+  "max_hops": 16,
+  "started_at": "2026-10-14T20:00:00Z",
+  "deadline_at": "2026-10-14T20:01:00Z",
+  "ended_at": "2026-10-14T20:00:10Z",
+  "state": "completed",
+  "families": [{
+    "family": "ipv4",
+    "outcome": "completed",
+    "dns": [{"id":"dns-1","outcome":"skipped","method":"literal_ip","hostname":"192.0.2.10","addresses":[],"selected_ip":"192.0.2.10","selected_scope":"special_use"}],
+    "exchanges": [{
+      "id":"exchange-1","redirect_index":0,"requested_url":"http://192.0.2.10/path","hostname":"192.0.2.10","port":80,
+      "selected_ip":"192.0.2.10","selected_scope":"special_use","actual_peer_ip":"192.0.2.10","dns_ref":"dns-1",
+      "dns":{"id":"exchange-1-dns","outcome":"skipped","method":"reused_selection"},
+      "tcp":{"id":"tcp-1","outcome":"completed","method":"http_transport_connect","started_at":"2026-10-14T20:00:00Z","ended_at":"2026-10-14T20:00:00.02Z","bound_ms":2000,"duration_ms":20},
+      "tls":{"id":"tls-1","outcome":"skipped","method":"http_not_tls"},
+      "http":{"id":"http-1","outcome":"completed","method":"request_written_to_first_response_header_byte","started_at":"2026-10-14T20:00:00.02Z","ended_at":"2026-10-14T20:00:00.22Z","bound_ms":3000,"duration_ms":200},
+      "response_status":503,"connection_reused":false
+    }],
+    "paths": [{
+      "id":"path-1","selected_ip":"192.0.2.10",
+      "route":{"id":"route-1","outcome":"completed","method":"route_selection","started_at":"2026-10-14T20:00:01Z","ended_at":"2026-10-14T20:00:01.001Z","duration_ms":1,"selected_ip":"192.0.2.10","source_ip":"192.0.2.1","interface_index":4,"on_link":true},
+      "gateway":{"id":"gateway-1","outcome":"skipped","attempted":0,"replied":0,"samples":[]},
+      "target":{"id":"target-1","outcome":"completed","attempted":3,"replied":2,"samples":[
+        {"id":"target-echo-1","outcome":"completed","method":"icmp_echo","started_at":"2026-10-14T20:00:02Z","ended_at":"2026-10-14T20:00:02Z","bound_ms":1000,"duration_ms":0,"selected_ip":"192.0.2.10","ttl":64,"status":"echo_reply","reply_address":"192.0.2.10","rtt_ms":0},
+        {"id":"target-echo-2","outcome":"timeout","method":"icmp_echo","started_at":"2026-10-14T20:00:03Z","ended_at":"2026-10-14T20:00:04Z","bound_ms":1000,"selected_ip":"192.0.2.10","ttl":64,"status":"no_reply"},
+        {"id":"target-echo-3","outcome":"completed","method":"icmp_echo","started_at":"2026-10-14T20:00:05Z","ended_at":"2026-10-14T20:00:05.01Z","bound_ms":1000,"duration_ms":10,"selected_ip":"192.0.2.10","ttl":64,"status":"echo_reply","reply_address":"192.0.2.10","rtt_ms":10}
+      ],"variation":{"id":"variation-1","outcome":"unavailable","formula":"median of absolute RTT changes between adjacent successful attempts ordered by send time; at least 3 replies and 2 pairs required","evidence_refs":["target-echo-1","target-echo-3"]}},
+      "trace":{"id":"trace-1","selected_ip":"192.0.2.10","family":"ipv4","target_role":"final_host","max_hops":16,"highest_attempted_ttl":3,"outcome":"destination_replied","hops":[
+        {"id":"hop-1","outcome":"completed","method":"icmp_echo","started_at":"2026-10-14T20:00:06Z","ended_at":"2026-10-14T20:00:06.04Z","bound_ms":750,"duration_ms":40,"selected_ip":"192.0.2.10","ttl":1,"status":"time_exceeded","reply_address":"192.0.2.2","rtt_ms":40},
+        {"id":"hop-2","outcome":"timeout","method":"icmp_echo","started_at":"2026-10-14T20:00:07Z","ended_at":"2026-10-14T20:00:07.75Z","bound_ms":750,"selected_ip":"192.0.2.10","ttl":2,"status":"no_reply"},
+        {"id":"hop-3","outcome":"completed","method":"icmp_echo","started_at":"2026-10-14T20:00:08Z","ended_at":"2026-10-14T20:00:08.01Z","bound_ms":750,"duration_ms":10,"selected_ip":"192.0.2.10","ttl":3,"status":"echo_reply","reply_address":"192.0.2.10","rtt_ms":10}
+      ]}
+    }],
+    "final_url":"http://192.0.2.10/path","final_host":"192.0.2.10"
+  }],
+  "findings":[{"type":"dominant_measured_wait","family":"ipv4","exchange_ref":"exchange-1","observation":"For this IPv4 exchange, the HTTP first response-header byte was the dominant measured wait at 200 ms.","limit":"This includes transit and server work; it does not isolate either or measure page rendering.","evidence_refs":["tcp-1","http-1"]}]
+}

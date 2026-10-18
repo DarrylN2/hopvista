@@ -1,0 +1,7 @@
+# Milestone 10: isolated Windows executable smoke check
+
+The current Windows x64 application was built as one `.exe` and copied into an otherwise empty temporary directory. An opt-in process-level test launched that copy with only Windows System32 on `PATH`, then loaded the embedded HTML, JavaScript and CSS, fetched a local session token, verified wrong-Host and missing-Origin requests were rejected without CORS access, and submitted a loopback HTTP target through the real API. The run completed with HTTP 503 recorded as a response, the actual connected peer, an on-link route, five target echo replies, a destination trace reply, an explicit unsupported IPv6 family, and a terminal observed finding. The child process was stopped and the temporary copy removed.
+
+On 2026-10-15, the isolated test passed outside the socket-restricted command sandbox. The full root Go suite and `go vet` also passed. Reproduction commands and scope are in [the smoke-check README](../../tools/app-smoke/README.md). This checks one built executable on the current unelevated Windows 11 x64 condition, without requiring a Go or Node runtime to launch that executable. It is not a signed installer or cross-machine validation.
+
+Release acceptance remains open. The 250 ms native start margin is empirical; a genuinely stalled `GetBestRoute2`, another Windows account, broader Windows 11 builds and network conditions, UI review, and the remaining acceptance comparisons are still unverified.

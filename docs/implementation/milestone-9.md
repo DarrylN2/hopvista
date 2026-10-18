@@ -1,0 +1,9 @@
+# Milestone 9: HTTP journey progress in run snapshots
+
+The pinned IPv4 HTTP client now publishes detached journey snapshots after address selection, after each completed HTTP exchange, and after a new-host redirect selection. The run manager exposes those DNS and exchange observations through the existing `GET /api/v1/runs/{id}` response while a later exchange is still pending. The last attempted IP remains the path target if a redirect journey stops; selecting a new redirect host alone does not relabel it as attempted. An individual exchange's TCP/TLS/HTTP phases are published together when that exchange returns, rather than from concurrent `httptrace` callbacks.
+
+The measurement engine accepts the progress-capable HTTP client while retaining its simple HTTP measurer seam for deterministic fakes. It publishes an IPv4 `pending` family during the journey, then the final journey outcome before path sampling. Findings remain absent from every running or stopping snapshot and appear only after terminal completion. Cancellation during a pending HTTP exchange retains prior DNS and redirect evidence, stops new path probes, and completes with a cancelled run result.
+
+An in-memory held second-exchange fixture verifies that the DNS result and first redirect response are visible and that earlier snapshots do not mutate as the journey advances. A run-manager test verifies visible DNS progress, cancellation and zero path calls while HTTP is pending. On 2026-10-15, the full root Go tests, `go vet`, and application build passed; the opt-in live loopback API integration also passed after this change.
+
+Release acceptance remains open. The 250 ms native start margin remains empirical; a genuinely stalled `GetBestRoute2`, another Windows account, broader Windows 11 conditions, and packaged-executable release checks remain unverified.

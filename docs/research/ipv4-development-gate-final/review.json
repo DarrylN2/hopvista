@@ -1,0 +1,401 @@
+{
+  "reviewed_on_local_date": "2026-10-14",
+  "development_gate": "passed under approved empirical development requirements",
+  "release_gate": "not passed",
+  "environment": {
+    "architecture": "amd64",
+    "elevated": false,
+    "go_version": "go1.27.2",
+    "ipv4_reply_rtt_offset": 8,
+    "ipv4_reply_status_offset": 4,
+    "ipv6_reply_address_offset": 6,
+    "ipv6_reply_rtt_offset": 32,
+    "ipv6_reply_scope_offset": 22,
+    "ipv6_reply_status_offset": 28,
+    "native_mode": "synchronous; Event/APC/context NULL; no raw sockets",
+    "options_size": 8,
+    "os": "windows",
+    "reply_buffer_size": 512,
+    "route_next_hop_offset": 44,
+    "route_row_size": 104,
+    "scoped_local_ipv6_available": true,
+    "sockaddr_size": 28,
+    "version_return_code": 0,
+    "windows_version": "10.0.26200"
+  },
+  "steps": [
+    {
+      "step": "base",
+      "status": "passed",
+      "started_at": "2026-10-14T19:44:57.2888194Z",
+      "ended_at": "2026-10-14T19:45:09.1500812Z",
+      "expected_captures": [
+        "go-capture.json",
+        "windows-routes.json"
+      ],
+      "saved_captures": [
+        "go-capture.json",
+        "windows-routes.json"
+      ],
+      "log": "base.log"
+    },
+    {
+      "step": "margin-boundary",
+      "status": "passed",
+      "started_at": "2026-10-14T19:45:09.1826431Z",
+      "ended_at": "2026-10-14T19:45:29.8962294Z",
+      "expected_captures": [
+        "margin-boundary.json"
+      ],
+      "saved_captures": [
+        "margin-boundary.json"
+      ],
+      "log": "margin-boundary.log"
+    },
+    {
+      "step": "loaded-margin",
+      "status": "passed",
+      "started_at": "2026-10-14T19:45:29.8963261Z",
+      "ended_at": "2026-10-14T19:45:51.4740347Z",
+      "expected_captures": [
+        "loaded-margin-sampling.json"
+      ],
+      "saved_captures": [
+        "loaded-margin-sampling.json"
+      ],
+      "log": "loaded-margin.log"
+    },
+    {
+      "step": "loaded-drain",
+      "status": "passed",
+      "started_at": "2026-10-14T19:45:51.4742262Z",
+      "ended_at": "2026-10-14T19:46:00.9402664Z",
+      "expected_captures": [
+        "loaded-drain-caps.json"
+      ],
+      "saved_captures": [
+        "loaded-drain-caps.json"
+      ],
+      "log": "loaded-drain.log"
+    },
+    {
+      "step": "unloaded-drain",
+      "status": "passed",
+      "started_at": "2026-10-14T19:46:00.9403371Z",
+      "ended_at": "2026-10-14T19:46:10.39746Z",
+      "expected_captures": [
+        "drain-caps.json"
+      ],
+      "saved_captures": [
+        "drain-caps.json"
+      ],
+      "log": "unloaded-drain.log"
+    },
+    {
+      "step": "setup-guard",
+      "status": "passed",
+      "started_at": "2026-10-14T19:46:10.3975247Z",
+      "ended_at": "2026-10-14T19:46:14.0679032Z",
+      "expected_captures": [
+        "guard-delay.json"
+      ],
+      "saved_captures": [
+        "guard-delay.json"
+      ],
+      "log": "setup-guard.log"
+    },
+    {
+      "step": "route-cutoff",
+      "status": "passed",
+      "started_at": "2026-10-14T19:46:14.0680064Z",
+      "ended_at": "2026-10-14T19:46:17.7226456Z",
+      "expected_captures": [
+        "route-cutoff.json"
+      ],
+      "saved_captures": [
+        "route-cutoff.json"
+      ],
+      "log": "route-cutoff.log"
+    },
+    {
+      "step": "minute-cutoff",
+      "status": "passed",
+      "started_at": "2026-10-14T19:46:17.7227192Z",
+      "ended_at": "2026-10-14T19:47:21.172602Z",
+      "expected_captures": [
+        "minute-cutoff.json"
+      ],
+      "saved_captures": [
+        "minute-cutoff.json"
+      ],
+      "log": "minute-cutoff.log"
+    }
+  ],
+  "ipv4_echoes": [
+    {
+      "case": "localhost-v4",
+      "family": "ipv4",
+      "ttl_or_hop_limit": 64,
+      "timeout_ms": 750,
+      "reply_count": 1,
+      "reply_status": 0,
+      "native_error": 0,
+      "outcome": "echo_reply",
+      "elapsed_ms": 0,
+      "close_ok": true
+    },
+    {
+      "case": "selected-next-hop",
+      "family": "ipv4",
+      "ttl_or_hop_limit": 64,
+      "timeout_ms": 750,
+      "reply_count": 1,
+      "reply_status": 0,
+      "native_error": 0,
+      "outcome": "echo_reply",
+      "elapsed_ms": 33.4939,
+      "close_ok": true
+    },
+    {
+      "case": "remote-low-limit",
+      "family": "ipv4",
+      "ttl_or_hop_limit": 1,
+      "timeout_ms": 750,
+      "reply_count": 1,
+      "reply_status": 11013,
+      "native_error": 0,
+      "outcome": "time_exceeded_reply",
+      "elapsed_ms": 4.2324,
+      "close_ok": true
+    },
+    {
+      "case": "remote-low-limit",
+      "family": "ipv4",
+      "ttl_or_hop_limit": 2,
+      "timeout_ms": 750,
+      "reply_count": 1,
+      "reply_status": 11013,
+      "native_error": 0,
+      "outcome": "time_exceeded_reply",
+      "elapsed_ms": 2.1988,
+      "close_ok": true
+    },
+    {
+      "case": "remote-low-limit",
+      "family": "ipv4",
+      "ttl_or_hop_limit": 3,
+      "timeout_ms": 750,
+      "reply_count": 0,
+      "reply_status": null,
+      "native_error": 11010,
+      "outcome": "timeout",
+      "elapsed_ms": 236.7515,
+      "close_ok": true
+    },
+    {
+      "case": "remote-low-limit",
+      "family": "ipv4",
+      "ttl_or_hop_limit": 4,
+      "timeout_ms": 750,
+      "reply_count": 1,
+      "reply_status": 11013,
+      "native_error": 0,
+      "outcome": "time_exceeded_reply",
+      "elapsed_ms": 1.354,
+      "close_ok": true
+    },
+    {
+      "case": "remote-echo",
+      "family": "ipv4",
+      "ttl_or_hop_limit": 64,
+      "timeout_ms": 750,
+      "reply_count": 1,
+      "reply_status": 0,
+      "native_error": 0,
+      "outcome": "echo_reply",
+      "elapsed_ms": 38.516,
+      "close_ok": true
+    },
+    {
+      "case": "no-reply-continuation",
+      "family": "ipv4",
+      "ttl_or_hop_limit": 1,
+      "timeout_ms": 750,
+      "reply_count": 1,
+      "reply_status": 11013,
+      "native_error": 0,
+      "outcome": "time_exceeded_reply",
+      "elapsed_ms": 1.8997,
+      "close_ok": true
+    },
+    {
+      "case": "no-reply-continuation",
+      "family": "ipv4",
+      "ttl_or_hop_limit": 2,
+      "timeout_ms": 750,
+      "reply_count": 1,
+      "reply_status": 11013,
+      "native_error": 0,
+      "outcome": "time_exceeded_reply",
+      "elapsed_ms": 1.7291,
+      "close_ok": true
+    },
+    {
+      "case": "no-reply-continuation",
+      "family": "ipv4",
+      "ttl_or_hop_limit": 3,
+      "timeout_ms": 750,
+      "reply_count": 0,
+      "reply_status": null,
+      "native_error": 11010,
+      "outcome": "timeout",
+      "elapsed_ms": 451.6323,
+      "close_ok": true
+    },
+    {
+      "case": "no-reply-continuation",
+      "family": "ipv4",
+      "ttl_or_hop_limit": 4,
+      "timeout_ms": 750,
+      "reply_count": 0,
+      "reply_status": null,
+      "native_error": 11010,
+      "outcome": "timeout",
+      "elapsed_ms": 487.1191,
+      "close_ok": true
+    },
+    {
+      "case": "no-reply-v4",
+      "family": "ipv4",
+      "ttl_or_hop_limit": 64,
+      "timeout_ms": 750,
+      "reply_count": 0,
+      "reply_status": null,
+      "native_error": 11010,
+      "outcome": "timeout",
+      "elapsed_ms": 509.5654,
+      "close_ok": true
+    },
+    {
+      "case": "invalid-handle",
+      "family": "ipv4",
+      "ttl_or_hop_limit": 64,
+      "timeout_ms": 750,
+      "reply_count": 0,
+      "reply_status": null,
+      "native_error": 87,
+      "outcome": "api_error",
+      "elapsed_ms": 0,
+      "close_ok": true
+    },
+    {
+      "case": "short-buffer",
+      "family": "ipv4",
+      "ttl_or_hop_limit": 64,
+      "timeout_ms": 750,
+      "reply_count": 0,
+      "reply_status": null,
+      "native_error": 87,
+      "outcome": "api_error",
+      "elapsed_ms": 0,
+      "close_ok": true
+    }
+  ],
+  "ipv4_route_comparison": [
+    {
+      "on_link": true,
+      "return_code": 0,
+      "source_interface_match": true,
+      "next_hop_interface_match": true
+    },
+    {
+      "on_link": false,
+      "return_code": 0,
+      "source_interface_match": true,
+      "next_hop_interface_match": true
+    },
+    {
+      "on_link": false,
+      "return_code": 0,
+      "source_interface_match": true,
+      "next_hop_interface_match": true
+    },
+    {
+      "on_link": true,
+      "return_code": 0,
+      "source_interface_match": true,
+      "next_hop_interface_match": true
+    }
+  ],
+  "source_hashes": [
+    {
+      "file": "async_windows_amd64.go",
+      "sha256": "423FECF0D41A286DC4E47636845686A1FEE11A3D583A7FAEAADDF5AA5DD44202"
+    },
+    {
+      "file": "drain_caps_windows_amd64_test.go",
+      "sha256": "DFC2B43B23292384F7D051BB2E45C663A77AED193F5208E0A83F30861EF79A61"
+    },
+    {
+      "file": "go.mod",
+      "sha256": "DEA6CC82B249A18B999F38F1A08DD95C124ABA5295BD495B220EF6F540E8502D"
+    },
+    {
+      "file": "loaded_margin_sampling_windows_amd64_test.go",
+      "sha256": "9235FCC94612484C11C8D8DF0FBB9B9179BAD0510F98126C5835FD4C81279344"
+    },
+    {
+      "file": "main_windows_amd64.go",
+      "sha256": "DAB1833374E056425DAB10BD4B534C3508BDD32CF1A3002555C5866C05BF2874"
+    },
+    {
+      "file": "margin_boundary_windows_amd64_test.go",
+      "sha256": "630A61073B07663ADE69364785269AD69C10FDD1E88BE82CF5EB087606E82BC5"
+    },
+    {
+      "file": "minute_cutoff_windows_amd64_test.go",
+      "sha256": "4506B0134BB2AC30C3728FE553D92E45B02F56B8450B87A78111C232C55EAC0B"
+    },
+    {
+      "file": "native_windows_amd64_test.go",
+      "sha256": "D0B2C6893D0CC99E2A3FC1595C8EA1003F4940A4941ADC352684C666CDA4F297"
+    },
+    {
+      "file": "native_windows_amd64.go",
+      "sha256": "4AD9E52146DEC9B8BB14D7067EC4D5FED274A6DEE1F7039F1577383C8BEB2C1D"
+    },
+    {
+      "file": "route_cutoff_windows_amd64_test.go",
+      "sha256": "5E37FC3E474B6A6463C4BD48B90EFCD239E9CC119AF1019406638EA1712E615B"
+    },
+    {
+      "file": "route_latency_windows_amd64_test.go",
+      "sha256": "1FCCDEB2FCA2B9946C4008BD8A86ED273A05E3020E6403B2D2B10AC1105D8939"
+    },
+    {
+      "file": "run-gate-recheck.ps1",
+      "sha256": "32829D66642A5F194318D6A11083A9B2A44E67E99EBC3FAA78140F22CF6D76F6"
+    },
+    {
+      "file": "run.ps1",
+      "sha256": "35A261CE76FEA0D5B3B92E5CD03F434E863CD9B364C86622D15F91F231AF352C"
+    },
+    {
+      "file": "timeout_windows_amd64_test.go",
+      "sha256": "A6396268071D220F849F32185EBA3C6172ADED6136394BF28BA83E3FCC791EC2"
+    },
+    {
+      "file": "unreachable_windows_amd64_test.go",
+      "sha256": "24A6978F1492D51ECC05E25A81CFEB6A139238A60659B3F47B5F337EB6C02A9A"
+    }
+  ],
+  "limitations": [
+    "Single Windows 11 25H2 build 26200 and unelevated token",
+    "Separate standard-user account and other builds unverified",
+    "Actual stalled GetBestRoute2 unverified; phase delays are simulated",
+    "250 ms is an empirical initial policy, not a worst-case timing bound",
+    "Base short-timeout diagnostic remains intentionally unguarded; approved policy uses full caps",
+    "Genuine unreachable decoding evidence reused from go-windows-unreachable.capture.json",
+    "No production adapter, packaged-executable, HTTP, local API, lifecycle or UI release acceptance yet"
+  ]
+}

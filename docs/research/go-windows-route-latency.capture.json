@@ -1,0 +1,1052 @@
+{
+  "captured_at": "2026-10-14T04:59:09.3478649Z",
+  "environment": {
+    "architecture": "amd64",
+    "elevated": false,
+    "go_version": "go1.27.2",
+    "ipv4_reply_rtt_offset": 8,
+    "ipv4_reply_status_offset": 4,
+    "ipv6_reply_address_offset": 6,
+    "ipv6_reply_rtt_offset": 32,
+    "ipv6_reply_scope_offset": 22,
+    "ipv6_reply_status_offset": 28,
+    "native_mode": "synchronous; Event/APC/context NULL; no raw sockets",
+    "options_size": 8,
+    "os": "windows",
+    "reply_buffer_size": 512,
+    "route_next_hop_offset": 44,
+    "route_row_size": 104,
+    "sockaddr_size": 28,
+    "version_return_code": 0,
+    "windows_version": "10.0.26200"
+  },
+  "observations": [
+    {
+      "destination": "1.1.1.1",
+      "family": "ipv4",
+      "attempt": 1,
+      "started_at": "2026-10-14T04:59:09.3178208Z",
+      "returned_at": "2026-10-14T04:59:09.3184606Z",
+      "api_elapsed_ms": 0.6398,
+      "call_elapsed_ms": 0.6398,
+      "return_code": 0
+    },
+    {
+      "destination": "1.1.1.1",
+      "family": "ipv4",
+      "attempt": 2,
+      "started_at": "2026-10-14T04:59:09.3184606Z",
+      "returned_at": "2026-10-14T04:59:09.3184606Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "1.1.1.1",
+      "family": "ipv4",
+      "attempt": 3,
+      "started_at": "2026-10-14T04:59:09.3184606Z",
+      "returned_at": "2026-10-14T04:59:09.3184606Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "1.1.1.1",
+      "family": "ipv4",
+      "attempt": 4,
+      "started_at": "2026-10-14T04:59:09.3184606Z",
+      "returned_at": "2026-10-14T04:59:09.3184606Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "1.1.1.1",
+      "family": "ipv4",
+      "attempt": 5,
+      "started_at": "2026-10-14T04:59:09.3184606Z",
+      "returned_at": "2026-10-14T04:59:09.3184606Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "1.1.1.1",
+      "family": "ipv4",
+      "attempt": 6,
+      "started_at": "2026-10-14T04:59:09.3184606Z",
+      "returned_at": "2026-10-14T04:59:09.3184606Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "1.1.1.1",
+      "family": "ipv4",
+      "attempt": 7,
+      "started_at": "2026-10-14T04:59:09.3184606Z",
+      "returned_at": "2026-10-14T04:59:09.3184606Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "1.1.1.1",
+      "family": "ipv4",
+      "attempt": 8,
+      "started_at": "2026-10-14T04:59:09.3184606Z",
+      "returned_at": "2026-10-14T04:59:09.3184606Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "1.1.1.1",
+      "family": "ipv4",
+      "attempt": 9,
+      "started_at": "2026-10-14T04:59:09.3184606Z",
+      "returned_at": "2026-10-14T04:59:09.3184606Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "1.1.1.1",
+      "family": "ipv4",
+      "attempt": 10,
+      "started_at": "2026-10-14T04:59:09.3184606Z",
+      "returned_at": "2026-10-14T04:59:09.3184606Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "1.1.1.1",
+      "family": "ipv4",
+      "attempt": 11,
+      "started_at": "2026-10-14T04:59:09.3184606Z",
+      "returned_at": "2026-10-14T04:59:09.3184606Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "1.1.1.1",
+      "family": "ipv4",
+      "attempt": 12,
+      "started_at": "2026-10-14T04:59:09.3184606Z",
+      "returned_at": "2026-10-14T04:59:09.3184606Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "1.1.1.1",
+      "family": "ipv4",
+      "attempt": 13,
+      "started_at": "2026-10-14T04:59:09.3184606Z",
+      "returned_at": "2026-10-14T04:59:09.3184606Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "1.1.1.1",
+      "family": "ipv4",
+      "attempt": 14,
+      "started_at": "2026-10-14T04:59:09.3184606Z",
+      "returned_at": "2026-10-14T04:59:09.3184606Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "1.1.1.1",
+      "family": "ipv4",
+      "attempt": 15,
+      "started_at": "2026-10-14T04:59:09.3184606Z",
+      "returned_at": "2026-10-14T04:59:09.3184606Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "1.1.1.1",
+      "family": "ipv4",
+      "attempt": 16,
+      "started_at": "2026-10-14T04:59:09.3184606Z",
+      "returned_at": "2026-10-14T04:59:09.3190066Z",
+      "api_elapsed_ms": 0.546,
+      "call_elapsed_ms": 0.546,
+      "return_code": 0
+    },
+    {
+      "destination": "1.1.1.1",
+      "family": "ipv4",
+      "attempt": 17,
+      "started_at": "2026-10-14T04:59:09.3190066Z",
+      "returned_at": "2026-10-14T04:59:09.3190066Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "1.1.1.1",
+      "family": "ipv4",
+      "attempt": 18,
+      "started_at": "2026-10-14T04:59:09.3190066Z",
+      "returned_at": "2026-10-14T04:59:09.3190066Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "1.1.1.1",
+      "family": "ipv4",
+      "attempt": 19,
+      "started_at": "2026-10-14T04:59:09.3190066Z",
+      "returned_at": "2026-10-14T04:59:09.3190066Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "1.1.1.1",
+      "family": "ipv4",
+      "attempt": 20,
+      "started_at": "2026-10-14T04:59:09.3190066Z",
+      "returned_at": "2026-10-14T04:59:09.3190066Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "1.1.1.1",
+      "family": "ipv4",
+      "attempt": 21,
+      "started_at": "2026-10-14T04:59:09.3190066Z",
+      "returned_at": "2026-10-14T04:59:09.3190066Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "1.1.1.1",
+      "family": "ipv4",
+      "attempt": 22,
+      "started_at": "2026-10-14T04:59:09.3190066Z",
+      "returned_at": "2026-10-14T04:59:09.3190066Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "1.1.1.1",
+      "family": "ipv4",
+      "attempt": 23,
+      "started_at": "2026-10-14T04:59:09.3190066Z",
+      "returned_at": "2026-10-14T04:59:09.3190066Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "1.1.1.1",
+      "family": "ipv4",
+      "attempt": 24,
+      "started_at": "2026-10-14T04:59:09.3190066Z",
+      "returned_at": "2026-10-14T04:59:09.3190066Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "1.1.1.1",
+      "family": "ipv4",
+      "attempt": 25,
+      "started_at": "2026-10-14T04:59:09.3190066Z",
+      "returned_at": "2026-10-14T04:59:09.3190066Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "192.0.2.1",
+      "family": "ipv4",
+      "attempt": 1,
+      "started_at": "2026-10-14T04:59:09.3251837Z",
+      "returned_at": "2026-10-14T04:59:09.3251837Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "192.0.2.1",
+      "family": "ipv4",
+      "attempt": 2,
+      "started_at": "2026-10-14T04:59:09.3251837Z",
+      "returned_at": "2026-10-14T04:59:09.3251837Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "192.0.2.1",
+      "family": "ipv4",
+      "attempt": 3,
+      "started_at": "2026-10-14T04:59:09.3251837Z",
+      "returned_at": "2026-10-14T04:59:09.3251837Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "192.0.2.1",
+      "family": "ipv4",
+      "attempt": 4,
+      "started_at": "2026-10-14T04:59:09.3251837Z",
+      "returned_at": "2026-10-14T04:59:09.3251837Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "192.0.2.1",
+      "family": "ipv4",
+      "attempt": 5,
+      "started_at": "2026-10-14T04:59:09.3251837Z",
+      "returned_at": "2026-10-14T04:59:09.3251837Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "192.0.2.1",
+      "family": "ipv4",
+      "attempt": 6,
+      "started_at": "2026-10-14T04:59:09.3251837Z",
+      "returned_at": "2026-10-14T04:59:09.3251837Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "192.0.2.1",
+      "family": "ipv4",
+      "attempt": 7,
+      "started_at": "2026-10-14T04:59:09.3251837Z",
+      "returned_at": "2026-10-14T04:59:09.3251837Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "192.0.2.1",
+      "family": "ipv4",
+      "attempt": 8,
+      "started_at": "2026-10-14T04:59:09.3251837Z",
+      "returned_at": "2026-10-14T04:59:09.3251837Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "192.0.2.1",
+      "family": "ipv4",
+      "attempt": 9,
+      "started_at": "2026-10-14T04:59:09.3251837Z",
+      "returned_at": "2026-10-14T04:59:09.3251837Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "192.0.2.1",
+      "family": "ipv4",
+      "attempt": 10,
+      "started_at": "2026-10-14T04:59:09.3251837Z",
+      "returned_at": "2026-10-14T04:59:09.3251837Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "192.0.2.1",
+      "family": "ipv4",
+      "attempt": 11,
+      "started_at": "2026-10-14T04:59:09.3251837Z",
+      "returned_at": "2026-10-14T04:59:09.3251837Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "192.0.2.1",
+      "family": "ipv4",
+      "attempt": 12,
+      "started_at": "2026-10-14T04:59:09.3251837Z",
+      "returned_at": "2026-10-14T04:59:09.3251837Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "192.0.2.1",
+      "family": "ipv4",
+      "attempt": 13,
+      "started_at": "2026-10-14T04:59:09.3251837Z",
+      "returned_at": "2026-10-14T04:59:09.3251837Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "192.0.2.1",
+      "family": "ipv4",
+      "attempt": 14,
+      "started_at": "2026-10-14T04:59:09.3251837Z",
+      "returned_at": "2026-10-14T04:59:09.3251837Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "192.0.2.1",
+      "family": "ipv4",
+      "attempt": 15,
+      "started_at": "2026-10-14T04:59:09.3251837Z",
+      "returned_at": "2026-10-14T04:59:09.3251837Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "192.0.2.1",
+      "family": "ipv4",
+      "attempt": 16,
+      "started_at": "2026-10-14T04:59:09.3251837Z",
+      "returned_at": "2026-10-14T04:59:09.3251837Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "192.0.2.1",
+      "family": "ipv4",
+      "attempt": 17,
+      "started_at": "2026-10-14T04:59:09.3251837Z",
+      "returned_at": "2026-10-14T04:59:09.3251837Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "192.0.2.1",
+      "family": "ipv4",
+      "attempt": 18,
+      "started_at": "2026-10-14T04:59:09.3251837Z",
+      "returned_at": "2026-10-14T04:59:09.3251837Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "192.0.2.1",
+      "family": "ipv4",
+      "attempt": 19,
+      "started_at": "2026-10-14T04:59:09.3251837Z",
+      "returned_at": "2026-10-14T04:59:09.3251837Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "192.0.2.1",
+      "family": "ipv4",
+      "attempt": 20,
+      "started_at": "2026-10-14T04:59:09.3251837Z",
+      "returned_at": "2026-10-14T04:59:09.3251837Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "192.0.2.1",
+      "family": "ipv4",
+      "attempt": 21,
+      "started_at": "2026-10-14T04:59:09.3251837Z",
+      "returned_at": "2026-10-14T04:59:09.3251837Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "192.0.2.1",
+      "family": "ipv4",
+      "attempt": 22,
+      "started_at": "2026-10-14T04:59:09.3251837Z",
+      "returned_at": "2026-10-14T04:59:09.3251837Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "192.0.2.1",
+      "family": "ipv4",
+      "attempt": 23,
+      "started_at": "2026-10-14T04:59:09.3251837Z",
+      "returned_at": "2026-10-14T04:59:09.3251837Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "192.0.2.1",
+      "family": "ipv4",
+      "attempt": 24,
+      "started_at": "2026-10-14T04:59:09.3251837Z",
+      "returned_at": "2026-10-14T04:59:09.3251837Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "192.0.2.1",
+      "family": "ipv4",
+      "attempt": 25,
+      "started_at": "2026-10-14T04:59:09.3251837Z",
+      "returned_at": "2026-10-14T04:59:09.3251837Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "::1",
+      "family": "ipv6",
+      "attempt": 1,
+      "started_at": "2026-10-14T04:59:09.3315262Z",
+      "returned_at": "2026-10-14T04:59:09.3315262Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "::1",
+      "family": "ipv6",
+      "attempt": 2,
+      "started_at": "2026-10-14T04:59:09.3315262Z",
+      "returned_at": "2026-10-14T04:59:09.3315262Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "::1",
+      "family": "ipv6",
+      "attempt": 3,
+      "started_at": "2026-10-14T04:59:09.3315262Z",
+      "returned_at": "2026-10-14T04:59:09.3315262Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "::1",
+      "family": "ipv6",
+      "attempt": 4,
+      "started_at": "2026-10-14T04:59:09.3315262Z",
+      "returned_at": "2026-10-14T04:59:09.3315262Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "::1",
+      "family": "ipv6",
+      "attempt": 5,
+      "started_at": "2026-10-14T04:59:09.3315262Z",
+      "returned_at": "2026-10-14T04:59:09.3315262Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "::1",
+      "family": "ipv6",
+      "attempt": 6,
+      "started_at": "2026-10-14T04:59:09.3315262Z",
+      "returned_at": "2026-10-14T04:59:09.3315262Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "::1",
+      "family": "ipv6",
+      "attempt": 7,
+      "started_at": "2026-10-14T04:59:09.3315262Z",
+      "returned_at": "2026-10-14T04:59:09.3315262Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "::1",
+      "family": "ipv6",
+      "attempt": 8,
+      "started_at": "2026-10-14T04:59:09.3315262Z",
+      "returned_at": "2026-10-14T04:59:09.3315262Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "::1",
+      "family": "ipv6",
+      "attempt": 9,
+      "started_at": "2026-10-14T04:59:09.3315262Z",
+      "returned_at": "2026-10-14T04:59:09.3315262Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "::1",
+      "family": "ipv6",
+      "attempt": 10,
+      "started_at": "2026-10-14T04:59:09.3315262Z",
+      "returned_at": "2026-10-14T04:59:09.3315262Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "::1",
+      "family": "ipv6",
+      "attempt": 11,
+      "started_at": "2026-10-14T04:59:09.3315262Z",
+      "returned_at": "2026-10-14T04:59:09.3315262Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "::1",
+      "family": "ipv6",
+      "attempt": 12,
+      "started_at": "2026-10-14T04:59:09.3315262Z",
+      "returned_at": "2026-10-14T04:59:09.3315262Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "::1",
+      "family": "ipv6",
+      "attempt": 13,
+      "started_at": "2026-10-14T04:59:09.3315262Z",
+      "returned_at": "2026-10-14T04:59:09.3315262Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "::1",
+      "family": "ipv6",
+      "attempt": 14,
+      "started_at": "2026-10-14T04:59:09.3315262Z",
+      "returned_at": "2026-10-14T04:59:09.3315262Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "::1",
+      "family": "ipv6",
+      "attempt": 15,
+      "started_at": "2026-10-14T04:59:09.3315262Z",
+      "returned_at": "2026-10-14T04:59:09.3315262Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "::1",
+      "family": "ipv6",
+      "attempt": 16,
+      "started_at": "2026-10-14T04:59:09.3315262Z",
+      "returned_at": "2026-10-14T04:59:09.3315262Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "::1",
+      "family": "ipv6",
+      "attempt": 17,
+      "started_at": "2026-10-14T04:59:09.3315262Z",
+      "returned_at": "2026-10-14T04:59:09.3315262Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "::1",
+      "family": "ipv6",
+      "attempt": 18,
+      "started_at": "2026-10-14T04:59:09.3315262Z",
+      "returned_at": "2026-10-14T04:59:09.3315262Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "::1",
+      "family": "ipv6",
+      "attempt": 19,
+      "started_at": "2026-10-14T04:59:09.3315262Z",
+      "returned_at": "2026-10-14T04:59:09.3315262Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "::1",
+      "family": "ipv6",
+      "attempt": 20,
+      "started_at": "2026-10-14T04:59:09.3315262Z",
+      "returned_at": "2026-10-14T04:59:09.3315262Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "::1",
+      "family": "ipv6",
+      "attempt": 21,
+      "started_at": "2026-10-14T04:59:09.3315262Z",
+      "returned_at": "2026-10-14T04:59:09.3315262Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "::1",
+      "family": "ipv6",
+      "attempt": 22,
+      "started_at": "2026-10-14T04:59:09.3315262Z",
+      "returned_at": "2026-10-14T04:59:09.3315262Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "::1",
+      "family": "ipv6",
+      "attempt": 23,
+      "started_at": "2026-10-14T04:59:09.3315262Z",
+      "returned_at": "2026-10-14T04:59:09.3315262Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "::1",
+      "family": "ipv6",
+      "attempt": 24,
+      "started_at": "2026-10-14T04:59:09.3315262Z",
+      "returned_at": "2026-10-14T04:59:09.3315262Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "::1",
+      "family": "ipv6",
+      "attempt": 25,
+      "started_at": "2026-10-14T04:59:09.3315262Z",
+      "returned_at": "2026-10-14T04:59:09.3315262Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 0
+    },
+    {
+      "destination": "2606:4700:4700::1111",
+      "family": "ipv6",
+      "attempt": 1,
+      "started_at": "2026-10-14T04:59:09.3384516Z",
+      "returned_at": "2026-10-14T04:59:09.3390152Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0.5636,
+      "return_code": 1231
+    },
+    {
+      "destination": "2606:4700:4700::1111",
+      "family": "ipv6",
+      "attempt": 2,
+      "started_at": "2026-10-14T04:59:09.3390152Z",
+      "returned_at": "2026-10-14T04:59:09.3390152Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 1231
+    },
+    {
+      "destination": "2606:4700:4700::1111",
+      "family": "ipv6",
+      "attempt": 3,
+      "started_at": "2026-10-14T04:59:09.3390152Z",
+      "returned_at": "2026-10-14T04:59:09.3390152Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 1231
+    },
+    {
+      "destination": "2606:4700:4700::1111",
+      "family": "ipv6",
+      "attempt": 4,
+      "started_at": "2026-10-14T04:59:09.3390152Z",
+      "returned_at": "2026-10-14T04:59:09.3390152Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 1231
+    },
+    {
+      "destination": "2606:4700:4700::1111",
+      "family": "ipv6",
+      "attempt": 5,
+      "started_at": "2026-10-14T04:59:09.3390152Z",
+      "returned_at": "2026-10-14T04:59:09.3390152Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 1231
+    },
+    {
+      "destination": "2606:4700:4700::1111",
+      "family": "ipv6",
+      "attempt": 6,
+      "started_at": "2026-10-14T04:59:09.3390152Z",
+      "returned_at": "2026-10-14T04:59:09.3390152Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 1231
+    },
+    {
+      "destination": "2606:4700:4700::1111",
+      "family": "ipv6",
+      "attempt": 7,
+      "started_at": "2026-10-14T04:59:09.3390152Z",
+      "returned_at": "2026-10-14T04:59:09.3390152Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 1231
+    },
+    {
+      "destination": "2606:4700:4700::1111",
+      "family": "ipv6",
+      "attempt": 8,
+      "started_at": "2026-10-14T04:59:09.3390152Z",
+      "returned_at": "2026-10-14T04:59:09.3390152Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 1231
+    },
+    {
+      "destination": "2606:4700:4700::1111",
+      "family": "ipv6",
+      "attempt": 9,
+      "started_at": "2026-10-14T04:59:09.3390152Z",
+      "returned_at": "2026-10-14T04:59:09.3390152Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 1231
+    },
+    {
+      "destination": "2606:4700:4700::1111",
+      "family": "ipv6",
+      "attempt": 10,
+      "started_at": "2026-10-14T04:59:09.3390152Z",
+      "returned_at": "2026-10-14T04:59:09.3390152Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 1231
+    },
+    {
+      "destination": "2606:4700:4700::1111",
+      "family": "ipv6",
+      "attempt": 11,
+      "started_at": "2026-10-14T04:59:09.3390152Z",
+      "returned_at": "2026-10-14T04:59:09.3390152Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 1231
+    },
+    {
+      "destination": "2606:4700:4700::1111",
+      "family": "ipv6",
+      "attempt": 12,
+      "started_at": "2026-10-14T04:59:09.3390152Z",
+      "returned_at": "2026-10-14T04:59:09.3390152Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 1231
+    },
+    {
+      "destination": "2606:4700:4700::1111",
+      "family": "ipv6",
+      "attempt": 13,
+      "started_at": "2026-10-14T04:59:09.3390152Z",
+      "returned_at": "2026-10-14T04:59:09.3390152Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 1231
+    },
+    {
+      "destination": "2606:4700:4700::1111",
+      "family": "ipv6",
+      "attempt": 14,
+      "started_at": "2026-10-14T04:59:09.3390152Z",
+      "returned_at": "2026-10-14T04:59:09.3390152Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 1231
+    },
+    {
+      "destination": "2606:4700:4700::1111",
+      "family": "ipv6",
+      "attempt": 15,
+      "started_at": "2026-10-14T04:59:09.3390152Z",
+      "returned_at": "2026-10-14T04:59:09.3390152Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 1231
+    },
+    {
+      "destination": "2606:4700:4700::1111",
+      "family": "ipv6",
+      "attempt": 16,
+      "started_at": "2026-10-14T04:59:09.3390152Z",
+      "returned_at": "2026-10-14T04:59:09.3390152Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 1231
+    },
+    {
+      "destination": "2606:4700:4700::1111",
+      "family": "ipv6",
+      "attempt": 17,
+      "started_at": "2026-10-14T04:59:09.3390152Z",
+      "returned_at": "2026-10-14T04:59:09.3390152Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 1231
+    },
+    {
+      "destination": "2606:4700:4700::1111",
+      "family": "ipv6",
+      "attempt": 18,
+      "started_at": "2026-10-14T04:59:09.3390152Z",
+      "returned_at": "2026-10-14T04:59:09.3390152Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 1231
+    },
+    {
+      "destination": "2606:4700:4700::1111",
+      "family": "ipv6",
+      "attempt": 19,
+      "started_at": "2026-10-14T04:59:09.3390152Z",
+      "returned_at": "2026-10-14T04:59:09.3390152Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 1231
+    },
+    {
+      "destination": "2606:4700:4700::1111",
+      "family": "ipv6",
+      "attempt": 20,
+      "started_at": "2026-10-14T04:59:09.3390152Z",
+      "returned_at": "2026-10-14T04:59:09.3390152Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 1231
+    },
+    {
+      "destination": "2606:4700:4700::1111",
+      "family": "ipv6",
+      "attempt": 21,
+      "started_at": "2026-10-14T04:59:09.3390152Z",
+      "returned_at": "2026-10-14T04:59:09.3390152Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 1231
+    },
+    {
+      "destination": "2606:4700:4700::1111",
+      "family": "ipv6",
+      "attempt": 22,
+      "started_at": "2026-10-14T04:59:09.3390152Z",
+      "returned_at": "2026-10-14T04:59:09.3390152Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 1231
+    },
+    {
+      "destination": "2606:4700:4700::1111",
+      "family": "ipv6",
+      "attempt": 23,
+      "started_at": "2026-10-14T04:59:09.3390152Z",
+      "returned_at": "2026-10-14T04:59:09.3390152Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 1231
+    },
+    {
+      "destination": "2606:4700:4700::1111",
+      "family": "ipv6",
+      "attempt": 24,
+      "started_at": "2026-10-14T04:59:09.3390152Z",
+      "returned_at": "2026-10-14T04:59:09.3390152Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 1231
+    },
+    {
+      "destination": "2606:4700:4700::1111",
+      "family": "ipv6",
+      "attempt": 25,
+      "started_at": "2026-10-14T04:59:09.3390152Z",
+      "returned_at": "2026-10-14T04:59:09.3390152Z",
+      "api_elapsed_ms": 0,
+      "call_elapsed_ms": 0,
+      "return_code": 1231
+    }
+  ],
+  "batches": [
+    {
+      "destination": "1.1.1.1",
+      "calls": 1000,
+      "elapsed_ms": 6.1771,
+      "return_code": 0
+    },
+    {
+      "destination": "192.0.2.1",
+      "calls": 1000,
+      "elapsed_ms": 6.3425,
+      "return_code": 0
+    },
+    {
+      "destination": "::1",
+      "calls": 1000,
+      "elapsed_ms": 6.9254,
+      "return_code": 0
+    },
+    {
+      "destination": "2606:4700:4700::1111",
+      "calls": 1000,
+      "elapsed_ms": 8.8497,
+      "return_code": 1231
+    }
+  ],
+  "gate": "incomplete; route samples do not establish a worst-case bound"
+}

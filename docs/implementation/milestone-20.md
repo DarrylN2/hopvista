@@ -1,0 +1,7 @@
+# Milestone 20: minimal production UI
+
+The user approved building the UI as a minimal first pass. `ui/` now contains the React/TypeScript source and a Vite build pinned for the available Node 20.16 runtime. The generated `internal/localapi/static/` assets are embedded by the existing Go server, so the packaged app still launches without Node. The old JSON-only page is replaced with the IPv4 path as the main desktop area, with an adjacent observed finding, limit, selected IP/scope, and separate website phase rows for each redirect exchange. Narrow layout orders the summary and timings before the path. The path text distinguishes unanswered hops, route gateway, target echo, and trace outcome. Evidence buttons open and focus recorded measurement details; raw JSON remains available.
+
+The UI uses the Go result and finding wording. It does not calculate a cause or convert intermediate ICMP RTT into link delay. Findings remain pending until the run is terminal; stopping keeps completed evidence visible. The direct-path caveat remains persistent.
+
+Verification on 2026-10-15: `npm run build`, root `go test ./...`, `go vet ./...`, and the opt-in isolated packaged executable smoke check passed. The in-app browser could not reach the local loopback listener, so this pass has no rendered browser, keyboard, or human comprehension review. Release acceptance remains open, as do the wider Windows/native-stall limits recorded in the acceptance matrix.

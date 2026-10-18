@@ -1,0 +1,11 @@
+# Milestone 8: live path progress and evidence-backed finding rules
+
+The IPv4 path sampler now publishes detached snapshots after route selection, each gateway and target echo sample, and each trace hop. An active echo series or trace has a transient `pending` outcome until it ends. Completed samples remain visible in `GET /api/v1/runs/{id}` while a later synchronous call is pending. Findings still appear only after the run reaches a completed terminal state. Cancellation retains the last completed observations and the run remains `stopping` with its busy slot held until the pending adapter call returns and cleanup finishes.
+
+The finding rules now lead with the phase where an HTTP attempt stopped, distinguish a redirect policy stop from a transport failure, and treat HTTP 4xx/5xx as completed responses. A completed phase is called the dominant measured wait only when at least two completed durations from the same exchange are comparable, the largest is at least 100 ms, and it is at least twice the next largest. DNS, TCP, TLS and HTTP first-byte durations may be compared within that exchange; ICMP RTTs and different exchanges are never substituted. Each finding cites its supporting measurement IDs and includes a direct-path limit. This is conservative observation wording, not a cause or general availability verdict.
+
+Issue #10 specifies at most 16 trace hops for v1. The earlier preview had accepted 1–64 with a default of 30; the local API, minimal UI, path sampler and JSON fixtures now use 1–16 with a default of 16. Older milestone notes describe the previous preview behavior and remain historical records.
+
+Tests cover partial trace visibility before cancellation, no new work while a fake echo remains pending, retained evidence at terminal cancellation, the 100 ms and 2× rule boundaries, stopped-phase wording, redirect stops, HTTP 503, and absent dominance across path/HTTP evidence. The full root Go test suite, `go vet`, and app build passed on 2026-10-15. The opt-in unelevated local API plus native IPv4 loopback check also passed after these changes.
+
+Release acceptance remains open. The 250 ms native start margin remains empirical, and a genuinely stalled `GetBestRoute2`, another Windows account, broader Windows 11 conditions, and packaged-executable release checks remain unverified.

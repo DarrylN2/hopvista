@@ -1,0 +1,6 @@
+{
+  "schema_version":1,"run_id":"fixture-unsupported","target_url":"http://[::1]/","connection_mode":"direct","max_hops":16,
+  "started_at":"2026-10-14T20:00:00Z","deadline_at":"2026-10-14T20:01:00Z","ended_at":"2026-10-14T20:00:00Z","state":"completed",
+  "families":[{"family":"ipv4","outcome":"unavailable","error":{"code":"ipv6_not_supported_in_v1","message":"IPv6 targets are not supported in v1."},"dns":[],"exchanges":[],"paths":[]}],
+  "findings":[]
+}

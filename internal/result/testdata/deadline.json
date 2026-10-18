@@ -1,0 +1,17 @@
+{
+  "schema_version":1,"run_id":"fixture-deadline","target_url":"https://example.com/","connection_mode":"direct","max_hops":16,
+  "started_at":"2026-10-14T20:00:00Z","deadline_at":"2026-10-14T20:01:00Z","stop_requested_at":"2026-10-14T20:01:00Z","ended_at":"2026-10-14T20:01:02Z","state":"completed",
+  "families":[{
+    "family":"ipv4","outcome":"deadline",
+    "dns":[{"id":"dns-1","outcome":"completed","method":"local_resolver_ipv4","started_at":"2026-10-14T20:00:00Z","ended_at":"2026-10-14T20:00:00.1Z","bound_ms":2000,"duration_ms":100,"hostname":"example.com","addresses":["192.0.2.10","192.0.2.11"],"selected_ip":"192.0.2.10","selected_scope":"special_use"}],
+    "exchanges":[],
+    "paths":[{
+      "id":"path-1","selected_ip":"192.0.2.10",
+      "route":{"id":"route-1","outcome":"completed","method":"route_selection","started_at":"2026-10-14T20:00:59Z","ended_at":"2026-10-14T20:01:02Z","duration_ms":3000,"selected_ip":"192.0.2.10","source_ip":"192.0.2.1","interface_index":4,"next_hop":"192.0.2.2","on_link":false},
+      "gateway":{"id":"gateway-1","outcome":"deadline","attempted":0,"replied":0,"samples":[]},
+      "target":{"id":"target-1","outcome":"deadline","attempted":0,"replied":0,"samples":[{"id":"target-refused","outcome":"deadline","method":"icmp_echo","bound_ms":1000,"selected_ip":"192.0.2.10","ttl":64,"status":"not_sent"}]},
+      "trace":{"id":"trace-1","selected_ip":"192.0.2.10","family":"ipv4","target_role":"attempted_host","max_hops":16,"highest_attempted_ttl":0,"outcome":"deadline","hops":[]}
+    }]
+  }],
+  "findings":[{"type":"measurement_cutoff","family":"ipv4","observation":"This IPv4 diagnostic run reached its measurement cutoff before echo or trace could start.","limit":"The route lookup returned after cutoff; no hard native completion time is promised.","evidence_refs":["route-1","target-refused","trace-1"]}]
+}

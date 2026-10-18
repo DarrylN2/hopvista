@@ -1,0 +1,7 @@
+# Milestone 15: packaged executable stopping while native echo drains
+
+On 2026-10-15, the opt-in isolated executable check was extended with a candidate no-reply IPv4 target (`192.0.2.1`) on the current Windows 11 x64 machine and network. The copied executable still ran from an otherwise empty directory with only Windows System32 on `PATH`. After the first target echo timed out, the test cancelled during the second echo. The cancel response showed `stopping`, a stop timestamp, no terminal timestamp, and no final finding. A new run received `busy` while the native call remained in flight. The terminal cancelled result retained both timed-out target echo samples: the second had started before the stop request and ended afterward. No third target echo started.
+
+The packaged check passed with `HOPVISTA_PACKAGED_EXE` and `HOPVISTA_PACKAGED_DRAIN_IP=192.0.2.1` set outside the socket-restricted command sandbox. See [the smoke-check README](../../tools/app-smoke/README.md) for the full build and run commands. The root Go suite and `go vet ./...` were also run after this change.
+
+This validates one finite packaged native drain and API lifecycle condition. It does not establish a hard native return bound, exercise a genuinely stalled `GetBestRoute2`, or cover another Windows account, wider Windows builds/networks, or human UI review. The 250 ms native start margin remains empirical and release acceptance remains open.
