@@ -50,6 +50,13 @@ func (r *traceRecorder) setFirstByte() {
 	defer r.mu.Unlock()
 	r.v.firstByte = time.Now().UTC()
 }
+
+// Retain the validated TCP peer even when TLS fails before GotConn fires.
+func (r *traceRecorder) setPeer(peer string) {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	r.v.peer = peer
+}
 func (r *traceRecorder) setGotConn(info httptrace.GotConnInfo) {
 	r.mu.Lock()
 	defer r.mu.Unlock()

@@ -244,6 +244,7 @@ func (c *Client) exchange(ctx context.Context, index int, selected target.Select
 				conn.Close()
 				return nil, errPeerMismatch
 			}
+			recorder.setPeer(peer.String())
 			return conn, nil
 		},
 	}

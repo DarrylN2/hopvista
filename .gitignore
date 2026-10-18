@@ -1,4 +1,5 @@
 .tools/
+.impeccable/review/
 ui/node_modules/
 tools/windows-network-feasibility/.local/
 tools/windows-network-feasibility/*.exe

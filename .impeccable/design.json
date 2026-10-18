@@ -1,0 +1,261 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-18T03:12:49.021Z",
+  "title": "Design System: HopVista",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper"
+      },
+      "canvas": {
+        "role": "neutral",
+        "displayName": "Light neutral canvas"
+      },
+      "wash": {
+        "role": "neutral",
+        "displayName": "Quiet wash"
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink"
+      },
+      "blue": {
+        "role": "primary",
+        "displayName": "Confident blue"
+      },
+      "blue-wash": {
+        "role": "primary",
+        "displayName": "Pale blue finding wash"
+      },
+      "teal": {
+        "role": "secondary",
+        "displayName": "Website timing teal"
+      },
+      "teal-wash": {
+        "role": "secondary",
+        "displayName": "Timing category wash"
+      },
+      "blue-ink": {
+        "role": "primary",
+        "displayName": "Finding ink"
+      },
+      "blue-muted": {
+        "role": "primary",
+        "displayName": "Finding supporting text"
+      },
+      "amber": {
+        "role": "status",
+        "displayName": "Stopping and cancelled"
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "purpose": "Bold fixed intro scale: 3rem, 2.25rem at 760px; active/result compact scale 1.75rem, 1.5rem at 480px.",
+        "displayName": "Headline"
+      },
+      "body": {
+        "purpose": "Familiar Segoe UI explanations and outcomes; font size inherits browser defaults.",
+        "displayName": "Familiar system sans"
+      },
+      "data": {
+        "displayName": "Selective monospace",
+        "purpose": "Addresses, raw RTT, hop numbers, completed timings, technical IDs, JSON, and conceptual phase labels; never the entire body."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "button-background",
+        "value": "background-color 160ms ease-out",
+        "purpose": "Immediate control-state feedback."
+      },
+      {
+        "name": "evidence-arrival",
+        "value": "evidence-land 520ms cubic-bezier(.16,1,.3,1)",
+        "purpose": "One-shot selection wash; static selection remains afterward."
+      },
+      {
+        "name": "evidence-arrow",
+        "value": "transform 160ms cubic-bezier(.16,1,.3,1); translateX(3px)",
+        "purpose": "Directional acknowledgment on hover and keyboard focus."
+      },
+      {
+        "name": "record-mark",
+        "value": "mark-observation 220ms cubic-bezier(.16,1,.3,1)",
+        "purpose": "Single newest-hop/copy glyph acknowledgment; running dot uses240ms."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact-desktop",
+        "value": "960px"
+      },
+      {
+        "name": "single-column",
+        "value": "760px"
+      },
+      {
+        "name": "echo-stack",
+        "value": "400px"
+      },
+      {
+        "name": "empty-guide-stack",
+        "value": "480px"
+      }
+    ],
+    "accessibility": {
+      "coarsePointer": "Evidence and copy buttons min-height:44px.",
+      "reducedMotion": "All animations/transitions disabled and arrow transform removed under prefers-reduced-motion:reduce. Static selection, copy confirmation/live status and automatic scrolling remain.",
+      "focus": "2px solid var(--focus), outline-offset: 4px"
+    },
+    "provenance": {
+      "browserReview": "Current graphic pass: independent visual reviewer inspected synthetic completed at 1440px/390px, stopping at 390px, partial at 1440px, failed at 390px; ship at representative scope, no material fixes. Seventeen state/width checks found no horizontal overflow, including long 64-hop content at 320px. Pending active states and evidence focus/return verified. Earlier actual loopback desktop/mobile verification remains historical. No whole-release, full human, screen-reader, or zoom acceptance; uninspected captures excluded.",
+      "screenshots": [
+        ".impeccable/review/graphic/completed-1440.png",
+        ".impeccable/review/graphic/completed-390.png",
+        ".impeccable/review/graphic/stopping-390.png",
+        ".impeccable/review/graphic/partial-1440.png",
+        ".impeccable/review/graphic/failed-390.png"
+      ],
+      "tonalRamps": "Omitted: no source tonal ramps; synthesized values are outside the approved extraction scope.",
+      "visualReviewDisposition": "Previous graphic pass: ship at representative scope. Current motion/color pass: manually verified, not independently reviewed.",
+      "status": "source-derived system with representative live and visual verification",
+      "visualAcceptance": false,
+      "snippets": "Static samples of source styling; application logic is not included.",
+      "mode": "Operate",
+      "sources": [
+        "ui/src/style.css",
+        "ui/src/main.tsx"
+      ],
+      "detector": "Attempted; failed because the detector engine was missing. No clean detector result.",
+      "motionPass": "Current animate/colorize/delight pass reviewed in browser without an independent sub-agent review. Seventeen measured state/width combinations had no horizontal overflow, including64hops320px. Clipboard success/keyboard copy and exact value verified; a synthetic rejecting clipboard exercised the recovery message once. Browser permission header was not reliably enforced and failure replay was inconsistent; no native permission-denial acceptance is claimed. Reduced-motion rules inspected through CSSOM; runtime preference emulation unavailable. Prior graphic independent review remains historical. Build/Go checks and packaged smoke passed.",
+      "motionScreenshots": [
+        ".impeccable/review/motion/completed-1440.png",
+        ".impeccable/review/motion/completed-390.png",
+        ".impeccable/review/motion/copy-error.png"
+      ]
+    }
+  },
+  "components": [
+    {
+      "css": ".ds-control { min-height: 44px; padding: .65rem 1.1rem; border: 1px solid transparent; border-radius: 6px; background: var(--blue); color: white; cursor: pointer; font-weight: 600; transition: background-color 160ms ease-out; } .ds-control:hover:not(:disabled) { background: var(--blue-hover); } .ds-control:active:not(:disabled) { background: #122e82; } .ds-control:disabled { background: #e4e8e2; color: #667168; cursor: not-allowed; } .ds-control { font: inherit; font-weight: 600; } .ds-control:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; } @media (prefers-reduced-motion: reduce) { .ds-control { transition: none !important; } }",
+      "refersTo": "button-primary",
+      "description": "Start a diagnostic run; actual hover, active, disabled, and focus treatments.",
+      "kind": "button",
+      "html": "<button class=\"ds-control\">Start diagnostic run</button>",
+      "name": "Primary action"
+    },
+    {
+      "css": ".ds-control { min-height: 44px; padding: .65rem 1.1rem; border: 1px solid transparent; border-radius: 6px; background: var(--blue); color: white; cursor: pointer; font-weight: 600; transition: background-color 160ms ease-out; } .ds-control:hover:not(:disabled) { background: var(--blue-hover); } .ds-control:active:not(:disabled) { background: #122e82; } .ds-control:disabled { background: #e4e8e2; color: #667168; cursor: not-allowed; } .ds-control { font: inherit; font-weight: 600; } .ds-control:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; } @media (prefers-reduced-motion: reduce) { .ds-control { transition: none !important; } } .ds-control.ds-secondary { background: transparent; border-color: #a3afa6; color: var(--ink); } .ds-control.ds-secondary:hover:not(:disabled) { background: var(--wash); } .ds-control.ds-secondary:disabled { color: #667168; border-color: var(--rule); }",
+      "refersTo": "button-secondary",
+      "description": "Cancel the active diagnostic run.",
+      "kind": "button",
+      "html": "<button class=\"ds-control ds-secondary\">Cancel run</button>",
+      "name": "Secondary action"
+    },
+    {
+      "css": ".ds-control { width: 100%; min-height: 46px; border: 1px solid #96a49a; border-radius: 6px; padding: .6rem .8rem; background: white; color: var(--ink); caret-color: var(--blue); } .ds-control::placeholder { color: #6a756e; opacity: 1; } .ds-control:hover { border-color: var(--ink); } .ds-control { font: inherit; } .ds-control:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; } .ds-label { display: block; font-family: \"Segoe UI\", system-ui, sans-serif; color: var(--ink); font-weight: 600; font-size: .875rem; margin-bottom: 8px; }",
+      "refersTo": "input",
+      "description": "Native URL field with hover and keyboard focus.",
+      "kind": "input",
+      "html": "<label class=\"ds-label\" for=\"ds-target\">Target URL</label><input class=\"ds-control\" id=\"ds-target\" type=\"url\" placeholder=\"https://example.com/\" />",
+      "name": "Target URL field"
+    },
+    {
+      "name": "Masthead identity",
+      "kind": "nav",
+      "description": "Bold wordmark and blue path glyph; masthead uses a 2px ink bottom rule.",
+      "css": ".ds-wordmark { display: inline-flex; align-items: center; gap: 12px; color: var(--ink); text-decoration: none; font-size: 1.5rem; font-weight: 700; letter-spacing: -.04em; } .ds-wordmark svg { width: 36px; height: 36px; stroke: var(--blue); stroke-width: 2; fill: #f7f8f5; } .ds-wordmark { font-family: \"Segoe UI\", system-ui, sans-serif; line-height: 1.55; } .ds-wordmark:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }",
+      "html": "<a class=\"ds-wordmark\" href=\"#\"><svg aria-hidden=\"true\" viewBox=\"0 0 32 32\"><path d=\"M5 25V7m22 18V7M5 16h22\"/><circle cx=\"5\" cy=\"16\" r=\"3\"/><circle cx=\"16\" cy=\"16\" r=\"3\"/><circle cx=\"27\" cy=\"16\" r=\"3\"/></svg><span>HopVista</span></a>"
+    },
+    {
+      "css": ".ds-state { color: var(--ink); font-size: .8125rem; font-weight: 600; text-transform: capitalize; padding: 5px 10px; background: #e8ede7; border-radius: 4px; white-space: nowrap; } .ds-state-running { color: var(--blue); background: var(--blue-wash); } .ds-state-stopping, .ds-state-cancelled { color: var(--amber); background: var(--amber-wash); } .ds-state-failed { color: var(--error); background: #fcf0ed; } .ds-state { font-family: \"Segoe UI\", system-ui, sans-serif; line-height: 1.55; }",
+      "refersTo": "state",
+      "description": "Textual run status, including source running, stopping, cancelled, and failed variants.",
+      "kind": "chip",
+      "html": "<span class=\"ds-state ds-state-running\">Running</span>",
+      "name": "Run state"
+    },
+    {
+      "css": ".ds-finding { padding: 24px; background: var(--blue-wash); border-top: 3px solid var(--blue); border-radius: 0 0 var(--radius) var(--radius); color: var(--ink); font-family: \"Segoe UI\", system-ui, sans-serif; line-height: 1.55; } .ds-finding h3 { margin: 0; color: var(--blue); font-size: 1.25rem; font-weight: 700; letter-spacing: -.02em; } .ds-finding p { margin: 20px 0 0; } .ds-finding .ds-observation { font-size: 1.125rem; line-height: 1.5; font-weight: 700; } .ds-finding .ds-context { font-size: .9375rem; margin-top: 12px; } .ds-limit { font-size: .875rem; color: var(--muted); padding-top: 16px; border-top: 1px solid #c7d1eb; } .ds-limit strong { display: block; color: var(--ink); font-weight: 600; margin-bottom: 4px; } @media (max-width: 960px) { .ds-finding { padding: 20px; } } .ds-finding { color:var(--blue-ink); }",
+      "refersTo": "finding",
+      "description": "Blue wash, strong rule, and unchanged finding semantics; static sample uses the real pending state.",
+      "kind": "card",
+      "html": "<section class=\"ds-finding\"><h3>What this run observed</h3><p>Pending until the diagnostic run finishes.</p></section>",
+      "name": "Finding and limitation"
+    },
+    {
+      "css": ".ds-card { min-width: 0; padding: 20px; background: var(--paper); border: 1px solid var(--rule); border-radius: var(--radius); scroll-margin: 24px; font-size: .8125rem; overflow-wrap: anywhere; } .ds-card.ds-selected { border-color: var(--blue); } .ds-card h4 { font-size: .875rem; } .ds-card > p { margin-top: 8px; } .ds-card:focus { outline: 2px solid var(--focus); outline-offset: 4px; } .ds-card { color: var(--ink); font-family: \"Segoe UI\", system-ui, sans-serif; line-height: 1.55; } .ds-card h4, .ds-card p { margin: 0; } .ds-card h4 { font-weight: 650; } .ds-card > p { margin-top: 8px; } .ds-card h4 { font: 600 .875rem/1.5 var(--font-data); }",
+      "refersTo": "evidence-card",
+      "description": "Recorded evidence container; selected variant changes border and receives programmatic focus.",
+      "kind": "card",
+      "html": "<section class=\"ds-card\" tabindex=\"-1\"><h4>Technical evidence</h4><p>Recorded evidence</p></section>",
+      "name": "Evidence record"
+    },
+    {
+      "name": "Evidence access",
+      "kind": "button",
+      "description": "Phase-named finding reference with inline arrow; ID remains in accessible name/title and technical evidence. Host supplies navigation.",
+      "css": ".ds-control { align-self: start; min-height: 32px; width: fit-content; max-width: 100%; padding: 4px 0; border: 0; border-radius: 2px; background: transparent; color: var(--blue); text-decoration: underline; text-underline-offset: 4px; font-size: .8125rem; font-weight: 500; text-align: left; overflow-wrap: anywhere; } .ds-control:hover:not(:disabled) { color: var(--blue-hover); background: var(--blue-wash); } .ds-control { font-family: \"Segoe UI\", system-ui, sans-serif; transition: background-color 160ms ease-out; } .ds-control:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; } @media (pointer: coarse) { .ds-control { min-height: 44px; } } @media (prefers-reduced-motion: reduce) { .ds-control { transition: none !important; } } .ds-control { display: inline-flex; align-items: center; gap: 6px; } .ds-control > svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.5; flex-shrink: 0; } .ds-control svg { transition:transform 160ms cubic-bezier(.16,1,.3,1); } .ds-control:is(:hover,:focus-visible) svg { transform:translateX(3px); } @media(prefers-reduced-motion:reduce) { .ds-control svg { transition:none; transform:none !important; } }",
+      "html": "<button class=\"ds-control\" type=\"button\" aria-label=\"View TCP evidence exchange-1-tcp\" title=\"exchange-1-tcp\">View TCP evidence<svg aria-hidden=\"true\" viewBox=\"0 0 16 16\"><path d=\"M3 8h10M9 4l4 4-4 4\"/></svg></button>"
+    },
+    {
+      "name": "Hop marker",
+      "kind": "custom",
+      "description": "Blue probe-order marker with a selective monospace hop number; connector conveys no physical network link.",
+      "html": "<span class=\"ds-hop\">Hop <span>1</span></span>",
+      "css": ".ds-hop { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 44px; height: 44px; border: 1px solid var(--blue); border-radius: 50%; color: var(--blue); font: 600 .625rem/1.2 \"Segoe UI\", system-ui, sans-serif; } .ds-hop > span { font: 600 1.125rem/1.2 var(--font-data); } .ds-hop { background:var(--blue-wash); }"
+    },
+    {
+      "name": "Completed timing value",
+      "kind": "custom",
+      "description": "Completed measurement typography; illustrative value is not run evidence.",
+      "html": "<strong class=\"ds-measured\">200 ms</strong>",
+      "css": ".ds-measured { color: var(--ink); font: 600 1.25rem/1.35 var(--font-data); letter-spacing: -.025em; font-variant-numeric: tabular-nums; }"
+    },
+    {
+      "name": "Copy IPv4",
+      "kind": "button",
+      "refersTo": "button-copy",
+      "description": "Static sample of the copy action. Runtime writes the selected literal IP, announces success, resets in2400ms and offers manual recovery on error.",
+      "html": "<button type=\"button\" class=\"ds-copy\">Copy IPv4</button>",
+      "css": ".ds-copy { display:inline-flex; align-items:center; justify-content:center; gap:6px; min-width:104px; min-height:32px; padding:4px 8px; border:1px solid #b8c7ec; border-radius:4px; background:var(--paper); color:var(--blue); font:600 .8125rem \"Segoe UI\",system-ui,sans-serif; cursor:pointer; transition:background-color 160ms ease-out; } .ds-copy:hover { background:var(--blue); color:white; } .ds-copy:focus-visible { outline:2px solid var(--focus); outline-offset:4px; } @media(pointer:coarse) { .ds-copy { min-height:44px; } } @media(prefers-reduced-motion:reduce) { .ds-copy { transition:none; } }"
+    },
+    {
+      "name": "Timing category",
+      "kind": "custom",
+      "description": "Teal identifies website timings independently of measurement status.",
+      "html": "<h3 class=\"ds-timing\">Website timing</h3><p class=\"ds-timing-help\">Separate waits for each website exchange.</p>",
+      "css": ".ds-timing { padding-top:16px; border-top:2px solid var(--teal); color:var(--teal); font:700 1.25rem \"Segoe UI\",system-ui,sans-serif; } .ds-timing-help { color:var(--teal-muted); font:.875rem/1.55 \"Segoe UI\",system-ui,sans-serif; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Clear field notes with guided reading",
+    "overview": "A light neutral canvas, ink typography, confident blue actions, generous spacing, and ruled sections make diagnostic observations approachable to a curious non-specialist. The approved crisp graphic treatment strengthens the existing field-notes direction: a compact wordmark, bold balanced headings, blue hop markers, and selective monospace addresses and measurements. Familiar Segoe UI body copy keeps explanations easy to read. The composition still guides attention from an observed finding and its limits to separate website timings and the recorded path.\n\nThis system is extracted from `ui/src/style.css` and `ui/src/main.tsx`. The user approved this bolder typography, clearer explanations, and polish pass while preserving the composition and measurement semantics. Go-owned observation and limitation strings remain authoritative; supplementary explanations do not reinterpret their evidence.\n\nThe earlier system received representative live and visual verification, with actual-run captures at `.impeccable/review/desktop.png` and `.impeccable/review/mobile.png`. For this graphic pass an independent reviewer inspected synthetic completed states at 1440px and 390px, stopping at 390px, partial at 1440px, and failed at 390px, returning **ship at representative scope** with no material fixes. Current captures are under `.impeccable/review/graphic/`; captures beyond that reviewed set do not imply visual acceptance. Seventeen current state/width checks found no horizontal overflow, including long 64-hop content at 320px; pending active states and evidence focus/return were also verified. This is not whole-release acceptance or a full human, screen-reader, or zoom audit. The type detector was attempted but failed because its engine was missing; no clean detector result is claimed.",
+    "keyCharacteristics": [
+      "Light neutral surfaces, bold ink headings, and familiar Segoe UI explanations.",
+      "Confident blue identity, hop markers, actions, evidence links, and finding emphasis.",
+      "Selective monospace addresses and completed values.",
+      "Flat panels, strong rules, and generous reading space.",
+      "Finding, limitations, and timing before path in narrow-screen reading order.",
+      "Blue path/evidence, teal website timings and amber stopping states; labels always carry meaning.",
+      "Brief state acknowledgments and useful clipboard feedback without delays or loops."
+    ],
+    "rules": [],
+    "dos": [
+      "Do keep the canvas light, text in ink, and blue used for actions, evidence access, identity, hop markers, and finding emphasis.",
+      "Do keep monospace selective to data and technical roles, with Segoe UI explanations.",
+      "Do pair an observed finding with its limitation and recorded evidence.",
+      "Do preserve visible labels, keyboard focus, and textual status meaning.",
+      "Do preserve the summary, timing, then path reading order on narrow screens.",
+      "Do label unavailable and pending measurements explicitly; missing durations and RTTs are not zero."
+    ],
+    "donts": [
+      "Don't interpret dotted probe-order connectors as physical network links or the HTTP route.",
+      "Don't present an active run's missing IPv4 selection as a terminal failure; show Pending.",
+      "Don't present diagnostic observations as a root cause or website timings as page load measurements.",
+      "Don't treat limited completed-run checks as acceptance of all states, edge cases, or the whole release."
+    ]
+  }
+}

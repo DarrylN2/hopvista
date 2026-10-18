@@ -136,3 +136,54 @@ func TestLivePinnedTLSIdentityAndSNI(t *testing.T) {
 		}
 	}
 }
+
+func TestLivePinnedHTTPSRedirectJourney(t *testing.T) {
+	liveHTTP(t)
+	var mu sync.Mutex
+	var authorities, snis []string
+	s := httptest.NewUnstartedServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		mu.Lock()
+		authorities = append(authorities, r.Host)
+		snis = append(snis, r.TLS.ServerName)
+		mu.Unlock()
+		if r.URL.Path == "/start" {
+			w.Header().Set("Location", "/final")
+			w.WriteHeader(http.StatusFound)
+			return
+		}
+		w.WriteHeader(http.StatusNoContent)
+	}))
+	s.StartTLS()
+	defer s.Close()
+	host := s.Certificate().DNSNames[0]
+	_, port, err := net.SplitHostPort(s.Listener.Addr().String())
+	if err != nil {
+		t.Fatal(err)
+	}
+	roots := x509.NewCertPool()
+	roots.AddCert(s.Certificate())
+	c := NewClient()
+	c.Roots = roots
+	j := c.Measure(context.Background(), "https://"+host+":"+port+"/start", loopbackSelector())
+	if j.Outcome != result.Completed || j.FinalHost != host || len(j.Exchanges) != 2 || len(j.DNS) != 1 {
+		t.Fatalf("real TCP HTTPS journey: %+v", j)
+	}
+	for _, x := range j.Exchanges {
+		if x.SelectedIP != "127.0.0.1" || x.ActualPeerIP != "127.0.0.1" || x.ConnectionReused == nil || *x.ConnectionReused || x.TCP.Outcome != result.Completed || x.TLS.Outcome != result.Completed || x.HTTP.Outcome != result.Completed {
+			t.Fatalf("real TCP evidence: %+v", x)
+		}
+	}
+	if j.Exchanges[1].DNS.Outcome != result.Skipped || j.Exchanges[1].DNS.DurationMS != nil || j.Exchanges[1].DNSRef != "dns-1" {
+		t.Fatalf("same-host pin: %+v", j.Exchanges[1])
+	}
+	mu.Lock()
+	defer mu.Unlock()
+	if len(authorities) != 2 || len(snis) != 2 {
+		t.Fatalf("requests: %v %v", authorities, snis)
+	}
+	for i := range authorities {
+		if authorities[i] != host+":"+port || snis[i] != host {
+			t.Fatalf("authority/SNI: %v %v", authorities, snis)
+		}
+	}
+}
