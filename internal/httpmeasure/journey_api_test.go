@@ -67,6 +67,12 @@ func journeyAdapter(clock *journeyClock, pathIP string) *probefake.Adapter {
 // Exercise the session/start/status boundary with the real manager and engine.
 // The optional observer can cancel a pending run through the same API.
 func runEngineThroughAPI(t *testing.T, manager *run.Manager, url string, observe func(result.Run, func())) result.Run {
+	hops := 1
+	return runEngineThroughAPIWithHops(t, manager, url, &hops, observe)
+}
+
+// Nil hops exercises the API's default rather than sending a configured limit.
+func runEngineThroughAPIWithHops(t *testing.T, manager *run.Manager, url string, hops *int, observe func(result.Run, func())) result.Run {
 	t.Helper()
 	handler, err := localapi.NewHandler("127.0.0.1:8123", manager)
 	if err != nil {
@@ -90,7 +96,11 @@ func runEngineThroughAPI(t *testing.T, manager *run.Manager, url string, observe
 	if err := json.Unmarshal(session.Body.Bytes(), &credentials); err != nil {
 		t.Fatal(err)
 	}
-	body, _ := json.Marshal(map[string]any{"target_url": url, "max_hops": 1})
+	input := map[string]any{"target_url": url}
+	if hops != nil {
+		input["max_hops"] = *hops
+	}
+	body, _ := json.Marshal(input)
 	start := call("POST", "/api/v1/runs", string(body), credentials.Token)
 	if start.Code != http.StatusAccepted {
 		t.Fatalf("start: %d %s", start.Code, start.Body)

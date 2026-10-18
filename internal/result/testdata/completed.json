@@ -19,7 +19,7 @@
       "tcp":{"id":"tcp-1","outcome":"completed","method":"http_transport_connect","started_at":"2026-10-14T20:00:00Z","ended_at":"2026-10-14T20:00:00.02Z","bound_ms":2000,"duration_ms":20},
       "tls":{"id":"tls-1","outcome":"skipped","method":"http_not_tls"},
       "http":{"id":"http-1","outcome":"completed","method":"request_written_to_first_response_header_byte","started_at":"2026-10-14T20:00:00.02Z","ended_at":"2026-10-14T20:00:00.22Z","bound_ms":3000,"duration_ms":200},
-      "response_status":503,"connection_reused":false
+      "response_status":200,"connection_reused":false
     }],
     "paths": [{
       "id":"path-1","selected_ip":"192.0.2.10",
@@ -31,7 +31,7 @@
         {"id":"target-echo-3","outcome":"completed","method":"icmp_echo","started_at":"2026-10-14T20:00:05Z","ended_at":"2026-10-14T20:00:05.01Z","bound_ms":1000,"duration_ms":10,"selected_ip":"192.0.2.10","ttl":64,"status":"echo_reply","reply_address":"192.0.2.10","rtt_ms":10}
       ],"variation":{"id":"variation-1","outcome":"unavailable","formula":"median of absolute RTT changes between adjacent successful attempts ordered by send time; at least 3 replies and 2 pairs required","evidence_refs":["target-echo-1","target-echo-3"]}},
       "trace":{"id":"trace-1","selected_ip":"192.0.2.10","family":"ipv4","target_role":"final_host","max_hops":16,"highest_attempted_ttl":3,"outcome":"destination_replied","hops":[
-        {"id":"hop-1","outcome":"completed","method":"icmp_echo","started_at":"2026-10-14T20:00:06Z","ended_at":"2026-10-14T20:00:06.04Z","bound_ms":750,"duration_ms":40,"selected_ip":"192.0.2.10","ttl":1,"status":"time_exceeded","reply_address":"192.0.2.2","rtt_ms":40},
+        {"id":"hop-1","outcome":"completed","method":"icmp_echo","started_at":"2026-10-14T20:00:06Z","ended_at":"2026-10-14T20:00:06.45Z","bound_ms":750,"duration_ms":450,"selected_ip":"192.0.2.10","ttl":1,"status":"time_exceeded","reply_address":"192.0.2.2","rtt_ms":450},
         {"id":"hop-2","outcome":"timeout","method":"icmp_echo","started_at":"2026-10-14T20:00:07Z","ended_at":"2026-10-14T20:00:07.75Z","bound_ms":750,"selected_ip":"192.0.2.10","ttl":2,"status":"no_reply"},
         {"id":"hop-3","outcome":"completed","method":"icmp_echo","started_at":"2026-10-14T20:00:08Z","ended_at":"2026-10-14T20:00:08.01Z","bound_ms":750,"duration_ms":10,"selected_ip":"192.0.2.10","ttl":3,"status":"echo_reply","reply_address":"192.0.2.10","rtt_ms":10}
       ]}
