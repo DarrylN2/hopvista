@@ -66,13 +66,13 @@ func journeyAdapter(clock *journeyClock, pathIP string) *probefake.Adapter {
 
 // Exercise the session/start/status boundary with the real manager and engine.
 // The optional observer can cancel a pending run through the same API.
-func runEngineThroughAPI(t *testing.T, manager *run.Manager, url string, observe func(result.Run, func())) result.Run {
+func runEngineThroughAPI(t *testing.T, manager *run.Manager, url string, observe func(result.Run, func(), func())) result.Run {
 	hops := 1
 	return runEngineThroughAPIWithHops(t, manager, url, &hops, observe)
 }
 
 // Nil hops exercises the API's default rather than sending a configured limit.
-func runEngineThroughAPIWithHops(t *testing.T, manager *run.Manager, url string, hops *int, observe func(result.Run, func())) result.Run {
+func runEngineThroughAPIWithHops(t *testing.T, manager *run.Manager, url string, hops *int, observe func(result.Run, func(), func())) result.Run {
 	t.Helper()
 	handler, err := localapi.NewHandler("127.0.0.1:8123", manager)
 	if err != nil {
@@ -132,16 +132,25 @@ func runEngineThroughAPIWithHops(t *testing.T, manager *run.Manager, url string,
 					t.Fatal(err)
 				}
 				if stopping.State == result.Stopping {
-					if len(stopping.Findings) != 0 {
-						t.Fatal("finding published while stopping")
+					if len(stopping.Findings) != 0 || stopping.StopRequestedAt == nil || stopping.EndedAt != nil || stopping.MaxHops != snapshot.MaxHops || stopping.DeadlineAt != snapshot.DeadlineAt {
+						t.Fatal("invalid stopping findings, timestamps or settings")
 					}
 					writeCapture(t, "run-stopping", stopping)
+				}
+			}, func() {
+				busy := call("POST", "/api/v1/runs", string(body), credentials.Token)
+				if busy.Code != http.StatusConflict || !strings.Contains(busy.Body.String(), `"busy"`) {
+					t.Fatal("held work released the active slot")
 				}
 			})
 		}
 		if snapshot.State.Terminal() {
 			if snapshot.SchemaVersion != 1 || snapshot.ConnectionMode != "direct" || snapshot.TargetURL != url || len(snapshot.Families) != 2 {
 				t.Fatalf("API contract: %+v", snapshot)
+			}
+			stable := call("GET", started.StatusURL, "", "")
+			if stable.Body.String() != response.Body.String() {
+				t.Fatal("terminal evidence changed after quiescence")
 			}
 			return snapshot
 		}

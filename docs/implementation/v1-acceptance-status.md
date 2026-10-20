@@ -1,5 +1,12 @@
 # HopVista v1 acceptance status
 
+Latest lifecycle follow-up: [issue #14 evidence](issue-14.md) rechecks native
+cancellation and cap/margin behavior, carries held-route stops through the
+engine/API and current UI, and records a **failed packaged-minute candidate**.
+That candidate completed its 64-hop trace in 38.35 seconds, so packaged actual
+60-second cutoff acceptance and issue #14 remain open. No production timing or
+approved UI change was made to force a passing check.
+
 Latest path/echo follow-up: [issue #13 verification](issue-13.md) carries silent,
 high-intermediate-RTT, unreachable, hop-limit and unstarted deadline/cancelled
 observations through the real engine/API into the approved results view. The

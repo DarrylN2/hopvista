@@ -110,7 +110,7 @@ func TestInterruptedHTTPThroughAPI(t *testing.T) {
 				window = 300 * time.Millisecond
 			}
 			cancelled := false
-			snapshot := runEngineThroughAPI(t, run.NewManagerWithWindow(e, window), "https://start.example/start", func(s result.Run, cancel func()) {
+			snapshot := runEngineThroughAPI(t, run.NewManagerWithWindow(e, window), "https://start.example/start", func(s result.Run, cancel func(), _ func()) {
 				if mode != "cancelled" || cancelled || s.State != result.Running || len(s.Families) == 0 || len(s.Families[0].Exchanges) != 1 {
 					return
 				}
