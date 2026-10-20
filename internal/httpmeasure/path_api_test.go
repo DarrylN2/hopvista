@@ -97,7 +97,7 @@ func TestDifficultPathsThroughAPI(t *testing.T) {
 				hops = &tc.hops
 			}
 			cancelled := false
-			snapshot := runEngineThroughAPIWithHops(t, manager, "https://start.example/path", hops, func(s result.Run, cancel func()) {
+			snapshot := runEngineThroughAPIWithHops(t, manager, "https://start.example/path", hops, func(s result.Run, cancel func(), _ func()) {
 				if tc.trace != result.TraceCancelled || cancelled {
 					return
 				}

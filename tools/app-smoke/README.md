@@ -1,5 +1,12 @@
 # Packaged executable smoke check
 
+For the opt-in real-minute cutoff candidate and native cancellation timestamp
+captures, see [issue #14's commands and outcomes](../../docs/implementation/issue-14.md).
+`TestPackagedMinuteCutoff` requires `HOPVISTA_PACKAGED_CUTOFF_IP` and the built
+`HOPVISTA_PACKAGED_EXE`; `HOPVISTA_CUTOFF_CAPTURE` optionally saves API JSON.
+An early-finishing candidate is a failed fixture, not a passing cutoff check.
+The currently recorded Wi-Fi candidate finishes early; issue #14 remains open.
+
 This opt-in Windows x64 check starts the built HopVista executable from an otherwise empty temporary directory. The child process receives a `PATH` containing only Windows System32, so it cannot find a Go or Node executable through `PATH`. The test verifies embedded UI assets, the local session endpoint, Host, Origin, and token rejection, explicit IPv6-literal rejection, and a full loopback HTTP 503 diagnostic run with native IPv4 route, echo, and trace evidence. It compares the loopback destination reply with system `tracert.exe -d -4` for the same selected `127.0.0.1` address. It then runs a `localhost` target and compares the application's selected and connected peer and HTTP 200 response with an independent system `curl.exe --resolve` request pinned to the same address and port, with proxies disabled. The check requires `tracert.exe` and `curl.exe` in Windows System32. It terminates the child and removes the temporary copy afterward.
 
 From the repository root in PowerShell, where loopback sockets are permitted:

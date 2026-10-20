@@ -344,6 +344,7 @@ func comparePackagedStopping(t *testing.T, client *http.Client, base, token, raw
 	if response.StatusCode != http.StatusOK || stopping.State != result.Stopping || stopping.StopRequestedAt == nil || stopping.EndedAt != nil || len(stopping.Findings) != 0 {
 		t.Fatalf("packaged run did not remain stopping: %+v", stopping)
 	}
+	writeCutoffCapture(t, "nativestopping", stopping)
 	response = post("/api/v1/runs", body)
 	var busy struct {
 		Error struct {
@@ -381,6 +382,26 @@ func comparePackagedStopping(t *testing.T, client *http.Client, base, token, raw
 	if len(target.Samples) != 2 || target.Attempted != 2 || target.Samples[0].Outcome != result.Timeout || target.Samples[1].Outcome != result.Timeout || target.Samples[1].StartedAt == nil || target.Samples[1].EndedAt == nil || target.Samples[1].StartedAt.After(*snapshot.StopRequestedAt) || target.Samples[1].EndedAt.Before(*snapshot.StopRequestedAt) {
 		t.Fatalf("packaged cancellation lacked an in-flight echo or started another: %+v", target)
 	}
+	if snapshot.MaxHops != 1 || snapshot.DeadlineAt.Sub(snapshot.StartedAt) != 60*time.Second || stopping.MaxHops != snapshot.MaxHops || !stopping.DeadlineAt.Equal(snapshot.DeadlineAt) || len(snapshot.Families[0].Exchanges) != len(stopping.Families[0].Exchanges) {
+		t.Fatal("cancellation changed settings or discarded website evidence")
+	}
+	writeCutoffCapture(t, "nativecancel", snapshot)
+	stable, _ := json.Marshal(snapshot)
+	response, err = client.Get(base + started.StatusURL)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var after result.Run
+	if err := json.NewDecoder(response.Body).Decode(&after); err != nil {
+		response.Body.Close()
+		t.Fatal(err)
+	}
+	response.Body.Close()
+	again, _ := json.Marshal(after)
+	if !bytes.Equal(stable, again) {
+		t.Fatal("cancelled terminal evidence changed")
+	}
+	t.Logf("native cancellation: cutoff=%s stop=%s last-send=%s returned-and-closed=%s quiescence=%s", snapshot.DeadlineAt.Format(time.RFC3339Nano), snapshot.StopRequestedAt.Format(time.RFC3339Nano), target.Samples[1].StartedAt.Format(time.RFC3339Nano), target.Samples[1].EndedAt.Format(time.RFC3339Nano), snapshot.EndedAt.Format(time.RFC3339Nano))
 }
 
 func compareTracert(t *testing.T, path result.Path) {

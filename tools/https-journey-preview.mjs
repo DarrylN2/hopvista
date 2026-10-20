@@ -1,5 +1,5 @@
 // Replay API-captured controlled results in the unchanged production UI.
-// Generate captures using docs/implementation/issue-11.md or issue-12.md first.
+// Generate captures using docs/implementation/issue-11.md, issue-12.md or issue-14.md.
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -36,7 +36,7 @@ const server = http.createServer(async (req, res) => {
   if (req.method !== 'GET' || !['index.html', 'app.js', 'style.css'].includes(asset)) { res.writeHead(404).end(); return; }
   let body = fs.readFileSync(path.join(root, 'internal', 'localapi', 'static', asset));
   if (asset === 'index.html') {
-    body = body.toString().replace('<body>', `<body><aside style="padding:8px 20px;background:#f5eddf;color:#745022;font:14px system-ui">Controlled API replay - simulated DNS/socket addresses, failures, ICMP and rule timings - real engine/API results - enter https://fixture.example with ${instructions}</aside>`);
+    body = body.toString().replace('<body>', `<body><aside style="padding:8px 20px;background:#f5eddf;color:#745022;font:14px system-ui">Controlled API replay - captured test results, not a live diagnostic run. Native versus simulated work is recorded in the corresponding implementation notes. Enter https://fixture.example with ${instructions}</aside>`);
   }
   res.setHeader('Content-Type', asset.endsWith('.js') ? 'text/javascript' : asset.endsWith('.css') ? 'text/css' : 'text/html');
   res.end(body);
