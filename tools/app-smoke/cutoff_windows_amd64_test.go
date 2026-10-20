@@ -19,6 +19,17 @@ import (
 // below are the production Windows adapter. The candidate must remain silent
 // far enough into a 64-hop trace to exhaust the real measurement budget.
 func TestPackagedMinuteCutoff(t *testing.T) {
+	runPackagedMinuteCutoff(t, false)
+}
+
+// The process pause is a harness-only scheduling fixture: real native work is
+// in flight, but its long wall-clock duration is externally induced. It does
+// not demonstrate a naturally stalled GetBestRoute2 or echo call.
+func TestPackagedSuspendedMinuteCutoff(t *testing.T) {
+	runPackagedMinuteCutoff(t, true)
+}
+
+func runPackagedMinuteCutoff(t *testing.T, pauseNative bool) {
 	rawIP := os.Getenv("HOPVISTA_PACKAGED_CUTOFF_IP")
 	if rawIP == "" {
 		t.Skip("set HOPVISTA_PACKAGED_CUTOFF_IP to a no-reply IPv4 candidate")
@@ -28,6 +39,9 @@ func TestPackagedMinuteCutoff(t *testing.T) {
 		t.Fatalf("invalid cutoff candidate %q", rawIP)
 	}
 	p := startPackagedProcess(t, copyPackagedExecutable(t))
+	if pauseNative {
+		ownDisposablePackagedProcess(t, p)
+	}
 	client := &http.Client{Timeout: 5 * time.Second, Transport: &http.Transport{Proxy: nil}}
 	defer client.CloseIdleConnections()
 	request := func(method, path, token string, body []byte) (int, []byte) {
@@ -72,6 +86,8 @@ func TestPackagedMinuteCutoff(t *testing.T) {
 	}
 	var snapshot result.Run
 	var previous result.Run
+	paused := false
+	var pausedEchoID string
 	until := time.Now().Add(75 * time.Second) // harness observation limit, not a native drain promise
 	for time.Now().Before(until) {
 		code, data = request(http.MethodGet, started.StatusURL, "", nil)
@@ -93,6 +109,17 @@ func TestPackagedMinuteCutoff(t *testing.T) {
 			}
 			writeCutoffCapture(t, "minutestopping", snapshot)
 		}
+		if pauseNative && !paused && len(snapshot.Families) > 0 && len(snapshot.Families[0].Paths) == 1 {
+			path := snapshot.Families[0].Paths[0]
+			if path.Target.Outcome == result.Pending && len(path.Target.Samples) == 1 && path.Target.Samples[0].Outcome == result.Timeout {
+				// The second target echo follows the first timeout immediately.
+				// The known no-reply fixture keeps it native-pending beyond 50 ms.
+				time.Sleep(50 * time.Millisecond)
+				pausedEchoID = path.Target.ID + "-2"
+				pausePackagedUntil(t, p, snapshot.DeadlineAt.Add(500*time.Millisecond))
+				paused = true
+			}
+		}
 		if snapshot.State.Terminal() {
 			break
 		}
@@ -100,19 +127,41 @@ func TestPackagedMinuteCutoff(t *testing.T) {
 		time.Sleep(20 * time.Millisecond)
 	}
 	// Save even a failed candidate's terminal/last snapshot for diagnosis.
-	writeCutoffCapture(t, "minute", snapshot)
+	capture := "minute"
+	if pauseNative {
+		capture = "pausedminute"
+	}
+	writeCutoffCapture(t, capture, snapshot)
+	if pauseNative && !paused {
+		t.Fatal("native no-reply fixture never reached the pause trigger")
+	}
 	if !snapshot.State.Terminal() || snapshot.State != result.RunCompleted || snapshot.EndedAt == nil || len(snapshot.Families) == 0 || len(snapshot.Families[0].Paths) != 1 {
 		t.Fatalf("no quiescent result: %+v", snapshot)
 	}
 	path := snapshot.Families[0].Paths[0]
+	if pauseNative {
+		found := false
+		for _, e := range path.Target.Samples {
+			if e.ID == pausedEchoID && e.StartedAt != nil && e.EndedAt != nil && e.StartedAt.Before(snapshot.DeadlineAt) && e.EndedAt.After(snapshot.DeadlineAt) {
+				found = true
+			}
+		}
+		if !found {
+			t.Fatalf("process pause did not span a real native echo: id=%s samples=%+v", pausedEchoID, path.Target.Samples)
+		}
+	}
 	if path.Trace.Outcome != result.TraceDeadline || snapshot.Families[0].Outcome != result.Deadline {
 		t.Fatalf("candidate did not exhaust the window: trace=%s family=%s elapsed=%s", path.Trace.Outcome, snapshot.Families[0].Outcome, snapshot.EndedAt.Sub(snapshot.StartedAt))
 	}
 	if snapshot.StopRequestedAt == nil || snapshot.StopRequestedAt.Before(snapshot.DeadlineAt) || snapshot.EndedAt.Before(snapshot.DeadlineAt) {
 		t.Fatal("candidate exhausted admission budget before the wall-clock cutoff; this does not exercise real-minute stopping")
 	}
-	if len(path.Trace.Hops) < 2 || len(path.Target.Samples) == 0 {
-		t.Fatal("completed partial evidence missing")
+	if pauseNative {
+		if len(path.Target.Samples) != 2 || path.Target.Outcome != result.Deadline || len(path.Trace.Hops) != 0 {
+			t.Fatal("paused target echo did not retain partial evidence or stop scheduling")
+		}
+	} else if len(path.Trace.Hops) < 2 || len(path.Target.Samples) == 0 {
+		t.Fatal("completed trace evidence missing")
 	}
 	stop := snapshot.DeadlineAt
 	if snapshot.StopRequestedAt != nil && snapshot.StopRequestedAt.Before(stop) {
@@ -136,9 +185,11 @@ func TestPackagedMinuteCutoff(t *testing.T) {
 			}
 		}
 	}
-	last := path.Trace.Hops[len(path.Trace.Hops)-1]
-	if last.StartedAt == nil && (last.Outcome != result.Deadline || last.Status != result.NotSent || last.RTTMS != nil) {
-		t.Fatalf("invalid budget refusal: %+v", last)
+	if len(path.Trace.Hops) > 0 {
+		last := path.Trace.Hops[len(path.Trace.Hops)-1]
+		if last.StartedAt == nil && (last.Outcome != result.Deadline || last.Status != result.NotSent || last.RTTMS != nil) {
+			t.Fatalf("invalid budget refusal: %+v", last)
+		}
 	}
 	t.Logf("cutoff=%s stop-observed=%v quiescence=%s elapsed=%s", snapshot.DeadlineAt.Format(time.RFC3339Nano), snapshot.StopRequestedAt, snapshot.EndedAt.Format(time.RFC3339Nano), snapshot.EndedAt.Sub(snapshot.StartedAt))
 	for i := 0; i < 3; i++ {

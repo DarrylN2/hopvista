@@ -2,10 +2,12 @@
 
 Latest lifecycle follow-up: [issue #14 evidence](issue-14.md) rechecks native
 cancellation and cap/margin behavior, carries held-route stops through the
-engine/API and current UI, and records a **failed packaged-minute candidate**.
-That candidate completed its 64-hop trace in 38.35 seconds, so packaged actual
-60-second cutoff acceptance and issue #14 remain open. No production timing or
-approved UI change was made to force a passing check.
+engine/API and current UI, and records the **failed natural packaged-minute
+candidate**: its 64-hop trace completed in 38.35 seconds. A later test-only
+process pause spanned the full, unchanged 60-second packaged window while a
+real native echo was in flight; its pass and interruption history are recorded
+in the same document. The pause is induced by the harness, so a naturally
+stalled native call, broader conditions and release acceptance remain open.
 
 Latest path/echo follow-up: [issue #13 verification](issue-13.md) carries silent,
 high-intermediate-RTT, unreachable, hop-limit and unstarted deadline/cancelled
