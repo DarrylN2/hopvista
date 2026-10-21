@@ -5,7 +5,16 @@ captures, see [issue #14's commands and outcomes](../../docs/implementation/issu
 `TestPackagedMinuteCutoff` requires `HOPVISTA_PACKAGED_CUTOFF_IP` and the built
 `HOPVISTA_PACKAGED_EXE`; `HOPVISTA_CUTOFF_CAPTURE` optionally saves API JSON.
 An early-finishing candidate is a failed fixture, not a passing cutoff check.
-The currently recorded Wi-Fi candidate finishes early; issue #14 remains open.
+The natural Wi-Fi candidate finishes early; issue #14's stated checks are
+covered by the separately labeled controlled-pause fixture and other evidence
+at the recorded condition. Release acceptance remains open.
+`TestPackagedSuspendedMinuteCutoff` uses the same built executable and candidate
+address, but the harness pauses only its disposable process while a native echo
+is in flight, then resumes after the real 60-second deadline. This is an
+externally induced scheduling delay, not a naturally stalled native API call.
+The test owns the child in a Windows kill-on-close job so a test timeout cannot
+leave a suspended process behind. See the later issue #14 follow-up record for
+the pass and interruption history.
 
 This opt-in Windows x64 check starts the built HopVista executable from an otherwise empty temporary directory. The child process receives a `PATH` containing only Windows System32, so it cannot find a Go or Node executable through `PATH`. The test verifies embedded UI assets, the local session endpoint, Host, Origin, and token rejection, explicit IPv6-literal rejection, and a full loopback HTTP 503 diagnostic run with native IPv4 route, echo, and trace evidence. It compares the loopback destination reply with system `tracert.exe -d -4` for the same selected `127.0.0.1` address. It then runs a `localhost` target and compares the application's selected and connected peer and HTTP 200 response with an independent system `curl.exe --resolve` request pinned to the same address and port, with proxies disabled. The check requires `tracert.exe` and `curl.exe` in Windows System32. It terminates the child and removes the temporary copy afterward.
 

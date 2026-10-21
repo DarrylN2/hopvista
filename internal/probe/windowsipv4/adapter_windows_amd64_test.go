@@ -103,8 +103,10 @@ func TestLivePendingEchoCancellation(t *testing.T) {
 	defer cancel()
 	deadline := time.Now().Add(5 * time.Second)
 	request := probe.EchoRequest{ID: "pending", SelectedIP: ip, TTL: 64, Cap: time.Second, DeadlineAt: deadline}
+	traces := make(chan nativeEchoTrace, 1)
+	a := Adapter{observeEcho: func(trace nativeEchoTrace) { traces <- trace }}
 	done := make(chan result.Echo, 1)
-	go func() { done <- (Adapter{}).Echo(ctx, request) }()
+	go func() { done <- a.Echo(ctx, request) }()
 	time.Sleep(25 * time.Millisecond)
 	select {
 	case early := <-done:
@@ -121,7 +123,16 @@ func TestLivePendingEchoCancellation(t *testing.T) {
 	if first.Outcome != result.Timeout || first.Status != result.NoReply || first.StartedAt == nil || first.EndedAt == nil || first.StartedAt.After(stopped) || first.EndedAt.Before(stopped) || first.ReplyAddress != "" || first.RTTMS != nil {
 		t.Fatalf("pending native echo did not drain as observed: %+v", first)
 	}
-	t.Logf("pending native echo returned after cancellation and cleanup; stop-to-return %.1f ms", first.EndedAt.Sub(stopped).Seconds()*1000)
+	var trace nativeEchoTrace
+	select {
+	case trace = <-traces:
+	default:
+		t.Fatal("native timing observer did not report return and handle cleanup")
+	}
+	if !trace.HandleClosed || !trace.StartedAt.Equal(*first.StartedAt) || trace.ReturnedAt.Before(stopped) || trace.ReturnedAt.Before(trace.StartedAt) || trace.ClosedAt.Before(trace.ReturnedAt) || !trace.ClosedAt.Equal(*first.EndedAt) {
+		t.Fatalf("native return and cleanup ordering: trace=%+v echo=%+v stop=%s", trace, first, stopped)
+	}
+	t.Logf("pending native echo: start=%s stop=%s raw-return=%s handle-closed=%s", trace.StartedAt.Format(time.RFC3339Nano), stopped.Format(time.RFC3339Nano), trace.ReturnedAt.Format(time.RFC3339Nano), trace.ClosedAt.Format(time.RFC3339Nano))
 }
 
 // This samples the production adapter's empirical full-cap start policy on

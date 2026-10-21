@@ -23,7 +23,18 @@ var icmpCreateFile = dll.NewProc("IcmpCreateFile")
 var icmpSendEcho2 = dll.NewProc("IcmpSendEcho2")
 var icmpCloseHandle = dll.NewProc("IcmpCloseHandle")
 
-type Adapter struct{}
+// observeEcho is a package-local test seam. Production constructs Adapter{}
+// and retains the schema-1 returned-and-closed timestamp in Measurement.
+type Adapter struct {
+	observeEcho func(nativeEchoTrace)
+}
+
+type nativeEchoTrace struct {
+	StartedAt    time.Time
+	ReturnedAt   time.Time
+	ClosedAt     time.Time
+	HandleClosed bool
+}
 
 var _ probe.Adapter = Adapter{}
 
@@ -104,7 +115,7 @@ func (Adapter) Route(ctx context.Context, req probe.RouteRequest) result.Route {
 	return out
 }
 
-func (Adapter) Echo(ctx context.Context, req probe.EchoRequest) (out result.Echo) {
+func (a Adapter) Echo(ctx context.Context, req probe.EchoRequest) (out result.Echo) {
 	bound := req.Cap.Seconds() * 1000
 	out = result.Echo{Measurement: result.Measurement{ID: req.ID, Method: "icmp_send_echo2_ipv4", BoundMS: &bound}, SelectedIP: req.SelectedIP.String(), TTL: req.TTL, Status: result.NotSent}
 	if req.ID == "" || !probe.ValidIPv4(req.SelectedIP) || req.TTL < 1 || req.TTL > 255 || req.Cap <= 0 || req.Cap > time.Second || req.Cap%time.Millisecond != 0 || req.DeadlineAt.IsZero() {
@@ -123,8 +134,10 @@ func (Adapter) Echo(ctx context.Context, req probe.EchoRequest) (out result.Echo
 		out.Error = nativeError("icmp_handle_open_failed")
 		return
 	}
+	var returnedAt time.Time
 	defer func() {
 		closed, _, _ := icmpCloseHandle.Call(handle)
+		closedAt := time.Now().UTC()
 		if closed == 0 {
 			out.Outcome = result.Error
 			out.Status = result.CallError
@@ -134,11 +147,13 @@ func (Adapter) Echo(ctx context.Context, req probe.EchoRequest) (out result.Echo
 			out.DurationMS = nil
 		}
 		if out.StartedAt != nil {
-			ended := time.Now().UTC()
-			out.EndedAt = &ended
+			out.EndedAt = &closedAt
 			if out.Outcome == result.Completed {
-				d := ended.Sub(*out.StartedAt).Seconds() * 1000
+				d := closedAt.Sub(*out.StartedAt).Seconds() * 1000
 				out.DurationMS = &d
+			}
+			if a.observeEcho != nil && !returnedAt.IsZero() {
+				a.observeEcho(nativeEchoTrace{StartedAt: *out.StartedAt, ReturnedAt: returnedAt, ClosedAt: closedAt, HandleClosed: closed != 0})
 			}
 		}
 	}()
@@ -158,6 +173,7 @@ func (Adapter) Echo(ctx context.Context, req probe.EchoRequest) (out result.Echo
 	out.StartedAt = &started
 	ip := req.SelectedIP.As4()
 	count, _, callErr := icmpSendEcho2.Call(handle, 0, 0, 0, uintptr(binary.LittleEndian.Uint32(ip[:])), uintptr(unsafe.Pointer(&request[0])), uintptr(len(request)), uintptr(unsafe.Pointer(&options[0])), uintptr(unsafe.Pointer(&reply[0])), uintptr(unsafe.Sizeof(reply)), uintptr(req.Cap/time.Millisecond))
+	returnedAt = time.Now().UTC()
 	runtime.KeepAlive(request)
 	runtime.KeepAlive(options)
 	runtime.KeepAlive(reply)
