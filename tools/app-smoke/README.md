@@ -5,7 +5,9 @@ captures, see [issue #14's commands and outcomes](../../docs/implementation/issu
 `TestPackagedMinuteCutoff` requires `HOPVISTA_PACKAGED_CUTOFF_IP` and the built
 `HOPVISTA_PACKAGED_EXE`; `HOPVISTA_CUTOFF_CAPTURE` optionally saves API JSON.
 An early-finishing candidate is a failed fixture, not a passing cutoff check.
-The currently recorded Wi-Fi candidate finishes early; issue #14 remains open.
+The natural Wi-Fi candidate finishes early; issue #14's stated checks are
+covered by the separately labeled controlled-pause fixture and other evidence
+at the recorded condition. Release acceptance remains open.
 `TestPackagedSuspendedMinuteCutoff` uses the same built executable and candidate
 address, but the harness pauses only its disposable process while a native echo
 is in flight, then resumes after the real 60-second deadline. This is an

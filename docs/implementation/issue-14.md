@@ -1,12 +1,13 @@
 # Issue 14: packaged cancellation and cutoff evidence
 
-Checked on 2026-10-19 (America/Los_Angeles; captures use 2026-10-20 UTC) for
+First checked on 2026-10-19 (America/Los_Angeles; captures use 2026-10-20 UTC) for
 [issue #14](https://github.com/DarrylN2/hopvista/issues/14), with no comments
 when read. Branch `codex/packaged-cutoff-acceptance` starts at freshly fetched
 `origin/main`, `b1ef63141f655ae0ae8032a0cd37a3252d0244ff` (merged PR #21).
 The workspace was clean. The approved UI, React/TypeScript, Vite, plain CSS,
 schema version 1 and Go-owned findings are unchanged. **Issue #14 remains
-partially verified; release acceptance remains open.**
+partially verified. Later follow-ups below complete the issue's stated checks
+at the named tested-condition scope. **Release acceptance remains open.**
 
 ## Condition and provenance
 
@@ -115,15 +116,15 @@ printed replay listener. Restart the helper after regenerating captures.
 The 75-second observation limit in the opt-in packaged test and Go's test
 timeout are harness limits, not production native drain guarantees.
 
-## Outstanding acceptance
+## Outstanding acceptance after the first pass
 
 A repeatable native/network fixture that keeps the unmodified packaged app
 active through its actual 60-second wall-clock cutoff is still required.
 `192.0.2.1` on this Wi-Fi condition is not that fixture. The opt-in test retains
 its failure rather than skipping or treating early full-cap refusal as success.
 No actual stalled GetBestRoute2 was observed. Other Windows accounts/builds,
-alternate networks/VPNs and broader load remain unverified. Do not close issue
-#14 or claim release acceptance from this record.
+alternate networks/VPNs and broader load remain unverified. This first pass
+did not complete issue #14 or claim release acceptance.
 
 ## Verification
 
@@ -229,12 +230,81 @@ $env:HOPVISTA_CUTOFF_CAPTURE = Join-Path $PWD '.tools/issue-14'
 ```
 
 The natural no-pause 64-hop candidate remains a failed 38.35-second fixture.
-An actually stalled GetBestRoute2, natural native work spanning the cutoff,
-separately timed native return and handle close, and broader accounts/builds/
-networks are still unverified. Issue #14 and release acceptance remain open
-pending those distinctions and any release-scope decision.
+At this stage an actually stalled GetBestRoute2, natural native work spanning
+the cutoff, separately timed native return and handle close, and broader
+accounts/builds/networks remained unverified. This induced-pause check did not
+by itself complete issue #14 or release acceptance.
 
 The final follow-up check passed explicit packaged paused-cutoff testing,
 standalone TypeScript checking, the production Vite build, full root
 `go test ./... -count=1`, `go vet ./...`, and a fresh production executable
 build. Opt-in native fixtures still skip in the ordinary Go suite.
+
+## Final issue #14 check: native return and cleanup timing
+
+On 2026-10-20 (America/Los_Angeles; timestamps below are 2026-10-21 UTC), the
+same unelevated Windows 11 Pro 25H2 build 26200.9711 x64 condition had one
+active Intel Wi-Fi 6E AX211 adapter at a reported 9 Mbps, with IPv4 default
+gateway `10.8.26.1`. The opt-in live adapter checks used the same stated
+`192.0.2.1` candidate. Two sandboxed attempts could not open an ICMP handle,
+including loopback; these are permission failures, not native timing results.
+The elevated-permission retry passed, as did all four opt-in `TestLive*`
+checks. There were no deliberately added CPU workers outside the loaded cap
+case; ordinary desktop activity continued. The loaded case used GOMAXPROCS=1
+and two progressing busy Go workers, as in the original record.
+
+A package-local test observer now records the exact instant immediately after
+`IcmpSendEcho2` returns and the instant immediately after `IcmpCloseHandle`
+returns. Production constructs `Adapter{}` with no observer. The schema-1
+`ended_at` remains the handle-closed instant, so the public run result and UI
+remain unchanged. In the focused native cancellation pass, the echo entered at
+`04:10:55.0102183Z`, cancellation was requested at `04:10:55.0311731Z`, the
+native call returned at `04:10:55.5833103Z`, and the handle closed at
+`04:10:55.5837292Z`. The test asserts that order, that no post-cancel echo
+starts, and that the public echo end matches handle closure. A second pass of
+all live checks confirmed the same ordering; its return and closure fell in
+the same reported clock tick. Three full-cap no-reply samples at each of 750,
+900 and 1000 ms and the corresponding loaded samples passed; no loaded
+pre-send refusals occurred in this repeat. This is observed ordering, not a
+promise that every native call returns within a fixed time.
+
+The rebuilt production executable, with the observer nil, passed
+`TestPackagedSuspendedMinuteCutoff` again. Its run started at
+`04:12:24.2833521Z`, reached the unchanged cutoff at `04:13:24.2833521Z`,
+recorded scheduling stop at `04:13:24.7839657Z`, and quiesced at
+`04:13:24.7856906Z` (60.5023385 s). The target's second actual native echo
+entered at `04:12:27.5976732Z` and returned-and-closed at
+`04:13:24.7844749Z`. The harness alone paused the disposable process at
+`04:12:27.6490488Z` and resumed it at `04:13:24.7836169Z`. Its pause explains
+the approximately 500 ms late stop observation. The check retained earlier
+gateway and target evidence, scheduled no trace probes after cutoff, held
+findings until terminal, returned stable terminal snapshots, and released the
+run slot after quiescence. Existing finite packaged cancellation and simulated
+held-route checks cover the responsive `stopping` and busy-slot interval; the
+whole-process pause cannot expose a live API view while suspended. The
+unchanged UI replay remains the presentation check recorded above.
+
+Reproduce the native ordering and packaged cutoff checks from the root after
+building the current executable, using the documented native-network access:
+
+```powershell
+$env:GOCACHE = Join-Path $PWD '.tools/go-build'
+$env:HOPVISTA_LIVE_ADAPTER = '1'
+$env:HOPVISTA_LIVE_DRAIN_IP = '192.0.2.1'
+& ./.tools/go/bin/go.exe test ./internal/probe/windowsipv4 -run '^TestLive' -count=1 -v
+& ./.tools/go/bin/go.exe build -o .tools/hopvista-minute-current.exe ./cmd/hopvista
+$env:HOPVISTA_PACKAGED_EXE = Join-Path $PWD '.tools/hopvista-minute-current.exe'
+$env:HOPVISTA_PACKAGED_CUTOFF_IP = '192.0.2.1'
+$env:HOPVISTA_CUTOFF_CAPTURE = Join-Path $PWD '.tools/issue-14'
+& ./.tools/go/bin/go.exe test ./tools/app-smoke -run '^TestPackagedSuspendedMinuteCutoff$' -count=1 -v -timeout 100s
+```
+
+The ticket asks for a repeatable stated fixture and explicitly allows a
+test-only seam. Taken with the prior finite native cancellation, held-route
+engine/API, and UI replay checks, the above covers **issue #14's acceptance
+criteria at this named condition**. The packaged minute fixture induces a
+process scheduling delay, not a network-caused native stall. An actual stalled
+GetBestRoute2, natural native work spanning the cutoff, additional Windows
+accounts/builds/networks, full accessibility and human comprehension remain
+unverified; issue #10 release acceptance stays open. These limits are not
+reported as demonstrated failures or silently promoted to passes.
