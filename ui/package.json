@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "tsc --noEmit && vite build",
-    "test": "node --test ../tools/accessibility-ui.test.mjs"
+    "test": "node --test ../tools/accessibility-ui.test.mjs ../tools/packaged-ui.test.mjs",
+    "test:packaged": "node --test ../tools/packaged-ui.test.mjs"
   },
   "dependencies": {
     "react": "19.2.0",
