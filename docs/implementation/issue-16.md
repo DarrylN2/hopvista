@@ -265,7 +265,11 @@ Report: `.impeccable/review/issue-16/observations-2026-10-22T04-01-29.546Z.json`
 remains. No desktop/browser control or system clipboard access was used.
 
 The initial full-suite retry used bare `go`, which was absent from PATH and
-therefore did not run. It was retried with the repository's `.tools/go/bin/go.exe`.
+therefore did not run. With `CGO_ENABLED=0`,
+`& ./.tools/go/bin/go.exe test ./... -count=1` and
+`& ./.tools/go/bin/go.exe vet ./...` then passed. Full-suite output is retained
+in `.tools/issue-16/participant-copy-go-test.log`; the previously described
+opt-in checks remain disabled. `git diff --check` also passed.
 The participant has been asked to refresh and reread the updated production UI;
 actual comprehension recheck answers remain pending. This wording change has
 not yet been rechecked with real NVDA under the current no-desktop-control
@@ -296,3 +300,11 @@ Review summary: Standards 0 actionable findings; Spec 0 new implementation
 findings. **Known issue #16 blocker: completion of the real participant review,
 plus any demonstrated defect fixes and affected-case rechecks. Issue #10 release
 acceptance remains separate and open.**
+
+Follow-up source review of `git diff a58b2e8...4426b9c` completed after the
+participant-driven timing change. Standards: no documented violations or
+actionable heuristic smells. Spec: no new implementation defects or scope
+creep; timing boundaries, schema and Go-owned findings preserved. Spec explicitly
+retained the pending participant recheck, remaining participant tasks and lack
+of a fresh real-reader check of the changed wording. Neither reviewer operated
+a browser, desktop or clipboard or independently reran checks.
