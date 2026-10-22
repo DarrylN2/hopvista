@@ -308,3 +308,13 @@ creep; timing boundaries, schema and Go-owned findings preserved. Spec explicitl
 retained the pending participant recheck, remaining participant tasks and lack
 of a fresh real-reader check of the changed wording. Neither reviewer operated
 a browser, desktop or clipboard or independently reran checks.
+
+P1's revised-copy recheck still did not establish phase comprehension: they
+described TCP making the connection and TLS securing it, but were uncertain
+about DNS, described HTTP as a protocol without explaining its measured wait,
+and explicitly did not know whether download/display were included. Their full
+answer is preserved in the participant record. The facilitator then supplied
+plain definitions and explained the excluded body download/page display; any
+later answer must be recorded as assisted. The automated guidance test remains
+a regression check for available content, not evidence that this human defect
+is resolved. No further production change or acceptance pass is claimed.

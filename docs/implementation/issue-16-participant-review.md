@@ -53,7 +53,9 @@ opened technical evidence. Image dimensions are not CSS viewport measurements,
 and screenshots do not establish keyboard-only operation. It is unknown whether
 the phase explanation response preceded or followed opening details. The facilitator
 provided the loopback review URL, the `i11completed` replay path and questions;
-no expected answers were supplied. No comprehension pass or screen-reader
+no expected answers were supplied before the two phase attempts below. After
+the revised-copy attempt, the facilitator supplied definitions and explicitly
+excluded response-body download and page display. No comprehension pass or screen-reader
 participant result has been inferred. Preserve first attempts and help. For
 each demonstrated failure, link a defect/regression check and record the
 participant's recheck.
@@ -63,6 +65,7 @@ participant's recheck.
 | Familiarity | “I'm new to networking and HopVist” | Review URL and scenario supplied. | Participant scope recorded. | Not applicable. |
 | `i11completed`: locating information | “I can send you pics of what the website shows. I think its okay in terms of how easy it is to find” | No content explanation supplied. | General perceived ease recorded; observation, uncertainty and selected IP have not yet been identified by the participant. | Specific readings requested. |
 | `i11completed`: phase meanings | “I think most of them are clear” | No definitions or expected answers supplied. | Perceived clarity recorded; actual phase comprehension remains unverified. | Participant explanations requested, allowing “not sure”. |
-| `i11completed`: phase meanings, follow-up | “For each timing, I'm not sure.” | Asked for own-word meanings; no expected definitions supplied. | Comprehension criterion not met in this attempt. | Added a visible four-step guide and simpler row explanations; participant asked to refresh and explain again. Response pending. |
+| `i11completed`: phase meanings, follow-up | “For each timing, I'm not sure.” | Asked for own-word meanings; no expected definitions supplied. | Comprehension criterion not met in this attempt. | Added a visible four-step guide and simpler row explanations; actual recheck below. |
+| `i11completed`: revised-copy phase recheck | “Okay, so I don't really know, but I think DNS. DNS finds and then establishes TCP makes the connection, TLS, secures the connection, HTTP is a protocol. I don't really know. I also don't know if these timings include downloading and displaying the whole page.” | Asked to refresh, run the same case and read updated timing guidance. No definitions supplied before this answer. Refresh/version was not independently observed. | Partial TCP/TLS understanding; DNS boundary unclear, HTTP timing boundary not explained, full-page exclusion unknown. Revised wording has not established comprehension acceptance. | Facilitator then explained address lookup, connection opening, encryption/certificate setup and request-to-first-response-byte timing, excluding body download and page display. Any subsequent recheck must be labelled assisted; no assisted answer yet. |
 | Browser and input scope | “I'm using google chrome, and I can navigate with mouse and keyboard” | No operation assistance supplied. | Browser/input familiarity recorded; this is not evidence that the specific keyboard evidence/copy tasks passed. | Specific tasks still pending. |
 | Browser/direct path, missing vs zero, cutoff/completion, hop limit/unreachable and keyboard evidence/copy | No response yet. | No help yet. | Not checked. | Pending later rounds. |
