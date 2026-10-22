@@ -1,5 +1,14 @@
 # HopVista v1 acceptance status
 
+Latest functional follow-up: [issue #24](issue-24.md) joins the current embedded
+production UI to the real packaged backend in isolated headless browser journeys.
+Form submission, redirect/error/partial results, evidence navigation, rejected
+input/retry, cancellation, subsequent runs and actual process restart pass on
+the recorded loopback Windows condition. These checks complement the earlier
+mocked-API UI and process/API checks. Human comprehension review is **explicitly
+deferred** at the user's request; issue #16 and overall release acceptance remain
+open. The historical ordering below does not override this priority change.
+
 Latest accessibility follow-up: [issue #16](issue-16.md) records keyboard and
 clipboard fixes, actual NVDA speech checks, layout/zoom, reduced-motion and
 contrast/target measurements against the verified #11–#14 scenarios. Independent

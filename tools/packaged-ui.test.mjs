@@ -144,7 +144,10 @@ async function start(page, target, hops = 1) {
 }
 
 async function terminalResult(page, context, origin, started, state = 'completed') {
-  await page.waitForFunction(expected => document.querySelector('main')?.dataset.state === expected, state, { timeout: 25_000 });
+  await page.waitForFunction(({ id, state }) => {
+    const exported = document.querySelector('.technical > details pre')?.textContent;
+    return document.querySelector('main')?.dataset.state === state && exported && JSON.parse(exported).run_id === id;
+  }, { id: started.run_id, state }, { timeout: 25_000 });
   const response = await context.request.get(origin + started.status_url);
   assert.equal(response.status(), 200);
   const run = await response.json();
