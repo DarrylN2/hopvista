@@ -96,6 +96,11 @@ glossary vocabulary, cleanup registration and preserved product boundaries. No
 meaningful baseline code smell warranted a change. Tests were not independently
 rerun by the reviewer.
 
+Independent follow-up review of `git diff 9687962...d8a78f0` found **0 new
+actionable Standards findings**, including the synchronization fix and this
+verification record. It confirmed that the run-ID check stays at the public
+JSON-export seam and the record distinguishes checks, skips and remaining limits.
+
 ## Spec
 
 Independent source review of the same diff: **1 repeatability finding**. The
@@ -103,7 +108,13 @@ terminal wait could accept the preceding run's completed screen before the new
 POST response was consumed. Assertions prevented a false pass, but a false
 failure remained possible. The wait now checks the new run ID and terminal state.
 No missing functional scenarios or scope creep were identified. Independent
-recheck of the synchronization change is pending at this record's initial commit.
+recheck of `d8a78f0` confirmed the repeatability finding **resolved**, with **0
+remaining actionable Spec findings**. The reviewer also checked the recorded
+logs and confirmed that the evidence wording matches their scope. No tests or
+browser operations were independently rerun.
+
+Review summary: Standards **0 findings**; Spec **1 original finding resolved,
+0 remaining**. This final documentation update records both review dispositions.
 
 ## Remaining boundaries
 
