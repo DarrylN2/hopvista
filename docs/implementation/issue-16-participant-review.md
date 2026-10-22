@@ -45,8 +45,13 @@ Do not record unnecessary personal information.
 ## Observation record
 
 Participant: **P1, the user of this chat**, 2026-10-21 (America/Los_Angeles).
-Self-reported familiarity: new to networking and HopVista. Browser/version,
-viewport, zoom and input method have not yet been supplied. The facilitator
+Self-reported familiarity: new to networking and HopVista. Browser: Google
+Chrome (version unknown); participant reports they can use mouse and keyboard.
+Exact CSS viewport and zoom have not been supplied. Six participant-provided
+screenshots (3456×2040 source pixels) show the normal replay, website timing and
+opened technical evidence. Image dimensions are not CSS viewport measurements,
+and screenshots do not establish keyboard-only operation. It is unknown whether
+the phase explanation response preceded or followed opening details. The facilitator
 provided the loopback review URL, the `i11completed` replay path and questions;
 no expected answers were supplied. No comprehension pass or screen-reader
 participant result has been inferred. Preserve first attempts and help. For
@@ -58,4 +63,6 @@ participant's recheck.
 | Familiarity | “I'm new to networking and HopVist” | Review URL and scenario supplied. | Participant scope recorded. | Not applicable. |
 | `i11completed`: locating information | “I can send you pics of what the website shows. I think its okay in terms of how easy it is to find” | No content explanation supplied. | General perceived ease recorded; observation, uncertainty and selected IP have not yet been identified by the participant. | Specific readings requested. |
 | `i11completed`: phase meanings | “I think most of them are clear” | No definitions or expected answers supplied. | Perceived clarity recorded; actual phase comprehension remains unverified. | Participant explanations requested, allowing “not sure”. |
+| `i11completed`: phase meanings, follow-up | “For each timing, I'm not sure.” | Asked for own-word meanings; no expected definitions supplied. | Comprehension criterion not met in this attempt. | Added a visible four-step guide and simpler row explanations; participant asked to refresh and explain again. Response pending. |
+| Browser and input scope | “I'm using google chrome, and I can navigate with mouse and keyboard” | No operation assistance supplied. | Browser/input familiarity recorded; this is not evidence that the specific keyboard evidence/copy tasks passed. | Specific tasks still pending. |
 | Browser/direct path, missing vs zero, cutoff/completion, hop limit/unreachable and keyboard evidence/copy | No response yet. | No help yet. | Not checked. | Pending later rounds. |

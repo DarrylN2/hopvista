@@ -6,10 +6,10 @@ import "./style.css";
 const directPathCaveat = "HopVista tests a direct connection from this computer. Your browser may use another IP, a proxy, cached DNS, or an existing connection.";
 const terminal = new Set(["completed", "cancelled", "failed"]);
 const phaseHelp = {
-  DNS: "Local resolver lookup; an answer may come from a cache.",
-  TCP: "Connection setup to the selected IPv4 address.",
-  TLS: "Encrypted connection setup and certificate verification for this URL.",
-  HTTP: "From writing the request to the first response-header byte. Includes network transit and server work, not page rendering or body download.",
+  DNS: "Time spent finding an IPv4 address for the website name. This computer's resolver may use a saved (cached) answer.",
+  TCP: "Time spent opening a connection to the selected IPv4 address, before encryption and the website request.",
+  TLS: "Time spent setting up encryption and checking the website's security certificate for this HTTPS connection.",
+  HTTP: "Time from writing the request until the website's response starts (the first response-header byte). Includes network travel and server work, not downloading or displaying the page.",
 };
 
 function ms(value: number) { return `${Number(value.toFixed(value < 10 ? 2 : 1))} ms`; }
@@ -214,7 +214,7 @@ function App() {
             {run.error && <p className="error">{run.error.message}</p>}
             {family?.error && <p className="error">{family.error.message}</p>}
           </section>
-          <section className="panel timing" aria-labelledby="timing-title"><h3 id="timing-title">Website timing</h3><p className="section-help">Separate waits for each website exchange. These measurements do not measure page load.</p>
+          <section className="panel timing" aria-labelledby="timing-title"><h3 id="timing-title">Website timing</h3><p className="section-help">Four separate steps for each website request. DNS finds an address, TCP opens a connection, TLS secures it, and HTTP first byte waits for the response to start. These timings do not measure a full page load.</p>
             {family?.exchanges.length ? family.exchanges.map((exchange) => <ExchangeView key={exchange.id} exchange={exchange} showEvidence={showEvidence} />) : <p>No website exchange recorded yet.</p>}
             {family?.dns.filter((dns) => !family.exchanges.some((exchange) => exchange.dns_ref === dns.id)).map((dns) => <div className="exchange" key={dns.id}><h4>IPv4 selection for {dns.hostname}</h4><p>{phaseLabel(dns)}. {phaseHelp.DNS}</p><EvidenceButton id={dns.id} showEvidence={showEvidence} /></div>)}
           </section>

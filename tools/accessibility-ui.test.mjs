@@ -277,3 +277,16 @@ test('copy acknowledgement keeps its text readable through the color change', as
   });
   assert.deepEqual(colors, { text: 'rgb(255, 255, 255)', background: 'rgb(36, 79, 205)' });
 });
+
+test('website timing explains the four steps in plain language before opening evidence', async t => {
+  const { page } = await review(t);
+  await page.getByRole('button', { name: 'Start diagnostic run', exact: true }).press('Enter');
+  await page.locator('.run-heading').waitFor();
+  const introduction = await page.locator('.timing > .section-help').innerText();
+  assert.match(introduction, /DNS finds an address/);
+  assert.match(introduction, /TCP opens a connection/);
+  assert.match(introduction, /TLS secures it/);
+  assert.match(introduction, /HTTP first byte waits for the response to start/);
+  assert.match(introduction, /do not measure a full page load/);
+  assert.equal(await page.locator('.technical').getAttribute('open'), null);
+});

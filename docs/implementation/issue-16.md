@@ -233,6 +233,44 @@ These are real perceived-ease observations, not yet evidence of the requested
 phase/limit comprehension. A follow-up asks for the actual selected IP,
 observation, uncertainty and phase explanations, without providing answers.
 
+## Participant timing comprehension follow-up
+
+P1 supplied six Chrome screenshots of the normal replay, timing rows and opened
+technical evidence, and stated: “For each timing, I'm not sure.” This is a real
+comprehension failure for the phase task, superseding their earlier perceived
+clarity. Their reported mouse/keyboard familiarity does not establish a specific
+keyboard task pass. The screenshots do not establish their interpretation of
+the finding, selected IP or limits.
+
+At the approved rendered-UI seam, a new regression check required a visible
+four-step guide before opening technical evidence. The focused command
+`node --test --test-name-pattern="website timing explains" tools/accessibility-ui.test.mjs`
+failed against the previous generic introduction (1 failure; 14 pattern skips).
+The introduction now explains DNS/address, TCP/connection, TLS/encryption and
+HTTP/response start together, and individual row descriptions use plainer
+language while preserving first-response-header-byte scope and exclusion of
+body download/rendering. No schema, measurement or Go finding was changed.
+This test verifies available guidance, not human understanding.
+
+`npm.cmd --prefix ui run build`,
+`npx.cmd --prefix ui tsc --noEmit -p ui/tsconfig.json`, and
+`npm.cmd --prefix ui test` passed (14 passed, 1 opt-in system-clipboard skip).
+With `HOPVISTA_REVIEW_URL=http://127.0.0.1:50853/` and
+`HOPVISTA_REVIEW_MODES=i11completed,i12tcptimeout,i12measuredzero,i13limit64`,
+`node tools/accessibility-observe.mjs` passed all 20 affected scenario/viewport
+cases, including preserved findings, evidence navigation and reduced motion.
+Report: `.impeccable/review/issue-16/observations-2026-10-22T04-01-29.546Z.json`.
+`node tools/accessibility-metrics.mjs` passed 20 sampled color pairs and the
+320px manual-copy fallback; the previously disclosed wordmark target exception
+remains. No desktop/browser control or system clipboard access was used.
+
+The initial full-suite retry used bare `go`, which was absent from PATH and
+therefore did not run. It was retried with the repository's `.tools/go/bin/go.exe`.
+The participant has been asked to refresh and reread the updated production UI;
+actual comprehension recheck answers remain pending. This wording change has
+not yet been rechecked with real NVDA under the current no-desktop-control
+workflow; prior real-reader checks apply to the earlier production wording.
+
 ## Standards
 
 Independent source review of implementation commit
