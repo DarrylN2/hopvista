@@ -1,7 +1,7 @@
 # Issue 16 participant review
 
-Status: prepared; **no participant observations recorded yet**. This script
-does not establish human acceptance. Overall issue #10 release acceptance is
+Status: in progress; **partial participant feedback recorded below**. This script
+does not yet establish human acceptance. Overall issue #10 release acceptance is
 separate. Use the current production assets and the verified API captures from
 issues #11–#14, with their documented native versus simulated provenance.
 
@@ -44,11 +44,18 @@ Do not record unnecessary personal information.
 
 ## Observation record
 
-Participant: **pending**. No answers, comprehension pass or screen-reader
-participant result has been inferred. Fill the record from the participant's
-actual responses, preserving first attempts and help. For each demonstrated
-failure, link a defect/regression check and record the participant's recheck.
+Participant: **P1, the user of this chat**, 2026-10-21 (America/Los_Angeles).
+Self-reported familiarity: new to networking and HopVista. Browser/version,
+viewport, zoom and input method have not yet been supplied. The facilitator
+provided the loopback review URL, the `i11completed` replay path and questions;
+no expected answers were supplied. No comprehension pass or screen-reader
+participant result has been inferred. Preserve first attempts and help. For
+each demonstrated failure, link a defect/regression check and record the
+participant's recheck.
 
 | Task/case | Actual words or observed action | Help given | Outcome | Recheck |
 | --- | --- | --- | --- | --- |
-| Pending participant | — | — | Not checked | — |
+| Familiarity | “I'm new to networking and HopVist” | Review URL and scenario supplied. | Participant scope recorded. | Not applicable. |
+| `i11completed`: locating information | “I can send you pics of what the website shows. I think its okay in terms of how easy it is to find” | No content explanation supplied. | General perceived ease recorded; observation, uncertainty and selected IP have not yet been identified by the participant. | Specific readings requested. |
+| `i11completed`: phase meanings | “I think most of them are clear” | No definitions or expected answers supplied. | Perceived clarity recorded; actual phase comprehension remains unverified. | Participant explanations requested, allowing “not sure”. |
+| Browser/direct path, missing vs zero, cutoff/completion, hop limit/unreachable and keyboard evidence/copy | No response yet. | No help yet. | Not checked. | Pending later rounds. |

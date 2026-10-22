@@ -1,10 +1,10 @@
 # Issue 16: accessibility and human comprehension acceptance
 
-Independent checks performed on 2026-10-20 (America/Los_Angeles) for
+Independent checks first performed on 2026-10-20 (America/Los_Angeles) for
 [issue #16](https://github.com/DarrylN2/hopvista/issues/16), which had no comments
-when read. **Issue #16 remains open: the real participant review is pending.**
-The participant has been invited to the first round; no answers or human
-acceptance have been inferred. **Issue #10 release acceptance remains separate
+when read. **Issue #16 remains open: the real participant review is incomplete.**
+The first round has partial real participant feedback; no comprehension pass or
+human acceptance has been inferred. **Issue #10 release acceptance remains separate
 and open.**
 
 ## Baseline and scope
@@ -182,13 +182,14 @@ ignored under `.impeccable/review/issue-16/` and `.tools/issue-16/`.
 
 Use [the concrete participant script](issue-16-participant-review.md).
 Round 1 has been requested from the user. Participant identifier/familiarity,
-actual answers, difficulties/help and affected-case rechecks remain unrecorded
-until supplied. No agent or fixture is counted as human acceptance.
+actual answers, difficulties/help and affected-case rechecks are recorded as
+supplied in that script. Initial feedback describes ease/clarity in general;
+concrete readings and explanations remain pending. No agent or fixture is
+counted as human acceptance.
 
-The required independent Standards and Spec reviews are pending at this point
-in the record. Their outcomes will be appended after the implementation commit.
-Do not close issue #16 or infer whole-release acceptance from this independent
-work alone.
+The required independent Standards and Spec reviews are recorded below. Do not
+close issue #16 or infer whole-release acceptance from this independent work
+alone.
 
 ## Resumed follow-up: 2026-10-21
 
@@ -196,8 +197,7 @@ The user paused before the participant review, then requested a workflow without
 desktop control. On resume, only repository/terminal work and isolated headless
 browser checks were used. No open browser, pointer, keyboard, Windows preference
 or screen reader was operated. The review server only serves loopback captures;
-the participant opens and operates the browser themselves. No participant answer
-has yet been supplied.
+the participant opens and operates the browser themselves.
 
 The last metrics invocation before the pause actually **failed**: Start was
 sampled with white text on an intermediate background during its 160 ms
@@ -227,4 +227,34 @@ passed. The Go suite's opt-in native/network/packaged checks remained disabled,
 as above. Full-suite output is retained in `.tools/issue-16/resume-go-test.log`.
 
 The participant invitation was reissued with the new local URL and unprimed
-normal-result questions. It still does not count as an observation or pass.
+normal-result questions. P1 replied that they are new to networking/HopVista,
+find the information generally easy to locate and think most phases are clear.
+These are real perceived-ease observations, not yet evidence of the requested
+phase/limit comprehension. A follow-up asks for the actual selected IP,
+observation, uncertainty and phase explanations, without providing answers.
+
+## Standards
+
+Independent source review of implementation commit
+`7fe06e457caf847a636b6302f538627be6641987`, using
+`git diff eab3cecf75f843a75cbf60935bb12858f1ae18b8...7fe06e457caf847a636b6302f538627be6641987`:
+no actionable findings. The reviewer found no documented-standard violations or
+material code-smell findings. Schema version 1, Go-owned findings, the approved
+rendered-UI seam and explicit verification scope were preserved. Tests, desktop,
+browser and clipboard checks were not independently rerun by the reviewer.
+
+## Spec
+
+Independent source review of the same diff against issue #16 and its referenced
+records: no new actionable implementation defects or scope creep. The reviewer
+confirmed that the real participant review and recording of actual responses
+remain required. At review time the first invitation was awaiting a response;
+the subsequent P1 feedback and concrete follow-up request are recorded above
+and in the participant script. These documentation additions do not claim a
+comprehension pass or change reviewed production behavior. The reviewer did not
+rerun checks or operate the desktop.
+
+Review summary: Standards 0 actionable findings; Spec 0 new implementation
+findings. **Known issue #16 blocker: completion of the real participant review,
+plus any demonstrated defect fixes and affected-case rechecks. Issue #10 release
+acceptance remains separate and open.**
