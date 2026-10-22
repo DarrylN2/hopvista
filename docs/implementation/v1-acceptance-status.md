@@ -1,5 +1,11 @@
 # HopVista v1 acceptance status
 
+Latest accessibility follow-up: [issue #16](issue-16.md) records keyboard and
+clipboard fixes, actual NVDA speech checks, layout/zoom, reduced-motion and
+contrast/target measurements against the verified #11–#14 scenarios. Independent
+checks pass at that scope. **Real participant comprehension review is pending;
+issue #16 and overall issue #10 release acceptance remain open.**
+
 Latest lifecycle follow-up: [issue #14 evidence](issue-14.md) rechecks native
 cancellation and cap/margin behavior, carries held-route stops through the
 engine/API and current UI, and records the **failed natural packaged-minute

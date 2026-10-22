@@ -2,6 +2,12 @@
 
 Status: design brief approved by the user on 2026-10-17; first implementation completed, limited rendered verification performed, human acceptance outstanding.
 
+Accessibility follow-up: [issue #16 verification](../implementation/issue-16.md)
+records actual NVDA, native 200% zoom and runtime reduced-motion checks, plus
+keyboard focus, manual-copy fallback and input-boundary contrast fixes. The
+approved composition and Go-owned findings are preserved. Participant review
+and overall release acceptance remain open.
+
 Mode: Operate. Direction: Clear field notes with guided reading.
 
 ## Approved brief

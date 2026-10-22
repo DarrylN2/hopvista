@@ -80,8 +80,13 @@ function App() {
   const [pendingEvidence, setPendingEvidence] = useState("");
   const [activeEvidence, setActiveEvidence] = useState("");
   const evidenceSource = useRef<HTMLButtonElement | null>(null);
+  const statusRef = useRef<HTMLParagraphElement>(null);
   const detailsRef = useRef<HTMLDetailsElement>(null);
   const evidence = useMemo(() => run ? evidenceItems(run) : new Map<string, Record<string, unknown>>(), [run]);
+
+  useEffect(() => {
+    if (submitting || cancelling) statusRef.current?.focus();
+  }, [submitting, cancelling]);
 
   useEffect(() => {
     let live = true;
@@ -128,6 +133,7 @@ function App() {
     event.preventDefault();
     if (!token || submitting || runID) return;
     setSubmitting(true);
+    setNotice("Starting…");
     setRequestError("");
     try {
       const response = await fetch("/api/v1/runs", {
@@ -141,19 +147,26 @@ function App() {
       evidenceSource.current = null;
       setNotice("Running…");
       setRunID(data.run_id);
-    } catch (error) { setRequestError(`Could not start the diagnostic run. ${(error as Error).message}`); }
+    } catch (error) {
+      setNotice(run ? `${outcome(run.state)}.` : "Ready.");
+      setRequestError(`Could not start the diagnostic run. ${(error as Error).message}`);
+    }
     finally { setSubmitting(false); }
   }
 
   async function cancel() {
     if (!runID || cancelling) return;
     setCancelling(true);
+    setNotice("Requesting stop…");
     try {
       const response = await fetch(`/api/v1/runs/${runID}/cancel`, { method: "POST", headers: { "X-HopVista-Token": token } });
       const data = await readJSON<RunResult>(response);
       setRun(data);
       setNotice(data.state === "stopping" ? "Stopping… completed evidence remains available." : `${outcome(data.state)}.`);
-    } catch (error) { setRequestError(`Could not confirm cancellation. The run may still be active. ${(error as Error).message}`); }
+    } catch (error) {
+      setNotice("Cancellation unconfirmed. Last recorded state retained.");
+      setRequestError(`Could not confirm cancellation. The run may still be active. ${(error as Error).message}`);
+    }
     finally { setCancelling(false); }
   }
 
@@ -185,7 +198,7 @@ function App() {
       <button type="submit" disabled={!token || !!runID || submitting}>{submitting ? "Starting…" : "Start diagnostic run"}</button>
       {!!runID && <button type="button" className="secondary" disabled={cancelling || run?.state === "stopping"} onClick={cancel}>{cancelling ? "Requesting stop…" : run?.state === "stopping" ? "Stopping…" : "Cancel run"}</button>}
     </form>
-    <div className="status-line"><p className="status" role="status" aria-live="polite"><span className="status-dot" aria-hidden="true" />{notice}</p><span className="local-note">Memory-only results. Closing HopVista clears them.</span></div>
+    <div className="status-line"><p className="status" role="status" aria-live="polite" tabIndex={-1} ref={statusRef}><span className="status-dot" aria-hidden="true" />{notice}</p><span className="local-note">Memory-only results. Closing HopVista clears them.</span></div>
     {requestError && <p className="request-error" role="alert">{requestError}</p>}
     </section>
     <p className="caveat"><strong>A direct connection.</strong> {directPathCaveat}</p>
@@ -196,7 +209,7 @@ function App() {
       <div className="result-grid">
         <aside className="summary-column">
           <section className="panel answer" aria-labelledby="answer-title"><h3 id="answer-title">What this run observed</h3>
-            <p className="selected"><strong>Selected IPv4</strong><span className="selected-address">{address || (terminal.has(run.state) ? "No IPv4 address selected" : "Pending")}</span>{family && selectedScope(family) && <span className="address-scope">{outcome(selectedScope(family)!)}</span>}{address && <CopyAddress key={address} address={address} />}</p>
+            <p className="selected"><strong>Selected IPv4</strong><span className="selected-address">{address || (terminal.has(run.state) ? "No IPv4 address selected" : "Pending")}</span>{family && selectedScope(family) && <span className="address-scope"><span className="visually-hidden">, address scope: </span>{outcome(selectedScope(family)!)}</span>}{address && <CopyAddress key={address} address={address} />}</p>
             {finalFinding ? <FindingView finding={finalFinding} exchange={family?.exchanges.find((exchange) => exchange.id === finalFinding.exchange_ref)} showEvidence={showEvidence} /> : terminal.has(run.state) ? <p>No observed finding is available for this run result.</p> : <p>Pending until the diagnostic run finishes.</p>}
             {run.error && <p className="error">{run.error.message}</p>}
             {family?.error && <p className="error">{family.error.message}</p>}
@@ -225,6 +238,11 @@ function CopyAddress({ address }: { address: string }) {
   const [copied, setCopied] = useState(false);
   const [copying, setCopying] = useState(false);
   const [error, setError] = useState("");
+  const manualCopyRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (error) manualCopyRef.current?.focus();
+  }, [error]);
 
   useEffect(() => {
     if (!copied) return;
@@ -241,13 +259,13 @@ function CopyAddress({ address }: { address: string }) {
       setCopied(true);
     } catch {
       setCopied(false);
-      setError("Copy is unavailable. Select and copy the address above.");
+      setError("Copy is unavailable. The address is selected in the manual-copy field; use your copy shortcut.");
     } finally {
       setCopying(false);
     }
   }
 
-  return <span className="copy-address"><button type="button" className="copy-button" disabled={copying} data-copied={copied} aria-label={`Copy selected IPv4 address ${address}`} onClick={copy}><svg aria-hidden="true" viewBox="0 0 16 16">{copied ? <path d="m3 8 3 3 7-7"/> : <><rect x="5.5" y="5.5" width="7" height="8" rx="1"/><path d="M3 10.5H2.5V2.5h7V3"/></>}</svg><span>{copied ? "Copied" : copying ? "Copying…" : "Copy IPv4"}</span></button><span className={error ? "copy-feedback error" : "visually-hidden"} role="status">{error || (copied ? "IPv4 address copied." : "")}</span></span>;
+  return <span className="copy-address"><button type="button" className="copy-button" aria-disabled={copying} aria-busy={copying} data-copied={copied} aria-label={`Copy selected IPv4 address ${address}`} onClick={copy}><svg aria-hidden="true" viewBox="0 0 16 16">{copied ? <path d="m3 8 3 3 7-7"/> : <><rect x="5.5" y="5.5" width="7" height="8" rx="1"/><path d="M3 10.5H2.5V2.5h7V3"/></>}</svg><span>{copied ? "Copied" : copying ? "Copying…" : "Copy IPv4"}</span></button><span className={error ? "copy-feedback error" : "visually-hidden"} role="status">{error || (copied ? "IPv4 address copied." : "")}</span>{error && <label className="manual-copy">IPv4 address for manual copying<input ref={manualCopyRef} readOnly value={address} onFocus={(event) => event.currentTarget.select()} /></label>}</span>;
 }
 
 function EvidenceButton({ id, label = "View evidence", showEvidence }: { id: string; label?: string; showEvidence: (id: string) => void }) {
