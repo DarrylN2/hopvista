@@ -63,6 +63,10 @@ for its child, then removes only its known copy and empty temporary directory.
 The original helper acceptance run passed; no production defect or product
 red/green fix is claimed.
 
+PowerShell parser validation passed. A negative checksum invocation was rejected
+before creating a temporary directory or launching a process. The candidate's
+SHA-256 was rechecked unchanged after verification.
+
 ## Source and regression checks
 
 `go test ./... -p 1 -count=1 -v -timeout 180s` **passed** with live adapter,
@@ -162,10 +166,12 @@ Replay report: `.impeccable/review/issue-16/observations-2026-10-25T03-48-00.907
 
 - **#24 functional scope covered:** merged implementation/review through
   `6238991`, with current-candidate journeys passing after the Advanced fix.
+  Closed on GitHub on 2026-10-24 with the evidence disposition recorded there.
 - **#15 stated scope covered:** restart/token/output/directory/security evidence
   plus #24's usable fresh browser session and current source inspection. No
   broader persistence/telemetry claim is inferred from absence in the launch
   directory alone. See [restart/privacy evidence](packaged-restart-privacy.md).
+  Closed on GitHub on 2026-10-24 with the evidence disposition recorded there.
 - **#16 remains open:** partial participant feedback and facilitator help remain
   recorded. Human comprehension is deferred; automation is not a substitute.
   No fresh real-reader check of changed timing wording or native 200% zoom was
@@ -185,4 +191,22 @@ separately labeled. No hard native drain/completion bound is introduced.
 
 ## Review
 
-Independent Standards and Spec reviews are recorded after implementation.
+### Standards
+
+Independent read-only review of `git diff a159f9c...f0c235b`: **0 documented
+standard violations and 0 actionable heuristic findings**. The reviewer checked
+AGENTS/agent docs, glossary, product/design boundaries and the retained binary
+identity/network logs. No tests were independently rerun; no files were edited.
+
+### Spec
+
+Independent read-only review of the same diff against issue #17 and the user's
+authorized pre-acceptance scope: **0 actionable findings**. The reviewer
+independently checked the local executable checksum and inspected packaged,
+cutoff, public-network, UI/replay and full-suite logs. Candidate identity,
+same-selected-IP checks, skips and acceptance limits matched the record.
+No tests or desktop/browser operations were independently performed.
+
+Review summary: Standards **0 findings**; Spec **0 findings**. This final
+documentation-only update records the review dispositions and issue closure;
+production sources and the identified executable remain unchanged.
