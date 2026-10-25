@@ -11,4 +11,19 @@ The current [v1 acceptance status](docs/implementation/v1-acceptance-status.md) 
 
 ## Build the local app
 
-The minimal React/TypeScript UI source is in `ui/`. Its Vite output is checked in under `internal/localapi/static/` so a Go build embeds the production UI and the executable needs no Node runtime. After changing UI source, run `npm ci` and `npm run build` from `ui/`, then build `cmd/hopvista` with Go. Run the executable and open the loopback URL it prints. The UI remains a first functional pass pending visual and human review; release acceptance is still open.
+The approved React/TypeScript UI source is in `ui/`. Its Vite output is checked in under `internal/localapi/static/` so a Go build embeds the production UI and the executable needs no Node runtime. On a Windows x64 development machine with Go and Node installed, run from the repository root in PowerShell:
+
+```powershell
+npm.cmd --prefix ui ci
+npm.cmd --prefix ui run build
+New-Item -ItemType Directory -Force .tools | Out-Null
+$env:CGO_ENABLED = '0'
+go build -o .tools/hopvista.exe ./cmd/hopvista
+go version -m .tools/hopvista.exe
+Get-FileHash .tools/hopvista.exe -Algorithm SHA256
+& ./.tools/hopvista.exe
+```
+
+Open the printed `http://127.0.0.1:<port>/` URL in your browser. Keep the executable running while using the UI; Ctrl+C stops it. The packaged executable needs no Go/Node installation. Relaunching creates a fresh listener and mutation token; open the newly printed URL. Run results are held in process memory. An already open browser tab can retain its rendered result until reloaded or closed.
+
+The [experimental candidate record](docs/implementation/issue-17.md) identifies the exact source commit, executable checksum, reproduction commands and check outcomes. It contains the approved design, accessibility follow-ups and packaged UI checks. Human comprehension is deferred, issue #16 and overall release acceptance remain open, and preparing this candidate does not authorize release publication. See [packaged checks](tools/app-smoke/README.md) to verify a newly built executable.

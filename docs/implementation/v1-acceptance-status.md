@@ -1,5 +1,16 @@
 # HopVista v1 acceptance status
 
+Latest candidate preparation: [issue #17 evidence](issue-17.md) identifies a
+single Windows x64 executable from clean merged commit `a159f9c`, including the
+Advanced layout fix. Packaged browser/API/privacy/security, native cancellation,
+controlled paused-minute cutoff and same-selected-IP Windows route/tracert/pinned
+HTTPS curl checks pass at the recorded condition. The record reconciles #15 and
+#24 with their completed checks, including usable browser restart. Historical
+matrix entries below retain their original dates and are superseded by these
+linked follow-ups where applicable. **Candidate preparation is not release
+acceptance: human comprehension remains deferred, #16 and #17 remain open, and
+no release is published.**
+
 Latest functional follow-up: [issue #24](issue-24.md) joins the current embedded
 production UI to the real packaged backend in isolated headless browser journeys.
 Form submission, redirect/error/partial results, evidence navigation, rejected
