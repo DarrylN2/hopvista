@@ -211,6 +211,13 @@ assistive-text label without changing its visible styling. See the scoped
 
 Inputs have paper fill, a neutral stroke, a blue caret, and a minimum height of (46px). Hover darkens the border to ink. Visible labels precede the URL and hop count fields. Advanced options use a native details disclosure, and summaries have a minimum height of (44px). The hop count field caps its width at (116px).
 
+The Advanced disclosure occupies a separate full-width row after the URL and
+Start/Cancel controls. Expanding it leaves those controls in place and reveals
+the hop label beside its number field below a fine rule; these wrap naturally
+on narrow screens. Keyboard order follows this visible order. Isolated headless
+checks on 2026-10-24 verified unchanged URL/action geometry across expansion,
+keyboard toggling and no overflow at 1440, 960, 760, 390 and 320 CSS pixels.
+
 ### Identity and navigation
 
 The masthead combines the HopVista wordmark with its existing inline path glyph and a right-aligned scope label. The glyph is (36px) square with a 2px blue stroke; the wordmark uses 1.5rem, weight 700, and -.04em tracking. A keyboard skip link appears on focus and leads to the diagnostic workspace. There is no implemented application menu to extrapolate.

@@ -67,6 +67,8 @@ test('a failed start leaves an announced error and allows a keyboard retry', asy
   assert.equal(await start.isEnabled(), true);
   rejected = false;
   await page.keyboard.press('Shift+Tab');
+  assert.equal(await page.evaluate(() => document.activeElement.textContent), 'Advanced');
+  await page.keyboard.press('Shift+Tab');
   assert.equal(await page.evaluate(() => document.activeElement.textContent), 'Start diagnostic run');
   await page.keyboard.press('Enter');
   await page.locator('.run-heading').waitFor();
@@ -117,6 +119,8 @@ test('cancellation retains focus while stopping and after the control disappears
   await page.getByRole('button', { name: 'Start diagnostic run', exact: true }).press('Enter');
   await page.locator('.run-heading').waitFor();
   await page.keyboard.press('Shift+Tab');
+  assert.equal(await page.evaluate(() => document.activeElement.textContent), 'Advanced');
+  await page.keyboard.press('Shift+Tab');
   assert.equal(await page.evaluate(() => document.activeElement.textContent), 'Cancel run');
   await page.keyboard.press('Enter');
   await page.waitForFunction(() => document.querySelector('main').dataset.state === 'stopping');
@@ -152,6 +156,8 @@ test('keyboard entry, advanced settings, invalid bounds and the skip link remain
   await page.keyboard.press('Tab');
   assert.equal(await page.evaluate(() => document.activeElement.id), 'target');
   await page.keyboard.type('https://fixture.example/');
+  await page.keyboard.press('Tab');
+  assert.equal(await page.evaluate(() => document.activeElement.textContent), 'Start diagnostic run');
   await page.keyboard.press('Tab');
   assert.equal(await page.evaluate(() => document.activeElement.textContent), 'Advanced');
   await page.keyboard.press('Enter');

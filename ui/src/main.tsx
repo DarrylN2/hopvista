@@ -194,9 +194,9 @@ function App() {
     <section className="workspace" id="run-workspace" aria-label="Diagnostic run">
     <form className="start-form" onSubmit={start}>
       <div className="target-input"><label htmlFor="target">Target URL</label><input id="target" type="url" required placeholder="https://example.com/" autoComplete="url" spellCheck={false} value={target} onChange={(event) => setTarget(event.target.value)} /></div>
-      <details className="advanced"><summary>Advanced</summary><label htmlFor="hops">Maximum hops (1–64)</label><input id="hops" type="number" min="1" max="64" step="1" required value={hops} onChange={(event) => setHops(Number(event.target.value))} /></details>
       <button type="submit" disabled={!token || !!runID || submitting}>{submitting ? "Starting…" : "Start diagnostic run"}</button>
       {!!runID && <button type="button" className="secondary" disabled={cancelling || run?.state === "stopping"} onClick={cancel}>{cancelling ? "Requesting stop…" : run?.state === "stopping" ? "Stopping…" : "Cancel run"}</button>}
+      <details className="advanced"><summary>Advanced</summary><div className="advanced-fields"><label htmlFor="hops">Maximum hops (1–64)</label><input id="hops" type="number" min="1" max="64" step="1" required value={hops} onChange={(event) => setHops(Number(event.target.value))} /></div></details>
     </form>
     <div className="status-line"><p className="status" role="status" aria-live="polite" tabIndex={-1} ref={statusRef}><span className="status-dot" aria-hidden="true" />{notice}</p><span className="local-note">Memory-only results. Closing HopVista clears them.</span></div>
     {requestError && <p className="request-error" role="alert">{requestError}</p>}
