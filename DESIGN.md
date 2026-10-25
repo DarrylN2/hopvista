@@ -16,7 +16,7 @@ colors:
   disabled-background: "#e4e8e2"
   disabled-text: "#667168"
   secondary-border: "#a3afa6"
-  input-border: "#96a49a"
+  input-border: "#819187"
   placeholder: "#6a756e"
   state-background: "#e8ede7"
   running-text: "#205477"
@@ -195,13 +195,28 @@ Panels use the shared rounded panel token; controls and raw evidence blocks use 
 
 Primary actions are blue, semibold, and at least (44px) high. Hover deepens the blue, active deepens it again, and disabled controls use neutral colors with a not-allowed cursor. The secondary cancel action is transparent with a neutral border and ink text; hover uses wash. All interactive controls expose the shared keyboard focus treatment.
 
-Button backgrounds transition in 160ms. The authored motion moment is evidence selection: the focused record receives a 520ms wash acknowledgment and stays visibly selected. Evidence arrows move 3px on hover or keyboard focus over 160ms. The running status dot, newest hop marker and successful-copy glyph each have a single 220–240ms scale/opacity acknowledgment using cubic-bezier(.16, 1, .3, 1). No animation loops, staggered page entrances, fake progress or altered measurement values are used. Reduced motion removes animations, transitions and arrow movement, retaining static selection, live copy feedback and automatic scrolling.
+Start/cancel and copy button colors change immediately so enabled and acknowledged states retain text contrast. Other button backgrounds transition in 160ms. The authored motion moment is evidence selection: the focused record receives a 520ms wash acknowledgment and stays visibly selected. Evidence arrows move 3px on hover or keyboard focus over 160ms. The running status dot, newest hop marker and successful-copy glyph each have a single 220–240ms scale/opacity acknowledgment using cubic-bezier(.16, 1, .3, 1). No animation loops, staggered page entrances, fake progress or altered measurement values are used. Reduced motion removes animations, transitions and arrow movement, retaining static selection, live copy feedback and automatic scrolling.
 
 The compact Copy IPv4 action appears only for a selected address, writes that literal address to the clipboard and acknowledges success with a blue Copied label and check glyph for 2400ms. Its width stays at least 104px to avoid shifting on acknowledgment. A polite status announces success; a visible fallback explains manual copying when clipboard access fails. Pending and copied feedback describe the action, not network health. The button is at least 32px high, or 44px for coarse pointers.
+
+The accessibility follow-up retains focus during pending copy requests with
+aria-disabled/busy feedback. If copying fails, a labelled read-only field appears
+with the literal address focused and selected for keyboard copying. Start/cancel
+requests focus the persistent status message with the shared outline, preserving
+focus when action controls disable or disappear. The selected scope includes an
+assistive-text label without changing its visible styling. See the scoped
+[issue #16 evidence](docs/implementation/issue-16.md); human review remains open.
 
 ### Inputs and disclosures
 
 Inputs have paper fill, a neutral stroke, a blue caret, and a minimum height of (46px). Hover darkens the border to ink. Visible labels precede the URL and hop count fields. Advanced options use a native details disclosure, and summaries have a minimum height of (44px). The hop count field caps its width at (116px).
+
+The Advanced disclosure occupies a separate full-width row after the URL and
+Start/Cancel controls. Expanding it leaves those controls in place and reveals
+the hop label beside its number field below a fine rule; these wrap naturally
+on narrow screens. Keyboard order follows this visible order. Isolated headless
+checks on 2026-10-24 verified unchanged URL/action geometry across expansion,
+keyboard toggling and no overflow at 1440, 960, 760, 390 and 320 CSS pixels.
 
 ### Identity and navigation
 

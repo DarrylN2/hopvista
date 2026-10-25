@@ -1,5 +1,47 @@
 # Packaged executable smoke check
 
+## Browser journeys against the real executable
+
+[Issue #24](https://github.com/DarrylN2/hopvista/issues/24) adds repeatable
+headless browser checks alongside the process/API checks below. Build the current
+production UI and executable, then run from the repository root:
+
+```powershell
+npm.cmd --prefix ui ci
+npm.cmd --prefix ui run build
+$env:GOCACHE = Join-Path $PWD '.tools/go-build'
+$env:CGO_ENABLED = '0'
+& ./.tools/go/bin/go.exe build -o .tools/hopvista-ui-e2e.exe ./cmd/hopvista
+$env:HOPVISTA_PACKAGED_EXE = (Resolve-Path '.tools/hopvista-ui-e2e.exe').Path
+npm.cmd --prefix ui run test:packaged
+```
+
+Requires Windows x64, Node and the UI development dependencies on the test
+host, plus installed Microsoft Edge. `HOPVISTA_BROWSER` can select another
+installed Playwright Chromium channel. The packaged child receives only Windows
+System32 on PATH and runs from a disposable directory. Tests launch a separate
+headless browser with a temporary profile; existing browsers, desktop settings
+and the clipboard are not operated. All target traffic uses controlled loopback
+HTTP servers. Browser session/start/poll/cancel responses are never mocked.
+
+The three journeys cover relative redirects/503, real native loopback path
+evidence and evidence navigation; IPv6 rejection, retained partial HTTP evidence
+and another run; and cancellation during held HTTP headers, another run, actual
+process restart and a usable fresh UI in the same disposable browser context.
+The visible JSON export is compared with the real terminal API result. The
+executable's SHA-256 is printed so the result identifies the supplied binary.
+
+`npm.cmd --prefix ui test` includes these checks, explicitly skipping them when
+the executable variable is absent or the host is not Windows x64. Set the
+variable to enable them; a missing/invalid binary or browser is a failure.
+Use a newly built executable, since the runner does not build it implicitly.
+Run from a terminal that permits loopback sockets and headless browser launch.
+No native-stall, 60-second cutoff, human-comprehension or release-acceptance
+claim follows from these journeys. Existing native/cutoff and restart/privacy
+checks below remain separate regression evidence.
+
+## Process and API checks
+
 For the opt-in real-minute cutoff candidate and native cancellation timestamp
 captures, see [issue #14's commands and outcomes](../../docs/implementation/issue-14.md).
 `TestPackagedMinuteCutoff` requires `HOPVISTA_PACKAGED_CUTOFF_IP` and the built

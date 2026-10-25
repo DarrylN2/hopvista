@@ -6,10 +6,10 @@ import "./style.css";
 const directPathCaveat = "HopVista tests a direct connection from this computer. Your browser may use another IP, a proxy, cached DNS, or an existing connection.";
 const terminal = new Set(["completed", "cancelled", "failed"]);
 const phaseHelp = {
-  DNS: "Local resolver lookup; an answer may come from a cache.",
-  TCP: "Connection setup to the selected IPv4 address.",
-  TLS: "Encrypted connection setup and certificate verification for this URL.",
-  HTTP: "From writing the request to the first response-header byte. Includes network transit and server work, not page rendering or body download.",
+  DNS: "Time spent finding an IPv4 address for the website name. This computer's resolver may use a saved (cached) answer.",
+  TCP: "Time spent opening a connection to the selected IPv4 address, before encryption and the website request.",
+  TLS: "Time spent setting up encryption and checking the website's security certificate for this HTTPS connection.",
+  HTTP: "Time from writing the request until the website's response starts (the first response-header byte). Includes network travel and server work, not downloading or displaying the page.",
 };
 
 function ms(value: number) { return `${Number(value.toFixed(value < 10 ? 2 : 1))} ms`; }
@@ -80,8 +80,13 @@ function App() {
   const [pendingEvidence, setPendingEvidence] = useState("");
   const [activeEvidence, setActiveEvidence] = useState("");
   const evidenceSource = useRef<HTMLButtonElement | null>(null);
+  const statusRef = useRef<HTMLParagraphElement>(null);
   const detailsRef = useRef<HTMLDetailsElement>(null);
   const evidence = useMemo(() => run ? evidenceItems(run) : new Map<string, Record<string, unknown>>(), [run]);
+
+  useEffect(() => {
+    if (submitting || cancelling) statusRef.current?.focus();
+  }, [submitting, cancelling]);
 
   useEffect(() => {
     let live = true;
@@ -128,6 +133,7 @@ function App() {
     event.preventDefault();
     if (!token || submitting || runID) return;
     setSubmitting(true);
+    setNotice("Starting…");
     setRequestError("");
     try {
       const response = await fetch("/api/v1/runs", {
@@ -141,19 +147,26 @@ function App() {
       evidenceSource.current = null;
       setNotice("Running…");
       setRunID(data.run_id);
-    } catch (error) { setRequestError(`Could not start the diagnostic run. ${(error as Error).message}`); }
+    } catch (error) {
+      setNotice(run ? `${outcome(run.state)}.` : "Ready.");
+      setRequestError(`Could not start the diagnostic run. ${(error as Error).message}`);
+    }
     finally { setSubmitting(false); }
   }
 
   async function cancel() {
     if (!runID || cancelling) return;
     setCancelling(true);
+    setNotice("Requesting stop…");
     try {
       const response = await fetch(`/api/v1/runs/${runID}/cancel`, { method: "POST", headers: { "X-HopVista-Token": token } });
       const data = await readJSON<RunResult>(response);
       setRun(data);
       setNotice(data.state === "stopping" ? "Stopping… completed evidence remains available." : `${outcome(data.state)}.`);
-    } catch (error) { setRequestError(`Could not confirm cancellation. The run may still be active. ${(error as Error).message}`); }
+    } catch (error) {
+      setNotice("Cancellation unconfirmed. Last recorded state retained.");
+      setRequestError(`Could not confirm cancellation. The run may still be active. ${(error as Error).message}`);
+    }
     finally { setCancelling(false); }
   }
 
@@ -181,11 +194,11 @@ function App() {
     <section className="workspace" id="run-workspace" aria-label="Diagnostic run">
     <form className="start-form" onSubmit={start}>
       <div className="target-input"><label htmlFor="target">Target URL</label><input id="target" type="url" required placeholder="https://example.com/" autoComplete="url" spellCheck={false} value={target} onChange={(event) => setTarget(event.target.value)} /></div>
-      <details className="advanced"><summary>Advanced</summary><label htmlFor="hops">Maximum hops (1–64)</label><input id="hops" type="number" min="1" max="64" step="1" required value={hops} onChange={(event) => setHops(Number(event.target.value))} /></details>
       <button type="submit" disabled={!token || !!runID || submitting}>{submitting ? "Starting…" : "Start diagnostic run"}</button>
       {!!runID && <button type="button" className="secondary" disabled={cancelling || run?.state === "stopping"} onClick={cancel}>{cancelling ? "Requesting stop…" : run?.state === "stopping" ? "Stopping…" : "Cancel run"}</button>}
+      <details className="advanced"><summary>Advanced</summary><div className="advanced-fields"><label htmlFor="hops">Maximum hops (1–64)</label><input id="hops" type="number" min="1" max="64" step="1" required value={hops} onChange={(event) => setHops(Number(event.target.value))} /></div></details>
     </form>
-    <div className="status-line"><p className="status" role="status" aria-live="polite"><span className="status-dot" aria-hidden="true" />{notice}</p><span className="local-note">Memory-only results. Closing HopVista clears them.</span></div>
+    <div className="status-line"><p className="status" role="status" aria-live="polite" tabIndex={-1} ref={statusRef}><span className="status-dot" aria-hidden="true" />{notice}</p><span className="local-note">Memory-only results. Closing HopVista clears them.</span></div>
     {requestError && <p className="request-error" role="alert">{requestError}</p>}
     </section>
     <p className="caveat"><strong>A direct connection.</strong> {directPathCaveat}</p>
@@ -196,12 +209,12 @@ function App() {
       <div className="result-grid">
         <aside className="summary-column">
           <section className="panel answer" aria-labelledby="answer-title"><h3 id="answer-title">What this run observed</h3>
-            <p className="selected"><strong>Selected IPv4</strong><span className="selected-address">{address || (terminal.has(run.state) ? "No IPv4 address selected" : "Pending")}</span>{family && selectedScope(family) && <span className="address-scope">{outcome(selectedScope(family)!)}</span>}{address && <CopyAddress key={address} address={address} />}</p>
+            <p className="selected"><strong>Selected IPv4</strong><span className="selected-address">{address || (terminal.has(run.state) ? "No IPv4 address selected" : "Pending")}</span>{family && selectedScope(family) && <span className="address-scope"><span className="visually-hidden">, address scope: </span>{outcome(selectedScope(family)!)}</span>}{address && <CopyAddress key={address} address={address} />}</p>
             {finalFinding ? <FindingView finding={finalFinding} exchange={family?.exchanges.find((exchange) => exchange.id === finalFinding.exchange_ref)} showEvidence={showEvidence} /> : terminal.has(run.state) ? <p>No observed finding is available for this run result.</p> : <p>Pending until the diagnostic run finishes.</p>}
             {run.error && <p className="error">{run.error.message}</p>}
             {family?.error && <p className="error">{family.error.message}</p>}
           </section>
-          <section className="panel timing" aria-labelledby="timing-title"><h3 id="timing-title">Website timing</h3><p className="section-help">Separate waits for each website exchange. These measurements do not measure page load.</p>
+          <section className="panel timing" aria-labelledby="timing-title"><h3 id="timing-title">Website timing</h3><p className="section-help">Four separate steps for each website request. DNS finds an address, TCP opens a connection, TLS secures it, and HTTP first byte waits for the response to start. These timings do not measure a full page load.</p>
             {family?.exchanges.length ? family.exchanges.map((exchange) => <ExchangeView key={exchange.id} exchange={exchange} showEvidence={showEvidence} />) : <p>No website exchange recorded yet.</p>}
             {family?.dns.filter((dns) => !family.exchanges.some((exchange) => exchange.dns_ref === dns.id)).map((dns) => <div className="exchange" key={dns.id}><h4>IPv4 selection for {dns.hostname}</h4><p>{phaseLabel(dns)}. {phaseHelp.DNS}</p><EvidenceButton id={dns.id} showEvidence={showEvidence} /></div>)}
           </section>
@@ -225,6 +238,11 @@ function CopyAddress({ address }: { address: string }) {
   const [copied, setCopied] = useState(false);
   const [copying, setCopying] = useState(false);
   const [error, setError] = useState("");
+  const manualCopyRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (error) manualCopyRef.current?.focus();
+  }, [error]);
 
   useEffect(() => {
     if (!copied) return;
@@ -241,13 +259,13 @@ function CopyAddress({ address }: { address: string }) {
       setCopied(true);
     } catch {
       setCopied(false);
-      setError("Copy is unavailable. Select and copy the address above.");
+      setError("Copy is unavailable. The address is selected in the manual-copy field; use your copy shortcut.");
     } finally {
       setCopying(false);
     }
   }
 
-  return <span className="copy-address"><button type="button" className="copy-button" disabled={copying} data-copied={copied} aria-label={`Copy selected IPv4 address ${address}`} onClick={copy}><svg aria-hidden="true" viewBox="0 0 16 16">{copied ? <path d="m3 8 3 3 7-7"/> : <><rect x="5.5" y="5.5" width="7" height="8" rx="1"/><path d="M3 10.5H2.5V2.5h7V3"/></>}</svg><span>{copied ? "Copied" : copying ? "Copying…" : "Copy IPv4"}</span></button><span className={error ? "copy-feedback error" : "visually-hidden"} role="status">{error || (copied ? "IPv4 address copied." : "")}</span></span>;
+  return <span className="copy-address"><button type="button" className="copy-button" aria-disabled={copying} aria-busy={copying} data-copied={copied} aria-label={`Copy selected IPv4 address ${address}`} onClick={copy}><svg aria-hidden="true" viewBox="0 0 16 16">{copied ? <path d="m3 8 3 3 7-7"/> : <><rect x="5.5" y="5.5" width="7" height="8" rx="1"/><path d="M3 10.5H2.5V2.5h7V3"/></>}</svg><span>{copied ? "Copied" : copying ? "Copying…" : "Copy IPv4"}</span></button><span className={error ? "copy-feedback error" : "visually-hidden"} role="status">{error || (copied ? "IPv4 address copied." : "")}</span>{error && <label className="manual-copy">IPv4 address for manual copying<input ref={manualCopyRef} readOnly value={address} onFocus={(event) => event.currentTarget.select()} /></label>}</span>;
 }
 
 function EvidenceButton({ id, label = "View evidence", showEvidence }: { id: string; label?: string; showEvidence: (id: string) => void }) {
