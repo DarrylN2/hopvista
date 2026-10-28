@@ -298,3 +298,22 @@ not yet make missing completed time distinct enough from measured zero for
 this participant. Clarify the visible timeout label and incomplete finding
 context without changing the recorded outcome, bound, schema or Go finding.
 Recheck after the wording change; any success remains assisted.
+
+### Timeout wording human recheck
+
+After the UI began displaying “Did not finish within 2000 ms (no completed
+time)” for Exchange 2's timed-out Connection step, P1 was asked to refresh
+Chrome, rerun `i12tcptimeout`, and explain what that row says about its
+recorded time. This follows the facilitator's earlier explicit correction
+that a timeout has no completed time; the browser refresh/run was
+participant-performed and not independently observed by the agent.
+
+Actual response: “It ran out of time, it didn't finish under 2 seconds”.
+
+Assessment: **assisted recheck passed for the bounded timeout meaning**. P1
+now describes a step that did not finish within the two-second limit, rather
+than a completed 0 ms connection. The answer does not literally say “no
+completed time”, so the exact missing-versus-measured-zero distinction should
+still be checked against a separate completed-zero example. This is not a
+new participant or unassisted first-use pass. No new network measurement is
+inferred from the replay. Other issue #16 tasks remain open.
