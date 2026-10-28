@@ -153,3 +153,21 @@ status-code classes, dominant-wait rules, overall page success, browser timings
 or the finding's limits. No new live network observation is inferred from this
 replay. The next prompt asks the participant to explain the limits in their own
 words, without providing the expected explanation first.
+
+### Finding-limit recheck
+
+Prompt: “Now read ‘What this does not tell us.’ In your own words, what are we
+still unable to conclude from this run?” No expected limit or timing answer was
+supplied before the response.
+
+Actual response: “It doesn't give us the timings or like how slow/fast it needed
+to connect to the website?”
+
+Assessment: **not yet passed for the finding's limit**. P1 interpreted the
+limit as an absence of connection timing. This example does show measured
+steps, including connection timing, so the answer reveals a distinction the
+current wording did not convey to this reader: direct request timings versus
+browser/full-page timing and the cause of waits. The question mark also leaves
+some uncertainty about P1's confidence. Do not score this as a claim that the
+whole website was fast or slow. The facilitator may explain the distinction and
+ask a narrower assisted recheck; any later success must retain that assistance.
