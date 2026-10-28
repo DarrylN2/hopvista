@@ -538,3 +538,10 @@ Reduced-motion animations were zero. Logs:
 No new real Chrome, screen-reader or native zoom check is claimed. Human
 comprehension of the revised note is still pending. #16 and release
 acceptance remain open.
+
+Independent read-only review of `git diff 7f5099e...11292fb` found **0
+Standards findings** and **0 Spec findings**. Standards checked repo
+language/design guidance, preserved Go/schema boundaries, the rendered UI
+test seam and factual participant record. Spec checked the observed
+physical-link inference and still-pending human recheck against issue #16.
+Reviewers inspected retained logs but did not run tests or control a browser.
