@@ -434,3 +434,11 @@ Logs: `.tools/issue-16/missing-zero-{red,green,ui-test,go-test,observe}.log`.
 No new real Chrome, screen-reader, or native zoom check is claimed. A human
 recheck of the new wording remains outstanding, so #16 and release acceptance
 remain open.
+
+Independent read-only review of `git diff dc51a32...7e67338` found **0
+Standards findings** and **0 Spec findings**. Standards checked repository
+language/design guidance, the established rendered-browser test seam, data
+preservation and the participant record. Spec checked the observed “0” answer
+against issue #16's missing-versus-zero criterion, unchanged findings/schema,
+and the explicitly pending human recheck. Reviewers inspected retained logs;
+they did not run tests or control a browser.
