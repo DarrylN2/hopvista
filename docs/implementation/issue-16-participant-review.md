@@ -253,3 +253,17 @@ not explicitly distinguish the first response byte from the completed body
 or rendered page. Prior explanation and row guidance mean this is not
 unassisted first-use phase comprehension. Continue checking incomplete versus
 zero timing in another example; do not infer whole-page timing from this answer.
+
+### Incomplete-connection value check
+
+Prompt: enter `https://fixture.example/i12tcptimeout`, start the replayed run,
+and report what Connection shows in Exchange 2. The expected outcome and
+number were not supplied in the prompt.
+
+Actual response: “No response within 2000 ms”.
+
+Assessment: **guided check passed for locating the displayed timeout text**.
+It matches Exchange 2's connection timeout and 2000 ms bound in this captured
+example. The participant was told the exact exchange and row. This answer
+does not yet establish the meaning of timeout, missing versus zero duration,
+or which earlier timings remain useful. Ask for an interpretation next.
