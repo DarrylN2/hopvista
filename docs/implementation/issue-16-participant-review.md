@@ -479,3 +479,20 @@ after the answer. Clarify the visible adjacent text in ordinary language and
 recheck; if the graphic still yields the inference, the connector treatment
 will need reconsideration within the approved composition. No actual
 hop-to-hop link or website-request route is established by this trace.
+
+### Revised dotted-line note recheck
+
+After the path note was made more explicit, P1 was asked to refresh Chrome,
+rerun `i13highsilent`, and say what the dotted line alone reveals about a
+direct connection between neighboring markers. Prior facilitator correction
+and the new on-screen note both supplied the distinction; the browser action
+was participant-performed and not independently observed.
+
+Actual response: “Thats about the order”.
+
+Assessment: **assisted recheck passed for order, but the direct-link limit
+remains unconfirmed in this answer**. P1 again describes the dots as ordering
+checks, consistent with the revised note, and does not repeat the earlier
+direct-link claim. The answer does not explicitly say whether the line can
+establish a direct connection. Ask that narrower question once before scoring
+the limit. Do not infer a website-request route from this replay.
