@@ -206,3 +206,19 @@ it is not unassisted first-use comprehension. It does not establish an
 understanding of the connection step, the cause-of-wait limit, or browser
 versus direct-path differences. The facilitator should define Connection in
 plain language before a later task.
+
+### Response-begins timing prompt
+
+Facilitator explanation: Connection is the time HopVista recorded for opening
+a connection to the website's number address; it does not measure Chrome
+loading or displaying the page. Prompt: “In Exchange 4, what time do you see
+beside Response begins?”
+
+Actual response: “the encryption,  connection, and address lookup”.
+
+Assessment: **the requested Response begins value was not identified**. P1
+named the other three displayed timing steps instead of a time. This may
+reflect difficulty finding the fourth row or ambiguity in the facilitator's
+prompt; it is not evidence that P1 misunderstood the value itself. Rephrase
+with the exact row labels and ask again. Do not score phase-meaning comprehension
+from this response.
