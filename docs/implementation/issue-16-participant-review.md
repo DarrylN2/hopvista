@@ -108,10 +108,30 @@ in everyday words, defines IPv4 and its difference from the entered link,
 renames the summary/address/limit headings, and simplifies existing static
 finding guidance. Exact Go-owned observation/limit strings remain visible and
 unchanged, with the same measurements, schema and evidence references. This
-records a proposed readability fix, not a successful human recheck. P1's
-recheck of the updated page is pending.
+records a readability fix whose human recheck begins below. Results are scoped
+to the particular task and assistance actually supplied.
 
 Facilitator follow-up: the participant is told that IPv4 is a number address
 computers use to reach a website, and asked to refresh/rerun the example and
 find the address using the updated screen. This definition is assistance and
 must remain part of the recheck scope. No expected numeric address is supplied.
+
+### Number-address recheck
+
+Prompt: refresh/rerun `i11completed`, look at “Address for path checks (IPv4)”,
+and say which number appears and what it is used for. This directs attention to
+the revised label. The visible UI and facilitator both supplied the IPv4
+definition before this answer; the facilitator did not supply `1.1.1.1`.
+
+Actual response: “It shows 1.1.1.1 public , and i think that basically that
+number is like an address for a website”.
+
+Assessment: **assisted recheck passed for locating the displayed number address
+and describing its basic role as a website address**. The reported number and
+public scope match the example's path selection. This answer does not establish
+understanding of public/private scope, redirects or multiple addresses, and is
+not first-use comprehension by an unfamiliar participant. The refresh and
+browser operation were participant-performed and not independently observed.
+Main finding, uncertainty, phase meanings and the other outstanding tasks remain
+open. The next prompt asks what happened when HopVista contacted the website,
+using the “What this run found” panel, without supplying the expected finding.
