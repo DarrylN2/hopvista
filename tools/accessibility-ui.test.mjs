@@ -329,3 +329,15 @@ test('the result explains its purpose and number address without opening technic
   assert.ok((await page.locator('.limit').innerText()).includes(run.findings[0].limit));
   assert.equal(await page.locator('.technical').getAttribute('open'), null);
 });
+
+test('the direct-connection note explains why Chrome timing can differ', async t => {
+  const { page } = await review(t);
+  await page.getByRole('button', { name: 'Start diagnostic run', exact: true }).press('Enter');
+  await page.locator('.run-heading').waitFor();
+  const note = page.locator('.caveat');
+  assert.equal(await note.isVisible(), true);
+  assert.match(await note.innerText(), /HopVista opens its own direct connection/);
+  assert.match(await note.innerText(), /Chrome or another browser may reuse.*connection/);
+  assert.match(await note.innerText(), /times can differ/);
+  assert.equal(await page.locator('.technical').getAttribute('open'), null);
+});

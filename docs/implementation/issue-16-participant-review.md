@@ -356,3 +356,19 @@ connection) were not expressed. The facilitator should explain one or two
 concrete differences and recheck as assisted comprehension. This answer does
 not establish that the participant understood what the replay measures or
 prove any actual Chrome path or timing.
+
+### Browser difference assisted recheck
+
+Facilitator explanation: both tools run on this computer; HopVista opens its
+own direct connection, while Chrome may reuse an existing connection or use
+saved address information. Prompt: “In your own words, what’s one reason
+Chrome and HopVista could show different times?”
+
+Actual response: “Not too sure”.
+
+Assessment: **not passed after assistance**. P1 did not state a reason for
+different times despite the visible technical caveat and a plain verbal
+example. Do not treat the earlier correct rejection of guaranteed matching
+as comprehension of the mechanism. Simplify the on-screen caveat to connect
+the examples explicitly to different timings, preserve its direct-path
+limits, and recheck. Any later success is assisted.

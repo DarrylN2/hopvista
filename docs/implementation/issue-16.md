@@ -442,3 +442,32 @@ preservation and the participant record. Spec checked the observed “0” answe
 against issue #16's missing-versus-zero criterion, unchanged findings/schema,
 and the explicitly pending human recheck. Reviewers inspected retained logs;
 they did not run tests or control a browser.
+
+## Participant follow-up: direct connection versus Chrome
+
+P1 correctly said HopVista and Chrome need not show matching times but could
+not give a reason after reading the original caveat or after a facilitator
+example. The exact responses and assistance are in
+`issue-16-participant-review.md`. The visible note now says HopVista opens its
+own direct connection and explains that Chrome or another browser may reuse
+an open connection, use a saved or different number address, or go through
+another service (a proxy), so their times can differ. It does not claim an
+actual Chrome route or timing. The approved screen composition and Go-owned
+findings, measurements and schema v1 are unchanged. Human recheck remains
+pending; #16 and release acceptance remain open.
+
+The focused rendered-browser check failed on the old note and passed after
+the edit. TypeScript/Vite build passed. Full `npm.cmd --prefix ui test` with
+the new local verification executable passed **20 checks with 1 opt-in
+system-clipboard skip**, including three packaged browser journeys. Root
+`go test ./... -count=1`, `go vet ./...`, and `git diff --check` passed. The
+verification executable `.tools/issue-16/hopvista-browser-path-20261027.exe`
+was built from the dirty working tree for this wording check (Go 1.27.2,
+Windows amd64, `CGO_ENABLED=0`), SHA-256
+`F7E5DC856CD76F15D5F8528E62082A91EB11227AE69972DAF46608E35C51EBE2`.
+It is not a release candidate. Two replay modes at five widths passed **10
+isolated headless combinations** with no layout failure and zero animations
+under reduced motion; report
+`.impeccable/review/issue-16/observations-2026-10-28T04-10-24.961Z.json`.
+Logs: `.tools/issue-16/browser-path-{red,green,ui-test,go-test,observe}.log`.
+No new real Chrome, screen-reader or native zoom claim is made.

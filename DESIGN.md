@@ -219,6 +219,10 @@ contrasts it with earlier finished steps. A recorded 0 ms remains a completed
 value. This distinction responds to the participant's missing-versus-zero
 confusion without changing measurement outcomes or Go-owned finding text.
 Typography, layout, colors and evidence navigation retain the approved design.
+The direct-connection note states why a browser's times may differ and gives
+concrete examples: reusing an open connection, using a saved or different
+number address, or going through another service (a proxy). It uses the same
+visible note position and does not claim to measure Chrome's actual path.
 
 ### Inputs and disclosures
 
