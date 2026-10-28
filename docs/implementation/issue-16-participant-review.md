@@ -135,3 +135,21 @@ browser operation were participant-performed and not independently observed.
 Main finding, uncertainty, phase meanings and the other outstanding tasks remain
 open. The next prompt asks what happened when HopVista contacted the website,
 using the “What this run found” panel, without supplying the expected finding.
+
+### Main-finding recheck
+
+Prompt: “Now look at ‘What this run found.’ In your own words, what happened
+when HopVista contacted the website?” No expected response or status was
+supplied in this prompt.
+
+Actual response: “It returned a response and an HTTP status of 204”.
+
+Assessment: **guided recheck passed for identifying the recorded website
+response and status 204** in `i11completed`. The answer matches the final
+exchange and Go-owned finding in this captured example. The participant was
+directed to the summary panel after the wording fix; this is not an unassisted
+first-use finding-location check. It does not establish an understanding of
+status-code classes, dominant-wait rules, overall page success, browser timings
+or the finding's limits. No new live network observation is inferred from this
+replay. The next prompt asks the participant to explain the limits in their own
+words, without providing the expected explanation first.
