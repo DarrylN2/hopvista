@@ -594,3 +594,9 @@ combinations had no layout failure; report
 `.impeccable/review/issue-16/observations-2026-10-28T04-43-05.778Z.json`.
 Reduced-motion animations were zero. Logs:
 `.tools/issue-16/hop-reply-precision-{red,green,ui-test,go-test,observe}.log`.
+
+Independent read-only corrective review of `git diff 900debc...29421b7`
+found **0 remaining Standards findings** and **0 Spec findings**. The
+Standards reviewer confirmed the send-to-reply interval resolves the earlier
+device-only timing ambiguity; Spec confirmed the unchanged data and
+still-pending human comprehension check. Reviewers did not operate a browser.
