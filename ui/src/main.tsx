@@ -190,7 +190,7 @@ function App() {
   return <main className={run || runID || submitting ? "has-run" : undefined} data-state={run?.state || (runID || submitting ? "running" : "ready")}>
     <a className="skip-link" href="#run-workspace">Skip to diagnostic run</a>
     <header className="masthead"><a className="wordmark" href="#"><svg aria-hidden="true" viewBox="0 0 32 32"><path d="M5 25V7m22 18V7M5 16h22"/><circle cx="5" cy="16" r="3"/><circle cx="16" cy="16" r="3"/><circle cx="27" cy="16" r="3"/></svg><span>HopVista</span></a><p className="scope">Local IPv4 diagnostic <span>Experimental · Windows 11 x64</span></p></header>
-    <section className="intro" aria-labelledby="intro-title"><h1 id="intro-title">See the path.<br/><span>Understand the wait.</span></h1><p>Observed hop replies and website timings, from this computer.</p></section>
+    <section className="intro" aria-labelledby="intro-title"><h1 id="intro-title">See the path.<br/><span>Understand the wait.</span></h1><p>Check how long it takes this computer to connect to a website and receive the start of its response.</p></section>
     <section className="workspace" id="run-workspace" aria-label="Diagnostic run">
     <form className="start-form" onSubmit={start}>
       <div className="target-input"><label htmlFor="target">Target URL</label><input id="target" type="url" required placeholder="https://example.com/" autoComplete="url" spellCheck={false} value={target} onChange={(event) => setTarget(event.target.value)} /></div>
@@ -208,8 +208,9 @@ function App() {
       <p className="run-description">{runDescription(run.state)}{incomplete && <> Some measurements are incomplete; their individual outcomes explain why.</>}</p>
       <div className="result-grid">
         <aside className="summary-column">
-          <section className="panel answer" aria-labelledby="answer-title"><h3 id="answer-title">What this run observed</h3>
-            <p className="selected"><strong>Selected IPv4</strong><span className="selected-address">{address || (terminal.has(run.state) ? "No IPv4 address selected" : "Pending")}</span>{family && selectedScope(family) && <span className="address-scope"><span className="visually-hidden">, address scope: </span>{outcome(selectedScope(family)!)}</span>}{address && <CopyAddress key={address} address={address} />}</p>
+          <section className="panel answer" aria-labelledby="answer-title"><h3 id="answer-title">What this run found</h3>
+            <p className="selected"><strong>Address for path checks (IPv4)</strong><span className="selected-address">{address || (terminal.has(run.state) ? "No number address recorded" : "Waiting for an address…")}</span>{family && selectedScope(family) && <span className="address-scope"><span className="visually-hidden">, address scope: </span>{outcome(selectedScope(family)!)}</span>}{address && <CopyAddress key={address} address={address} />}</p>
+            <p className="address-help">An IPv4 address is a number address computers use to reach websites. It is different from the website link you enter. Each website request below lists its own address.</p>
             {finalFinding ? <FindingView finding={finalFinding} exchange={family?.exchanges.find((exchange) => exchange.id === finalFinding.exchange_ref)} showEvidence={showEvidence} /> : terminal.has(run.state) ? <p>No observed finding is available for this run result.</p> : <p>Pending until the diagnostic run finishes.</p>}
             {run.error && <p className="error">{run.error.message}</p>}
             {family?.error && <p className="error">{family.error.message}</p>}
@@ -273,14 +274,14 @@ function EvidenceButton({ id, label = "View evidence", showEvidence }: { id: str
 }
 function FindingView({ finding, exchange, showEvidence }: { finding: Finding; exchange?: Exchange; showEvidence: (id: string) => void }) {
   const context: Record<string, string> = {
-    dominant_measured_wait: "This compares completed phases in one exchange. The longest measured wait does not locate the cause.",
-    http_response_observed: "A recorded response describes this exchange, not the website’s overall speed. HTTP 4xx and 5xx statuses are still responses.",
+    dominant_measured_wait: "One measured step took longer than the others in this website request. That alone does not tell us what caused the wait.",
+    http_response_observed: "The website sent back a response to this request. An error response also counts. This alone does not tell us why a page feels slow or how fast the full page loads.",
     http_phase_incomplete: "Earlier completed timings remain useful. The unfinished phase has its own outcome; it is not a zero-duration measurement.",
     redirect_stopped: "A redirect asks for another URL. Stopping under the URL policy is deliberate and does not establish a network failure.",
     ipv4_selection_incomplete: "This run needs a usable IPv4 address. No IPv6 connection is attempted in v1.",
     measurement_cutoff: "The cutoff stops new measurement work. Work already started may finish later; no maximum cleanup time is promised.",
   };
-  return <><p className="observation">{finding.observation}</p>{context[finding.type] && <p className="finding-context">{context[finding.type]}</p>}{["dominant_measured_wait", "http_response_observed"].includes(finding.type) && <details className="finding-help"><summary>What does “dominant wait” mean?</summary><p>At least two completed phases in the same exchange must be comparable. The longest must be at least 100 ms and at least twice the next longest. If no phase meets that rule, it does not establish that the website or browser was fast.</p></details>}<p className="limit"><strong>What this cannot establish</strong>{finding.limit}</p><div className="evidence-refs">{finding.evidence_refs.map((id) => { const phase = exchange && phaseRows(exchange).find((row) => row.measurement.id === id); return <EvidenceButton key={id} id={id} label={phase ? `View ${phase.label} evidence` : undefined} showEvidence={showEvidence} />; })}</div></>;
+  return <>{context[finding.type] && <p className="finding-context">{context[finding.type]}</p>}<p className="observation">{finding.observation}</p>{["dominant_measured_wait", "http_response_observed"].includes(finding.type) && <details className="finding-help"><summary>What does “dominant wait” mean?</summary><p>At least two completed steps in the same website request must have timings we can compare. We highlight the longest wait only if it is at least 100 ms and twice the next longest. Otherwise, these timings do not single out one main wait or prove that the website was fast.</p></details>}<p className="limit"><strong>What this does not tell us</strong>{finding.limit}</p><div className="evidence-refs">{finding.evidence_refs.map((id) => { const phase = exchange && phaseRows(exchange).find((row) => row.measurement.id === id); return <EvidenceButton key={id} id={id} label={phase ? `View ${phase.label} evidence` : undefined} showEvidence={showEvidence} />; })}</div></>;
 }
 function ExchangeView({ exchange, showEvidence }: { exchange: Exchange; showEvidence: (id: string) => void }) {
   return <div className="exchange"><h4>Exchange {exchange.redirect_index + 1}</h4><p className="exchange-url">{exchange.requested_url}</p><p><strong>IPv4 {exchange.selected_ip}</strong> · {outcome(exchange.selected_scope)}{exchange.actual_peer_ip && <> · Actual peer {exchange.actual_peer_ip}</>}</p>

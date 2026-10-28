@@ -69,3 +69,44 @@ participant's recheck.
 | `i11completed`: revised-copy phase recheck | “Okay, so I don't really know, but I think DNS. DNS finds and then establishes TCP makes the connection, TLS, secures the connection, HTTP is a protocol. I don't really know. I also don't know if these timings include downloading and displaying the whole page.” | Asked to refresh, run the same case and read updated timing guidance. No definitions supplied before this answer. Refresh/version was not independently observed. | Partial TCP/TLS understanding; DNS boundary unclear, HTTP timing boundary not explained, full-page exclusion unknown. Revised wording has not established comprehension acceptance. | Facilitator then explained address lookup, connection opening, encryption/certificate setup and request-to-first-response-byte timing, excluding body download and page display. Any subsequent recheck must be labelled assisted; no assisted answer yet. |
 | Browser and input scope | “I'm using google chrome, and I can navigate with mouse and keyboard” | No operation assistance supplied. | Browser/input familiarity recorded; this is not evidence that the specific keyboard evidence/copy tasks passed. | Specific tasks still pending. |
 | Browser/direct path, missing vs zero, cutoff/completion, hop limit/unreachable and keyboard evidence/copy | No response yet. | No help yet. | Not checked. | Pending later rounds. |
+
+## Resumed review: 2026-10-27
+
+P1 explicitly resumed issue #16 in this chat: “ALright lets do 16”. The earlier
+deferral is lifted for this review. Participant is the same repo owner/user;
+the earlier networking explanations and subsequent personal use of HopVista
+are prior exposure. Phase-meaning rechecks must retain that assisted history;
+they cannot establish first-use comprehension for a new participant.
+
+Review baseline: clean `b67eaee` (PR #26 merged); production UI source and
+embedded assets are unchanged from candidate source `a159f9c`. Required local
+captures were checked against `.tools/issue-16/manifest.json` SHA-256 entries.
+The loopback replay listener was started and its HTTP 200 response/replay
+banner verified. The participant opens and operates the browser themselves;
+no desktop or existing browser is controlled by the agent. This uses fixed
+captured examples, not fresh measurements of the participant's network.
+
+The first prompt asks P1 to locate the observation, uncertainty and selected
+IPv4 in `i11completed` without opening technical details, and to report their
+browser/zoom. No expected answer was supplied. Initial socket-restricted server
+readiness failed; the disposable listener was stopped and restarted with
+permitted loopback access. HTTP 200 and the replay banner were then verified.
+
+P1 reports **Google Chrome at 100% zoom**; version and exact CSS viewport are
+unknown. Ambient in-app browser state is not substituted for this self-report.
+No specific keyboard-only operation is reported in this round.
+
+| Task | Actual response | Assessment / follow-up |
+| --- | --- | --- |
+| Main observation | “I think it observes the links or hops or connections between my computer and the fixture link.” | P1 described the path concept, but did not identify the particular returned response/finding in this example. The prompt was broad, so this is not evidence of an incorrect network diagnosis; locating/interpreting the intended main observation remains unverified. |
+| Uncertainty | “I think the language here is still too technical, even for me. Maybe like simplify the language or dumb it down a little bit.” | Explicit readability difficulty; no interpretation of the limit supplied. Simplify the primary explanations and labels, then recheck. |
+| Selected address | “I don't know what you mean by selected. Is is the \"https://start.example/start\"? What is even IPv4?” | The participant could not distinguish the website link from the selected numeric address; IPv4 is undefined for this reader. This criterion is not met in this attempt. Add a visible definition and plain address label without changing the recorded selection. |
+
+Response to this feedback: the agent acknowledged a wording gap without giving
+the expected numeric address or finding. The UI follow-up explains the purpose
+in everyday words, defines IPv4 and its difference from the entered link,
+renames the summary/address/limit headings, and simplifies existing static
+finding guidance. Exact Go-owned observation/limit strings remain visible and
+unchanged, with the same measurements, schema and evidence references. This
+records a proposed readability fix, not a successful human recheck. P1's
+recheck of the updated page is pending.

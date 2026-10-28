@@ -207,6 +207,14 @@ focus when action controls disable or disappear. The selected scope includes an
 assistive-text label without changing its visible styling. See the scoped
 [issue #16 evidence](docs/implementation/issue-16.md); human review remains open.
 
+The participant follow-up labels the finding panel “What this run found” and
+the limit “What this does not tell us”. “Address for path checks (IPv4)” has a
+visible, blue-tinted explanation of the number address and its difference from
+the entered website link. Existing static finding guidance comes before the
+exact Go-owned observation; it explains terms without calculating a finding.
+The intro describes connection and response-start timing in everyday language.
+Typography, layout, colors and evidence navigation retain the approved design.
+
 ### Inputs and disclosures
 
 Inputs have paper fill, a neutral stroke, a blue caret, and a minimum height of (46px). Hover darkens the border to ink. Visible labels precede the URL and hop count fields. Advanced options use a native details disclosure, and summaries have a minimum height of (44px). The hop count field caps its width at (116px).

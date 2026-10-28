@@ -1,5 +1,12 @@
 # HopVista v1 acceptance status
 
+Human review resumed on 2026-10-27. [Issue #16's participant record](issue-16-participant-review.md)
+records new difficulty interpreting the observation, limits and selected IPv4.
+The UI wording follow-up adds a visible number-address explanation and simpler
+primary labels/static guidance. A human recheck is pending; #16 and release
+acceptance remain open. This UI change is later than the exact `a159f9c`
+candidate below; its previous binary/checksum remains historical evidence.
+
 Latest candidate preparation: [issue #17 evidence](issue-17.md) identifies a
 single Windows x64 executable from clean merged commit `a159f9c`, including the
 Advanced layout fix. Packaged browser/API/privacy/security, native cancellation,

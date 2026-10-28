@@ -296,3 +296,21 @@ test('website timing explains the four steps in plain language before opening ev
   assert.match(introduction, /do not measure a full page load/);
   assert.equal(await page.locator('.technical').getAttribute('open'), null);
 });
+
+test('the result explains its purpose and number address without opening technical details', async t => {
+  const { page, run } = await review(t);
+  await page.getByRole('button', { name: 'Start diagnostic run', exact: true }).press('Enter');
+  await page.locator('.run-heading').waitFor();
+  assert.match(await page.locator('.intro').innerText(), /connect to a website.*response/i);
+  assert.equal(await page.getByRole('heading', { name: 'What this run found', exact: true }).isVisible(), true);
+  assert.match(await page.locator('.selected').innerText(), /Address for path checks/);
+  assert.equal(await page.locator('.selected-address').innerText(), '192.0.2.10');
+  const explanation = page.locator('.address-help');
+  assert.equal(await explanation.isVisible(), true);
+  assert.match(await explanation.innerText(), /IPv4.*number address/);
+  assert.match(await explanation.innerText(), /different from the website link/);
+  assert.match(await page.locator('.limit').innerText(), /What this does not tell us/);
+  assert.equal(await page.locator('.observation').innerText(), run.findings[0].observation);
+  assert.ok((await page.locator('.limit').innerText()).includes(run.findings[0].limit));
+  assert.equal(await page.locator('.technical').getAttribute('open'), null);
+});
