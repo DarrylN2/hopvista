@@ -237,3 +237,19 @@ this controlled replay. The facilitator pointed to the precise row after an
 earlier unsuccessful prompt. This does not establish unassisted finding of the
 row, understanding of what starts at that point, full-page speed, or a causal
 explanation. The 0 ms fixture value must not be generalized to real traffic.
+
+### Response-begins meaning recheck
+
+Prompt: “In your own words, what does Response begins measure? It’s fine to
+use the short explanation beside that row.” The label and inline help were
+available, and previous facilitator prompts had identified the row.
+
+Actual response: “The time between our request and website's response”.
+
+Assessment: **assisted recheck passed for the basic request-to-response wait**.
+P1 described the interval in ordinary words. The visible label “Response
+begins” supplies the start-of-response boundary, while the answer itself does
+not explicitly distinguish the first response byte from the completed body
+or rendered page. Prior explanation and row guidance mean this is not
+unassisted first-use phase comprehension. Continue checking incomplete versus
+zero timing in another example; do not infer whole-page timing from this answer.
