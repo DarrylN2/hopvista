@@ -267,3 +267,18 @@ It matches Exchange 2's connection timeout and 2000 ms bound in this captured
 example. The participant was told the exact exchange and row. This answer
 does not yet establish the meaning of timeout, missing versus zero duration,
 or which earlier timings remain useful. Ask for an interpretation next.
+
+### Incomplete-connection meaning check
+
+Prompt: “What do you think ‘No response within 2000 ms’ means for that
+Connection step?” No expected interpretation was supplied before the answer.
+
+Actual response: “Opening a connection failed?”
+
+Assessment: **partial understanding**. P1 associated the message with the
+connection attempt rather than a full-page result, and expressed uncertainty.
+The captured outcome is specifically a timeout: the connection did not
+complete within the 2000 ms bound. This does not prove a permanent inability
+to connect or say what a later attempt would do. The facilitator then
+clarified that distinction. A later check should test whether P1 distinguishes
+this missing completed duration from a recorded 0 ms duration.
