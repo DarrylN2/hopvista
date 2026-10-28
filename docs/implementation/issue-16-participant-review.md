@@ -496,3 +496,19 @@ checks, consistent with the revised note, and does not repeat the earlier
 direct-link claim. The answer does not explicitly say whether the line can
 establish a direct connection. Ask that narrower question once before scoring
 the limit. Do not infer a website-request route from this replay.
+
+### Direct-link limit recheck
+
+Prompt after the revised note and prior correction: “Can the dotted line tell
+us whether two neighboring hop markers are directly connected?”
+
+Actual response: “No cause there's a note”.
+
+Assessment: **assisted recheck passed for rejecting the direct-link
+inference**. P1 now says the line cannot tell us that neighboring markers
+connect directly and cites the adjacent note. The answer confirms that the
+revised explanation corrected the earlier visual inference for this
+participant when the note was used. It does not prove the graphic alone is
+unambiguous, unassisted first-use comprehension, or knowledge of the actual
+website-request route. Keep the connector explanation visible and continue
+other path/echo questions.
