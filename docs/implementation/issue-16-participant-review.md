@@ -171,3 +171,22 @@ browser/full-page timing and the cause of waits. The question mark also leaves
 some uncertainty about P1's confidence. Do not score this as a claim that the
 whole website was fast or slow. The facilitator may explain the distinction and
 ask a narrower assisted recheck; any later success must retain that assistance.
+
+### Connection-timing recheck
+
+Facilitator correction before this prompt: HopVista shows some measured times,
+including connection time; the limit concerns full-page timing in Chrome and
+the cause of a wait. Prompt: find the Connection row for the last website
+request in Website timing and report its time.
+
+Actual response: “0 ms? There are 4 exchanges”.
+
+Assessment: **assisted recheck passed for locating the recorded connection
+value, with residual uncertainty about which exchange to use**. The fourth
+exchange is the final request (`https://next.example/final`), and its TCP
+connection duration is recorded and displayed as 0 ms. P1 correctly noticed
+four exchanges; the prompt said “last website request” without explaining
+that the fourth exchange is the final one. The displayed 0 ms is a recorded
+value in this controlled replay; it does not show that real-world connection
+time is literally zero or that Chrome loaded the page instantly. The answer
+does not by itself establish the finding's browser-timing or causal limits.
