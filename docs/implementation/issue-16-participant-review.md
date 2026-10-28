@@ -222,3 +222,18 @@ reflect difficulty finding the fourth row or ambiguity in the facilitator's
 prompt; it is not evidence that P1 misunderstood the value itself. Rephrase
 with the exact row labels and ask again. Do not score phase-meaning comprehension
 from this response.
+
+### Response-begins value recheck
+
+Facilitator follow-up identified the fourth row below Encryption in Exchange 4
+as “Response begins” / “HTTP first byte” and asked for its displayed number;
+the expected value was not supplied.
+
+Actual response: “0 ms”.
+
+Assessment: **assisted recheck passed for locating the displayed Response
+begins value**. Exchange 4's HTTP-first-byte duration is recorded as 0 ms in
+this controlled replay. The facilitator pointed to the precise row after an
+earlier unsuccessful prompt. This does not establish unassisted finding of the
+row, understanding of what starts at that point, full-page speed, or a causal
+explanation. The 0 ms fixture value must not be generalized to real traffic.
