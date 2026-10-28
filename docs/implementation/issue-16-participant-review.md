@@ -445,3 +445,19 @@ meaning and may imply a physical or website-request route; do not assign a
 more precise misunderstanding than the words support. Ask P1 to read the
 nearby explanatory sentence and interpret it before deciding whether the
 on-screen language requires revision.
+
+### Dotted path connectors: note recheck
+
+Facilitator follow-up directed P1 to the sentence below “Trace to…” about
+dotted connectors and asked for its meaning in their own words. The exact
+expected interpretation was not supplied in the prompt, but the on-screen
+sentence explicitly states probe order.
+
+Actual response: “It shows the order of hops”.
+
+Assessment: **guided recheck passed for the order meaning**. P1 identified
+the order of hop checks after attention was directed to the nearby note.
+This does not establish that the visual alone conveys the intended meaning,
+or that P1 understands the line does not prove physical links or the route
+of the website request. Check those limits separately. No physical topology
+or HTTP route is inferred from the replay.
