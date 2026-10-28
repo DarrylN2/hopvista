@@ -372,3 +372,24 @@ example. Do not treat the earlier correct rejection of guaranteed matching
 as comprehension of the mechanism. Simplify the on-screen caveat to connect
 the examples explicitly to different timings, preserve its direct-path
 limits, and recheck. Any later success is assisted.
+
+### Revised browser-note human recheck
+
+After the note was simplified, P1 was asked to refresh Chrome, read “A direct
+connection”, and explain in their own words one reason Chrome and HopVista
+might show different times. The facilitator had already given a direct
+connection/reused-connection explanation earlier. The participant's browser
+refresh was not independently observed by the agent.
+
+Actual response: “Cause "Chrome or another browser may reuse an open
+connection, use a saved or different number address, or go through another
+service (a proxy). Their times can differ."”
+
+Assessment: **the revised explanation was found, but comprehension remains
+unverified**. P1 copied the visible sentence rather than paraphrasing a
+reason, despite the prompt asking for their own words. The quote accurately
+matches the revised UI, so it supports visibility/locatability of the note
+after the reported refresh, not independent understanding of reuse, saved
+addresses, proxies, or why the times differ. This is an assisted participant
+recheck, not a new-reader first-use pass. Ask about one concrete phrase in
+ordinary language before scoring this criterion.
