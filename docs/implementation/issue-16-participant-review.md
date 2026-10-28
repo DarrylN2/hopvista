@@ -428,3 +428,20 @@ this does not establish first-use comprehension, the actual path Chrome took,
 or understanding of alternate addresses/proxies. The broader direct-path
 versus browser distinction remains only partially checked. Other issue #16
 human tasks remain open.
+
+### Dotted path connectors: first reading
+
+Prompt: run `https://fixture.example/i13highsilent` and say what the dotted
+line between hop markers in the IPv4 path diagram means. No expected answer
+or explanation was supplied in this prompt. The UI does have a nearby muted
+sentence about probe order, but the participant was not directed to it.
+
+Actual response: “Its like the connection, like a train station”.
+
+Assessment: **not yet passed for path-connector meaning**. The train-station
+analogy suggests P1 reads the connected markers as a journey or connection
+between stops. The answer does not establish the intended probe-order-only
+meaning and may imply a physical or website-request route; do not assign a
+more precise misunderstanding than the words support. Ask P1 to read the
+nearby explanatory sentence and interpret it before deciding whether the
+on-screen language requires revision.
