@@ -317,3 +317,23 @@ completed time”, so the exact missing-versus-measured-zero distinction should
 still be checked against a separate completed-zero example. This is not a
 new participant or unassisted first-use pass. No new network measurement is
 inferred from the replay. Other issue #16 tasks remain open.
+
+### Measured-zero comparison
+
+Prompt: run `https://fixture.example/i12measuredzero`; in Exchange 2, report
+what Response begins shows and how it differs from the previous Connection
+timeout. The expected value was not supplied, but the participant had already
+been coached on completed versus missing time.
+
+Actual response: “It shows 0 ms and it;s different cause the response is
+immediate”.
+
+Assessment: **assisted recheck passed for distinguishing recorded zero from
+timeout/missing completed time**. Exchange 2's response-start phase is
+completed with duration 0 ms in this controlled capture; the previous
+connection phase timed out without a completed duration. The word “immediate”
+overstates what a recorded 0 ms proves, particularly outside this fixture and
+for a whole page. The facilitator clarified that 0 ms is the recorded value
+for the start of the response, not proof of literally instantaneous delivery
+or page rendering. This comparison does not establish first-use comprehension
+or other acceptance criteria.
