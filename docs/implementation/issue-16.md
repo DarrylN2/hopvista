@@ -1,5 +1,11 @@
 # Issue 16: accessibility and human comprehension acceptance
 
+Latest participant follow-up, 2026-10-27: human review has resumed. The same
+participant reports Chrome at 100% zoom and difficulty understanding the main
+observation, limits and selected IPv4. [Their actual answers](issue-16-participant-review.md)
+are retained. The follow-up below adds plainer visible guidance and labels;
+the participant's recheck and issue #16 acceptance remain pending.
+
 Independent checks first performed on 2026-10-20 (America/Los_Angeles) for
 [issue #16](https://github.com/DarrylN2/hopvista/issues/16), which had no comments
 when read. **Issue #16 remains open: the real participant review is incomplete.**
@@ -318,3 +324,82 @@ plain definitions and explained the excluded body download/page display; any
 later answer must be recorded as assisted. The automated guidance test remains
 a regression check for available content, not evidence that this human defect
 is resolved. No further production change or acceptance pass is claimed.
+
+## Resumed participant readability follow-up: 2026-10-27
+
+P1 resumed review after PR #26 merged, from clean `b67eaee`. They described the
+example as hops/connections, reported technical wording and confused the
+selected number address with the submitted website link. They explicitly asked
+what IPv4 means. This is actual difficulty locating/interpreting the intended
+finding and address, not a comprehension pass. The participant record preserves
+the prompts, answers, previous help and self-reported Chrome/100% scope.
+
+At the already approved rendered-production-UI seam, the focused regression
+`node --test --test-name-pattern='result explains its purpose' tools/accessibility-ui.test.mjs`
+first failed against the old intro (1 failure, 15 pattern skips). It passed
+after the production rebuild (1 pass, 15 pattern skips). It checks visible
+guidance before opening details and preservation of the supplied finding,
+limit and literal address; it does not measure human understanding.
+
+Implementation `1654ecd` changes the intro, finding/address/limit headings,
+defines IPv4 beside the displayed number and explains its difference from the
+entered link. Existing static guidance for completed response/dominant-wait
+findings is simpler and precedes the exact recorded observation. Detailed
+dominant-wait help uses “step” and “website request”. Go-owned finding strings,
+limits, measurements, evidence references and schema version 1 are unchanged.
+The approved composition/colors/typography and interactions are retained.
+
+Verification:
+
+- TypeScript/Vite build and final standalone typecheck passed.
+- Full `npm.cmd --prefix ui test`, with the new executable enabled, passed
+  **18 checks with 1 explicit system-clipboard skip**. This includes all three
+  real packaged browser journeys, without replacing application API responses.
+- The new executable is `.tools/issue-16/hopvista-reading-20261027.exe`, source
+  `1654ecd7ef49c04b6864d79731c3ec0fdafd6d50`, Go 1.27.2 windows/amd64,
+  `CGO_ENABLED=0`, `vcs.modified=false`; SHA-256
+  `4AB6CBE6DACBFD6729573605D0BB13FC9F46A2F577918684F6074B5A45BD5732`.
+  This is a new verification build, not the earlier `a159f9c` candidate/checksum.
+- Fifteen existing captured/synthetic modes at five widths passed **75
+  combinations** with preserved exact findings, evidence focus/return, reading
+  order and no page-wide overflow. Runtime reduced motion matched with zero
+  active animations. Report:
+  `.impeccable/review/issue-16/observations-2026-10-28T03-30-52.541Z.json`.
+- Twenty sampled color pairs passed; the manual-copy fallback remained selected
+  and within 320px. The existing 144×37px wordmark exception remains disclosed.
+- The normal replay was additionally inspected in isolated headless Edge at
+  1440/390/320 CSS pixels; visible address guidance, closed technical details,
+  exact observation/limit and no overflow passed. Desktop/narrow screenshots
+  were visually inspected. No unexpected page errors were observed.
+- Full root `go test ./... -count=1`, `go vet ./...`, and `git diff --check`
+  passed. Ordinary-suite native/network/minute/packaged opt-ins were disabled;
+  the packaged browser checks were enabled separately as above. No race result
+  is claimed with cgo disabled. No Go source changes were made.
+
+Local logs are `.tools/issue-16/resume-copy-{red,green,go-test,ui-test,look,observe,metrics}.log`.
+Existing browser/desktop/clipboard sessions were not controlled. Impeccable
+context loading could not install its engine in the restricted cache, so the
+existing product/design context and clarify/craft-floor references were read
+directly. This did not prevent the permitted rendered checks.
+
+### Standards
+
+Independent read-only review of `git diff b67eaee...1654ecd`: **0 findings**.
+The reviewer checked AGENTS/agent docs, glossary, product/design boundaries,
+public rendered seam, data preservation and the participant record. Retained
+focused/layout/metrics logs were checked; no tests or browser operations were
+independently performed.
+
+### Spec
+
+Independent read-only review of the same diff against issue #16 and the user's
+reported confusion: **0 actionable findings**. The reviewer confirmed the
+preserved Go findings/limits, unchanged data/schema, actual answers/assisted
+history and pending human recheck. Retained UI/replay logs matched the stated
+scope; no tests or browser operations were independently performed.
+
+Standards **0**; Spec **0**. A successful participant recheck is still required;
+these checks do not establish that the reported readability problem is resolved.
+The new wording has no fresh real-screen-reader or native-zoom check in this
+pass. Earlier observations keep their dated scope. #16 and overall release
+acceptance remain open.

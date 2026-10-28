@@ -110,3 +110,8 @@ finding guidance. Exact Go-owned observation/limit strings remain visible and
 unchanged, with the same measurements, schema and evidence references. This
 records a proposed readability fix, not a successful human recheck. P1's
 recheck of the updated page is pending.
+
+Facilitator follow-up: the participant is told that IPv4 is a number address
+computers use to reach a website, and asked to refresh/rerun the example and
+find the address using the updated screen. This definition is assistance and
+must remain part of the recheck scope. No expected numeric address is supplied.
