@@ -551,9 +551,10 @@ Reviewers inspected retained logs but did not run tests or control a browser.
 In `i13highsilent`, P1 inferred Hop 2 was a bottleneck from its 450 ms reply
 followed by Hop 3's 12 ms reply. After being directed to the existing row
 note, P1 said they were unsure of the technical words. The actual responses
-are in `issue-16-participant-review.md`. The static note now says the time is
-how long the device took to answer HopVista's check, not time between stops
-or proof the device made the website slow. The recorded 450/12 ms replies,
+are in `issue-16-participant-review.md`. The static note now says the time
+starts when HopVista sends a check and ends when it receives that device's
+reply, not time between stops or proof the device made the website slow. The
+recorded 450/12 ms replies,
 missing reply, outcomes, schema and Go-owned findings remain unchanged.
 This is a readability fix; human recheck remains pending.
 
@@ -572,3 +573,24 @@ Reduced-motion animations were zero. Logs:
 `.tools/issue-16/hop-reply-{red,green,ui-test,go-test,observe}.log`.
 No new real Chrome, screen-reader or native zoom check is claimed. #16 and
 release acceptance remain open.
+
+An independent Standards review of `2843428...900debc` found **1 wording
+issue**: “how long this device took to answer” could be read as time spent
+inside the device, while the recorded value spans sending the check to
+receiving the reply. Spec review found **0 findings**. The displayed note and
+rendered test were corrected to state both endpoints explicitly. The new
+focused test failed on the first plain-language wording and passed on this
+precise version. Human comprehension of this final wording remains pending.
+
+For the precise version, TypeScript/Vite build passed; full UI tests passed
+**22 checks with 1 opt-in system-clipboard skip**, including three packaged
+browser journeys. Local verification executable
+`.tools/issue-16/hopvista-hop-reply-precise-20261027.exe` was built from the
+dirty source tree (Go 1.27.2, Windows amd64, `CGO_ENABLED=0`), SHA-256
+`BD989C40E954767BCBDE40A81B573B12AF1166CA56D2BD18DA0B4E954008C403`.
+It is not a release candidate. Full root `go test ./... -count=1`, `go vet
+./...`, and `git diff --check` passed. Ten isolated headless path/width
+combinations had no layout failure; report
+`.impeccable/review/issue-16/observations-2026-10-28T04-43-05.778Z.json`.
+Reduced-motion animations were zero. Logs:
+`.tools/issue-16/hop-reply-precision-{red,green,ui-test,go-test,observe}.log`.

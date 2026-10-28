@@ -361,7 +361,7 @@ test('a slow intermediate reply explains its limits without networking jargon', 
   await page.locator('.run-heading').waitFor();
   const help = page.locator('.hop-list li').first().locator('small');
   assert.equal(await help.isVisible(), true);
-  assert.match(await help.innerText(), /device.*answer HopVista.*check/i);
+  assert.match(await help.innerText(), /starts when HopVista sends a check.*ends when it gets.*reply/i);
   assert.match(await help.innerText(), /does not measure.*time between.*stops/i);
   assert.match(await help.innerText(), /does not prove.*website slow/i);
   assert.doesNotMatch(await help.innerText(), /ICMP|RTT|bottleneck/i);

@@ -259,8 +259,9 @@ Compact, softly rounded badges pair state text with the status colors described 
 ### Path and evidence
 
 Hop rows pair hop number, observed reply information, raw RTT where present, and an evidence button. Dotted connectors express probe order. Evidence controls pair underlined text with an inline arrow, with a minimum height of (32px), increasing to (44px) for coarse pointers.
-For an intermediate reply with a time, the visible row note says the device
-answered HopVista's check; it explains that this is neither time between stops
+For an intermediate reply with a time, the visible row note says the time
+starts when HopVista sends a check and ends when it receives that device's
+reply; it explains that this is neither time between stops
 nor proof the device slowed the website. This replaces ICMP/RTT/bottleneck
 jargon in the primary reading layer while preserving the recorded value.
 
