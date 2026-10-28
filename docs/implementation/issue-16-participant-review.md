@@ -512,3 +512,20 @@ participant when the note was used. It does not prove the graphic alone is
 unambiguous, unassisted first-use comprehension, or knowledge of the actual
 website-request route. Keep the connector explanation visible and continue
 other path/echo questions.
+
+### High intermediate reply: first interpretation
+
+Prompt on `i13highsilent`: Hop 2 shows 450 ms and Hop 3 shows 12 ms; ask what,
+if anything, P1 concludes about delay between them. No expected conclusion
+was supplied. The row has a small caveat about ICMP response time versus
+link delay/bottleneck, but the prompt did not direct P1 to read it.
+
+Actual response: “Hop 2 is like the bottleneck”.
+
+Assessment: **not passed for the intermediate-reply limit**. A single 450 ms
+response from the device at Hop 2 followed by a 12 ms response at Hop 3 does
+not establish a bottleneck or a 450 ms link delay. P1 inferred a causal
+slowdown from the higher intermediate reply. This is a demonstrated
+comprehension miss, not evidence of an actual network bottleneck. The
+facilitator corrected the claim after the answer. Ask P1 to read the nearby
+row note before deciding whether its technical language needs revision.
