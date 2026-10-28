@@ -403,3 +403,34 @@ these checks do not establish that the reported readability problem is resolved.
 The new wording has no fresh real-screen-reader or native-zoom check in this
 pass. Earlier observations keep their dated scope. #16 and overall release
 acceptance remain open.
+
+## Participant follow-up: timeout versus measured zero
+
+In the resumed review, P1 read Exchange 2's connection timeout text correctly
+but then answered “0” when asked whether the step had a recorded zero or no
+completed time. The exact response and assistance history are in
+`issue-16-participant-review.md`. This is an observed comprehension miss, not
+evidence that the API recorded zero. The UI now says “Did not finish within
+2000 ms (no completed time)” for that timeout and explains that earlier
+finished steps still have usable times. The HTTP response-start timeout uses
+the same missing-time distinction. A measured 0 ms remains a completed value.
+Go-owned findings, result outcomes/bounds, schema v1 and evidence are unchanged.
+
+Verification for this wording change: the rendered-UI test failed first on the
+old “No response within 2000 ms” label, then passed after the change. The
+TypeScript/Vite build passed. Full `npm.cmd --prefix ui test` with a newly
+built local Windows x64 executable passed **19 checks, 1 opt-in system-clipboard
+skip**, including the three packaged browser journeys. Full root
+`go test ./... -count=1`, `go vet ./...`, and `git diff --check` passed. The
+verification executable is `.tools/issue-16/hopvista-missing-zero-20261027.exe`
+(Go 1.27.2, `CGO_ENABLED=0`, source tree dirty for this verification build),
+SHA-256 `3295CF16392FB95E0E20F087C27BC0C95A33363185B483106B4FBE37F6D84ADA`.
+It is not the issue #17 release candidate. Isolated headless checks for timeout
+and measured-zero captures passed **10 mode/width combinations** at the five
+existing widths, with no layout failures and reduced motion showing zero
+animations. Report:
+`.impeccable/review/issue-16/observations-2026-10-28T04-00-06.551Z.json`.
+Logs: `.tools/issue-16/missing-zero-{red,green,ui-test,go-test,observe}.log`.
+No new real Chrome, screen-reader, or native zoom check is claimed. A human
+recheck of the new wording remains outstanding, so #16 and release acceptance
+remain open.

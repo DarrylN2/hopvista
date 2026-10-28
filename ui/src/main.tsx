@@ -25,7 +25,7 @@ function runDescription(state: RunResult["state"]): string {
 }
 function phaseValue(m: Measurement): string {
   if (m.outcome === "completed" && m.duration_ms !== undefined) return ms(m.duration_ms);
-  if (m.outcome === "timeout" && m.bound_ms !== undefined) return `No response within ${ms(m.bound_ms)}`;
+  if (m.outcome === "timeout" && m.bound_ms !== undefined) return `Did not finish within ${ms(m.bound_ms)} (no completed time)`;
   if (m.outcome === "skipped") return m.method === "reused_selection" ? "Reused selection" : "Not applicable";
   return outcome(m.outcome);
 }
@@ -38,7 +38,7 @@ function phaseRows(exchange: Exchange) {
   ];
 }
 function phaseLabel(m: Measurement) {
-  if (m.outcome === "timeout" && m.bound_ms !== undefined && m.method === "request_written_to_first_response_header_byte") return `No first response byte within ${ms(m.bound_ms)}`;
+  if (m.outcome === "timeout" && m.bound_ms !== undefined && m.method === "request_written_to_first_response_header_byte") return `No response start within ${ms(m.bound_ms)} (no completed time)`;
   return phaseValue(m);
 }
 function selectedIP(family: Family): string | undefined {
@@ -276,7 +276,7 @@ function FindingView({ finding, exchange, showEvidence }: { finding: Finding; ex
   const context: Record<string, string> = {
     dominant_measured_wait: "One measured step took longer than the others in this website request. That alone does not tell us what caused the wait.",
     http_response_observed: "The website sent back a response to this request. An error response also counts. This alone does not tell us why a page feels slow or how fast the full page loads.",
-    http_phase_incomplete: "Earlier completed timings remain useful. The unfinished phase has its own outcome; it is not a zero-duration measurement.",
+    http_phase_incomplete: "This step did not finish, so it has no completed time. Earlier finished steps still have usable times.",
     redirect_stopped: "A redirect asks for another URL. Stopping under the URL policy is deliberate and does not establish a network failure.",
     ipv4_selection_incomplete: "This run needs a usable IPv4 address. No IPv6 connection is attempted in v1.",
     measurement_cutoff: "The cutoff stops new measurement work. Work already started may finish later; no maximum cleanup time is promised.",

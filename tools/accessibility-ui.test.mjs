@@ -297,6 +297,21 @@ test('website timing explains the four steps in plain language before opening ev
   assert.equal(await page.locator('.technical').getAttribute('open'), null);
 });
 
+test('a timed out connection says there is no completed time instead of looking like zero', async t => {
+  const { page, run } = await review(t);
+  const connection = run.families[0].exchanges[0].tcp;
+  connection.outcome = 'timeout';
+  connection.bound_ms = 2000;
+  delete connection.duration_ms;
+  await page.getByRole('button', { name: 'Start diagnostic run', exact: true }).press('Enter');
+  await page.locator('.run-heading').waitFor();
+  const firstExchange = page.locator('.timing .exchange').first();
+  const connectionRow = firstExchange.locator('.phases > div').nth(1);
+  assert.match(await connectionRow.innerText(), /no completed time/i);
+  assert.match(await connectionRow.innerText(), /2000 ms/);
+  assert.notEqual(await connectionRow.locator('dd strong').innerText(), '0 ms');
+});
+
 test('the result explains its purpose and number address without opening technical details', async t => {
   const { page, run } = await review(t);
   await page.getByRole('button', { name: 'Start diagnostic run', exact: true }).press('Enter');

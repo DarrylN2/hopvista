@@ -213,6 +213,11 @@ visible, blue-tinted explanation of the number address and its difference from
 the entered website link. Existing static finding guidance comes before the
 exact Go-owned observation; it explains terms without calculating a finding.
 The intro describes connection and response-start timing in everyday language.
+When a timing step times out, its visible value states that it has **no
+completed time** and identifies the time limit; the incomplete-finding context
+contrasts it with earlier finished steps. A recorded 0 ms remains a completed
+value. This distinction responds to the participant's missing-versus-zero
+confusion without changing measurement outcomes or Go-owned finding text.
 Typography, layout, colors and evidence navigation retain the approved design.
 
 ### Inputs and disclosures

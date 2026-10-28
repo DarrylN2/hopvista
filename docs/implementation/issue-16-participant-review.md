@@ -282,3 +282,19 @@ complete within the 2000 ms bound. This does not prove a permanent inability
 to connect or say what a later attempt would do. The facilitator then
 clarified that distinction. A later check should test whether P1 distinguishes
 this missing completed duration from a recorded 0 ms duration.
+
+### Missing-versus-zero check
+
+Prompt: “For Exchange 2, would you read the Connection time as 0 ms, or as no
+completed time recorded?” The facilitator had already explained that this
+attempt timed out after a two-second limit.
+
+Actual response: “0”.
+
+Assessment: **not passed**. P1 treated the timed-out connection as a recorded
+zero-duration connection despite reading the timeout text correctly and
+receiving an explanation. This is direct evidence that the result screen does
+not yet make missing completed time distinct enough from measured zero for
+this participant. Clarify the visible timeout label and incomplete finding
+context without changing the recorded outcome, bound, schema or Go finding.
+Recheck after the wording change; any success remains assisted.
