@@ -501,3 +501,10 @@ combinations had no layout failure; report
 Reduced-motion animations were zero. Logs:
 `.tools/issue-16/browser-reuse-{red,green,ui-test,go-test,observe}.log`.
 No new real Chrome, screen-reader or native zoom check is claimed.
+
+Independent read-only review of `git diff 4e9b54d...02cc56f` found **0
+Standards findings** and **0 Spec findings**. Standards checked repo
+language/design guidance, preserved data boundaries, the rendered UI seam
+and factual participant record. Spec checked the observed tab/connection
+confusion against issue #16 and the pending human recheck. Reviewers inspected
+retained logs but did not run tests or control a browser.
