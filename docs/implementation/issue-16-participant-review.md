@@ -190,3 +190,19 @@ that the fourth exchange is the final one. The displayed 0 ms is a recorded
 value in this controlled replay; it does not show that real-world connection
 time is literally zero or that Chrome loaded the page instantly. The answer
 does not by itself establish the finding's browser-timing or causal limits.
+
+### Full-page timing recheck
+
+Prompt after the facilitator identified Exchange 4 and explained that its
+0 ms Connection value is one step of one website request: “Does that 0 ms tell
+you how long Chrome took to load and display the whole page?”
+
+Actual response: “No i don't think so? Does the connection mean that?”
+
+Assessment: **assisted recheck passed narrowly for rejecting a full-page
+timing inference**, with explicit uncertainty about what Connection means.
+The answer follows a direct yes/no prompt and prior facilitator explanation;
+it is not unassisted first-use comprehension. It does not establish an
+understanding of the connection step, the cause-of-wait limit, or browser
+versus direct-path differences. The facilitator should define Connection in
+plain language before a later task.
