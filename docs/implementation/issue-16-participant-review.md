@@ -337,3 +337,22 @@ for a whole page. The facilitator clarified that 0 ms is the recorded value
 for the start of the response, not proof of literally instantaneous delivery
 or page rendering. This comparison does not establish first-use comprehension
 or other acceptance criteria.
+
+### Direct connection versus Chrome
+
+Prompt on the `i12measuredzero` result: read “A direct connection” and say
+whether HopVista's timing would necessarily match Chrome's timing for the same
+website, with a reason. No expected reason was supplied before the answer.
+
+Actual response: “I think it wont match chrome's timing cause its from my
+computer?”
+
+Assessment: **partial understanding**. P1 correctly rejects guaranteed
+matching timings but gives “from my computer” as the reason. Both HopVista and
+Chrome run on the participant's computer; that phrase alone does not explain
+the difference. The visible caveat's direct-versus-browser distinctions
+(another address, intermediary/proxy, saved address answer or reused
+connection) were not expressed. The facilitator should explain one or two
+concrete differences and recheck as assisted comprehension. This answer does
+not establish that the participant understood what the replay measures or
+prove any actual Chrome path or timing.
