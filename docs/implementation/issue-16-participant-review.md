@@ -529,3 +529,20 @@ slowdown from the higher intermediate reply. This is a demonstrated
 comprehension miss, not evidence of an actual network bottleneck. The
 facilitator corrected the claim after the answer. Ask P1 to read the nearby
 row note before deciding whether its technical language needs revision.
+
+### High intermediate reply: row-note reading
+
+Facilitator prompt: read the small note beside Hop 2's 450 ms reading and say
+what the number can and cannot tell us; “not sure” was explicitly allowed.
+The expected interpretation was not supplied in the prompt. The note uses
+“router”, “ICMP”, “RTT”, “link delay” and “bottleneck”.
+
+Actual response: “I'm not too sure of the techincal words”.
+
+Assessment: **not passed; the note's language blocked comprehension** for
+this participant. Do not infer that P1 understood the ICMP-versus-transit
+distinction or revise their earlier bottleneck conclusion based on this
+answer. Replace the static on-screen explanation with plain words that
+distinguish the device's answer to HopVista from time between hops or website
+slowdown. Keep the recorded RTT, outcome, trace and Go-owned findings intact;
+recheck after the wording change with assistance noted.

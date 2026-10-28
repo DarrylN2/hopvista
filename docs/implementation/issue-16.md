@@ -545,3 +545,30 @@ language/design guidance, preserved Go/schema boundaries, the rendered UI
 test seam and factual participant record. Spec checked the observed
 physical-link inference and still-pending human recheck against issue #16.
 Reviewers inspected retained logs but did not run tests or control a browser.
+
+## Participant follow-up: high intermediate reply
+
+In `i13highsilent`, P1 inferred Hop 2 was a bottleneck from its 450 ms reply
+followed by Hop 3's 12 ms reply. After being directed to the existing row
+note, P1 said they were unsure of the technical words. The actual responses
+are in `issue-16-participant-review.md`. The static note now says the time is
+how long the device took to answer HopVista's check, not time between stops
+or proof the device made the website slow. The recorded 450/12 ms replies,
+missing reply, outcomes, schema and Go-owned findings remain unchanged.
+This is a readability fix; human recheck remains pending.
+
+The focused rendered-browser check failed on the former ICMP/RTT/bottleneck
+copy and passed on the plain-language note. TypeScript/Vite build passed.
+Full UI tests passed **22 checks with 1 opt-in system-clipboard skip**,
+including three packaged browser journeys, using local verification
+executable `.tools/issue-16/hopvista-hop-reply-20261027.exe` (dirty source
+tree, Go 1.27.2, Windows amd64, `CGO_ENABLED=0`), SHA-256
+`E67473FBFDEED3F9C165AB0947162F50E9B2B82FD63F546D96B001DFE0E65225`.
+It is not a release candidate. Full root `go test ./... -count=1`, `go vet
+./...`, and `git diff --check` passed. Ten isolated headless mode/width
+combinations for `i13highsilent` and 64-hop content had no layout failure;
+report `.impeccable/review/issue-16/observations-2026-10-28T04-40-26.942Z.json`.
+Reduced-motion animations were zero. Logs:
+`.tools/issue-16/hop-reply-{red,green,ui-test,go-test,observe}.log`.
+No new real Chrome, screen-reader or native zoom check is claimed. #16 and
+release acceptance remain open.

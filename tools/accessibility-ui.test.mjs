@@ -354,3 +354,15 @@ test('the path note says dotted markers do not measure links between hops', asyn
   assert.match(await note.innerText(), /website request may have taken a different route/i);
   assert.equal(await page.locator('.technical').getAttribute('open'), null);
 });
+
+test('a slow intermediate reply explains its limits without networking jargon', async t => {
+  const { page } = await review(t);
+  await page.getByRole('button', { name: 'Start diagnostic run', exact: true }).press('Enter');
+  await page.locator('.run-heading').waitFor();
+  const help = page.locator('.hop-list li').first().locator('small');
+  assert.equal(await help.isVisible(), true);
+  assert.match(await help.innerText(), /device.*answer HopVista.*check/i);
+  assert.match(await help.innerText(), /does not measure.*time between.*stops/i);
+  assert.match(await help.innerText(), /does not prove.*website slow/i);
+  assert.doesNotMatch(await help.innerText(), /ICMP|RTT|bottleneck/i);
+});
