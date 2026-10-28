@@ -223,6 +223,9 @@ The direct-connection note states why a browser's times may differ and gives
 concrete examples: reusing an open connection, using a saved or different
 number address, or going through another service (a proxy). It uses the same
 visible note position and does not claim to measure Chrome's actual path.
+After a participant interpreted “open connection” as an open tab, the note
+spells out that a browser may keep a website connection open from an earlier
+visit and use it again instead of opening another.
 
 ### Inputs and disclosures
 

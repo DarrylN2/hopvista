@@ -478,3 +478,26 @@ design/language guidance, direct-path uncertainty, public browser test seam,
 and factual participant record. Spec checked the issue #16 browser-difference
 criterion, preserved Go/schema boundaries, and pending human recheck.
 Reviewers inspected retained logs; they did not run tests or control a browser.
+
+The next human check found another wording problem: P1 read “reuse an open
+connection” as an open browser tab. The note now says a browser may keep a
+website connection open from an earlier visit and use it again instead of
+opening another. The exact response is in the participant record. This is a
+clarification of the same direct-path caveat; it changes no diagnostic result,
+schema, finding or approved layout. Human recheck of this phrasing remains
+pending.
+
+The focused rendered-browser check failed on the previous phrase and passed
+with the concrete explanation. TypeScript/Vite build passed. Full UI tests
+passed **20 checks with 1 opt-in system-clipboard skip**, including three
+packaged browser journeys, using local verification executable
+`.tools/issue-16/hopvista-browser-reuse-20261027.exe` (dirty source tree,
+Go 1.27.2, Windows amd64, `CGO_ENABLED=0`), SHA-256
+`5298F14254EB363934B53BCC93BC3EFA58049D4F83D900386EFDD273403A05FD`.
+It is not a release candidate. Full root `go test ./... -count=1`, `go vet
+./...`, and `git diff --check` passed. Ten isolated headless mode/width
+combinations had no layout failure; report
+`.impeccable/review/issue-16/observations-2026-10-28T04-14-57.381Z.json`.
+Reduced-motion animations were zero. Logs:
+`.tools/issue-16/browser-reuse-{red,green,ui-test,go-test,observe}.log`.
+No new real Chrome, screen-reader or native zoom check is claimed.

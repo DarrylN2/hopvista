@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import type { Echo, Exchange, Family, Finding, Measurement, Path, RunResult } from "./types";
 import "./style.css";
 
-const directPathCaveat = "HopVista opens its own direct connection to the website. Chrome or another browser may reuse an open connection, use a saved or different number address, or go through another service (a proxy). Their times can differ.";
+const directPathCaveat = "HopVista opens its own direct connection to the website. A browser such as Chrome may keep a connection to the website open from an earlier visit and use it again instead of opening another. It may also use a saved or different number address, or go through another service (a proxy). Their times can differ.";
 const terminal = new Set(["completed", "cancelled", "failed"]);
 const phaseHelp = {
   DNS: "Time spent finding an IPv4 address for the website name. This computer's resolver may use a saved (cached) answer.",

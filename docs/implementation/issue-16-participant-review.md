@@ -393,3 +393,19 @@ after the reported refresh, not independent understanding of reuse, saved
 addresses, proxies, or why the times differ. This is an assisted participant
 recheck, not a new-reader first-use pass. Ask about one concrete phrase in
 ordinary language before scoring this criterion.
+
+### Open-connection phrase check
+
+Prompt: “When it says Chrome may ‘reuse an open connection,’ what do you think
+Chrome is reusing?” No definition of that phrase was supplied before the
+answer, though prior prompts had discussed direct versus browser connections.
+
+Actual response: “Like i guess an opened tab?”
+
+Assessment: **not passed for the connection-reuse mechanism**. P1 interpreted
+“open connection” as an open browser tab. The intended meaning is a network
+connection the browser may keep open to the site and use again. The wording
+should explain that concrete action without requiring familiarity with the
+term; preserve the direct-path caveat and other browser differences. The
+facilitator clarified the term after this response, so any later success is
+assisted. Do not infer P1's actual Chrome state from the answer.

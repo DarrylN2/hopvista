@@ -337,7 +337,8 @@ test('the direct-connection note explains why Chrome timing can differ', async t
   const note = page.locator('.caveat');
   assert.equal(await note.isVisible(), true);
   assert.match(await note.innerText(), /HopVista opens its own direct connection/);
-  assert.match(await note.innerText(), /Chrome or another browser may reuse.*connection/);
+  assert.match(await note.innerText(), /Chrome.*keep a connection.*open from an earlier visit/);
+  assert.match(await note.innerText(), /use it again instead of opening another/);
   assert.match(await note.innerText(), /times can differ/);
   assert.equal(await page.locator('.technical').getAttribute('open'), null);
 });
