@@ -342,3 +342,15 @@ test('the direct-connection note explains why Chrome timing can differ', async t
   assert.match(await note.innerText(), /times can differ/);
   assert.equal(await page.locator('.technical').getAttribute('open'), null);
 });
+
+test('the path note says dotted markers do not measure links between hops', async t => {
+  const { page } = await review(t);
+  await page.getByRole('button', { name: 'Start diagnostic run', exact: true }).press('Enter');
+  await page.locator('.run-heading').waitFor();
+  const note = page.locator('.path-column p').filter({ hasText: /dotted line|dotted connectors/i }).first();
+  assert.equal(await note.isVisible(), true);
+  assert.match(await note.innerText(), /dotted line.*numbered checks.*order/i);
+  assert.match(await note.innerText(), /did not measure a direct connection between one marker and the next/i);
+  assert.match(await note.innerText(), /website request may have taken a different route/i);
+  assert.equal(await page.locator('.technical').getAttribute('open'), null);
+});

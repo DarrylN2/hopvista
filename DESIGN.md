@@ -189,6 +189,12 @@ The current stylesheet defines no shadows. Depth comes from neutral surface chan
 
 Panels use the shared rounded panel token; controls and raw evidence blocks use the control radius. Status badges and text-like evidence controls have smaller corners. Borders are generally (1px), with (2px) ink section rules and the (3px) finding accent. The finding has square top corners and rounded bottom corners. The path uses circular nodes and dotted vertical connectors; those connectors mean probe order only and do not establish physical links or the HTTP route.
 
+The participant read the connectors as direct links despite the earlier muted
+technical caveat. The adjacent note now uses normal body text and states that
+the dots order numbered checks, no direct marker-to-marker connection was
+measured, and the website request may have taken another route. The approved
+path composition and connector geometry stay in place pending human recheck.
+
 ## Components
 
 ### Buttons

@@ -508,3 +508,33 @@ language/design guidance, preserved data boundaries, the rendered UI seam
 and factual participant record. Spec checked the observed tab/connection
 confusion against issue #16 and the pending human recheck. Reviewers inspected
 retained logs but did not run tests or control a browser.
+
+## Participant follow-up: dotted path connectors
+
+P1 first described the dotted line as a connection “like a train station”,
+then identified hop order after being directed to the note, but still said
+the dots proved a direct connection between markers “cause it looks like
+that”. The exact first/guided responses are in
+`issue-16-participant-review.md`. The nearby path note now says in plain
+language that the dots order numbered checks, HopVista did not measure a
+direct connection between adjacent markers, and the website request may
+have taken another route. The note uses normal body text instead of muted
+text. Connector geometry and the approved path composition remain in place
+pending human recheck; all trace outcomes and Go-owned findings are unchanged.
+
+The focused rendered-browser check failed on the former technical note and
+passed with the revised note. TypeScript/Vite build passed. Full UI tests
+passed **21 checks with 1 opt-in system-clipboard skip**, including three
+packaged browser journeys, using local verification executable
+`.tools/issue-16/hopvista-path-dots-20261027.exe` (dirty source tree,
+Go 1.27.2, Windows amd64, `CGO_ENABLED=0`), SHA-256
+`0F2D4FE47E0B53C69AE395A61F1E4C4111F3A166197DD1D7E562C05E174D12C2`.
+It is not a release candidate. Full root `go test ./... -count=1`, `go vet
+./...`, and `git diff --check` passed. Ten isolated headless mode/width
+combinations for `i13highsilent` and 64-hop content had no layout failure;
+report `.impeccable/review/issue-16/observations-2026-10-28T04-28-34.126Z.json`.
+Reduced-motion animations were zero. Logs:
+`.tools/issue-16/path-dots-{red,green,ui-test,go-test,observe}.log`.
+No new real Chrome, screen-reader or native zoom check is claimed. Human
+comprehension of the revised note is still pending. #16 and release
+acceptance remain open.

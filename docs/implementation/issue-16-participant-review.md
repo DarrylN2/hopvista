@@ -461,3 +461,21 @@ This does not establish that the visual alone conveys the intended meaning,
 or that P1 understands the line does not prove physical links or the route
 of the website request. Check those limits separately. No physical topology
 or HTTP route is inferred from the replay.
+
+### Dotted path connectors: link inference
+
+Prompt after the order recheck: “Do the dots also prove there’s a direct
+connection between each pair of hops? What makes you think so?” The nearby
+on-screen sentence says they do not establish a physical link; the prompt
+did not supply the expected answer.
+
+Actual response: “I think so, cause it looks like that”.
+
+Assessment: **not passed for the physical-link limit**. Even after locating
+the order note, P1 inferred direct connections from the visual itself. This
+is evidence that the diagram's connected appearance outweighs the current
+technical caveat for this participant. The facilitator corrected the claim
+after the answer. Clarify the visible adjacent text in ordinary language and
+recheck; if the graphic still yields the inference, the connector treatment
+will need reconsideration within the approved composition. No actual
+hop-to-hop link or website-request route is established by this trace.
