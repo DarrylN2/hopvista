@@ -471,3 +471,10 @@ under reduced motion; report
 `.impeccable/review/issue-16/observations-2026-10-28T04-10-24.961Z.json`.
 Logs: `.tools/issue-16/browser-path-{red,green,ui-test,go-test,observe}.log`.
 No new real Chrome, screen-reader or native zoom claim is made.
+
+Independent read-only review of `git diff a152838...7693202` found **0
+Standards findings** and **0 Spec findings**. Standards checked the repo's
+design/language guidance, direct-path uncertainty, public browser test seam,
+and factual participant record. Spec checked the issue #16 browser-difference
+criterion, preserved Go/schema boundaries, and pending human recheck.
+Reviewers inspected retained logs; they did not run tests or control a browser.
