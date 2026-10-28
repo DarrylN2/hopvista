@@ -409,3 +409,22 @@ should explain that concrete action without requiring familiarity with the
 term; preserve the direct-path caveat and other browser differences. The
 facilitator clarified the term after this response, so any later success is
 assisted. Do not infer P1's actual Chrome state from the answer.
+
+### Connection-reuse wording recheck
+
+After the UI explained that Chrome may keep a website connection open from
+an earlier visit and use it again, the facilitator asked P1 to refresh the
+page and answer: “If Chrome already has that connection open, what step could
+it skip on the next visit?” The facilitator had already corrected the earlier
+open-tab interpretation. Refresh was participant-performed and not
+independently observed.
+
+Actual response: “It might use the saved connection?”
+
+Assessment: **assisted recheck passed narrowly for the reuse example**. P1
+now identifies use of a connection already available, which implies skipping
+opening another one. The question and revised text supplied the situation;
+this does not establish first-use comprehension, the actual path Chrome took,
+or understanding of alternate addresses/proxies. The broader direct-path
+versus browser distinction remains only partially checked. Other issue #16
+human tasks remain open.
