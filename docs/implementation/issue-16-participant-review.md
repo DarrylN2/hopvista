@@ -585,3 +585,19 @@ the computer. Do not score this as a full round-trip understanding or infer
 that P1 rejects the return leg; ask one narrow follow-up before changing the
 UI again. The 450 ms remains a captured reply time, not proof of a link delay
 or website bottleneck.
+
+### High intermediate reply: return-leg follow-up
+
+Facilitator follow-up after P1 named only the outward check: “What has to
+happen after that for the 450 ms timer to stop?” Earlier UI and facilitator
+explanations had named the return reply, so this is a guided recheck.
+
+Actual response: “The reply needs to arrive to my computer”.
+
+Assessment: **assisted recheck passed for the return endpoint**. Taken with
+P1's preceding outward-leg answer, this identifies the round trip from the
+computer toward Hop 2 and the reply back to the computer. The question
+directed attention to what happens after the outward check, and P1 had
+received prior help; this is not unassisted first-use comprehension. It does
+not by itself establish understanding of whether the 450 ms proves link
+delay or a website bottleneck. Check that causal limit separately.
