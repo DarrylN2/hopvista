@@ -667,3 +667,22 @@ explicitly distinguish missing time from a recorded 0 ms reply. The
 facilitator corrected the distinction after the answer. Clarify the visible
 no-reply row without changing the outcome, bound, evidence or Go-owned
 findings, then recheck with assistance recorded.
+
+### Silent hop: revised wording recheck
+
+After the no-reply row was changed to distinguish a missing reply time from
+measured zero, P1 was asked to refresh `i13highsilent` and say what time, if
+any, they would record for Hop 1. Prior facilitator correction had explicitly
+explained missing versus zero; the browser operation was participant-performed
+and not independently observed by the agent.
+
+Actual response: “There is no reply within 750 ms. Also, can you let me know
+how far or like the percentage until we're done with this?”
+
+Assessment: **guided recheck passed for reading the no-reply bound, but the
+missing-duration interpretation remains unconfirmed**. P1 identified the
+750 ms no-reply result from the revised row. They did not state whether to
+record 0 ms or no completed reply time, which was the task's distinction.
+Do not infer a comprehension pass from the quoted row. The facilitator gave
+a rough progress update for the human walkthrough and should ask one narrow
+follow-up on the time value. Issue #16 and release acceptance remain open.
