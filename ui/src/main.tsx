@@ -290,9 +290,9 @@ function ExchangeView({ exchange, showEvidence }: { exchange: Exchange; showEvid
   </div>;
 }
 function EchoText({ echo }: { echo: Echo }) {
-  if (echo.status === "no_reply") return <span className="echo-reading"><span className="echo-status">No reply within {echo.bound_ms !== undefined ? ms(echo.bound_ms) : "the recorded time limit"}</span><span className="reply-address">No reply address</span><span className="raw-rtt">Reply time <strong>Not measured</strong></span><span className="echo-note">A 0 ms reading would mean a reply arrived.</span></span>;
+  if (echo.status === "no_reply") return <span className="echo-reading"><span className="echo-status">No reply within {echo.bound_ms !== undefined ? ms(echo.bound_ms) : "the recorded time limit"}</span><span className="reply-address">No reply address</span><span className="raw-rtt">Reply time: <strong>Not measured</strong></span><span className="echo-note">A 0 ms reading would mean a reply arrived.</span></span>;
   if (echo.status === "not_sent") return <>Not sent ({outcome(echo.outcome)}).</>;
-  return <span className="echo-reading"><span className="echo-status">{outcome(echo.status)}</span>{echo.reply_address && <strong className="reply-address">{echo.reply_address}</strong>}{echo.rtt_ms !== undefined && <span className="raw-rtt">Reply time <strong>{ms(echo.rtt_ms)}</strong></span>}{echo.error && <span className="error">{echo.error.message}</span>}</span>;
+  return <span className="echo-reading"><span className="echo-status">{outcome(echo.status)}</span>{echo.reply_address && <strong className="reply-address">{echo.reply_address}</strong>}{echo.rtt_ms !== undefined && <span className="raw-rtt">Reply time: <strong>{ms(echo.rtt_ms)}</strong></span>}{echo.error && <span className="error">{echo.error.message}</span>}</span>;
 }
 function PathView({ path, showEvidence }: { path: Path; showEvidence: (id: string) => void }) {
   const { route, trace } = path;

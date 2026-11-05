@@ -701,3 +701,9 @@ Standards findings** and **0 Spec findings**. Reviewers checked the raw
 RTT/missing distinction, unchanged data/schema boundary, truthful
 participant scope, public rendered test seam and pending human recheck.
 They did not edit or operate a browser.
+
+P1 then correctly read the aligned values as **Not measured** for Hop 1 and
+**450 ms** for Hop 2, an assisted missing-versus-measured recheck. P1 also
+requested a colon after the field label. The visible label now reads
+**Reply time:** in both hop states. The values, outcomes and evidence are
+unchanged. The exact participant answer is in the participant review record.

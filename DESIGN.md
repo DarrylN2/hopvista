@@ -259,7 +259,7 @@ Compact, softly rounded badges pair state text with the status colors described 
 ### Path and evidence
 
 Hop rows pair hop number, observed reply information, raw RTT where present, and an evidence button. Dotted connectors express probe order. Evidence controls pair underlined text with an inline arrow, with a minimum height of (32px), increasing to (44px) for coarse pointers.
-Hop rows use the same visible **Reply time** field for observed and missing
+Hop rows use the same visible **Reply time:** field for observed and missing
 replies. An observed reply shows its raw recorded RTT in milliseconds. A
 silent hop shows **Not measured**, the time limit, and the absence of a
 reply address; a short note explains that 0 ms requires an observed reply.

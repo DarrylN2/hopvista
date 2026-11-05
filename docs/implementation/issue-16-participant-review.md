@@ -721,3 +721,22 @@ Move the reply-time outcome into a consistent, labeled value position beside
 other hop readings so the missing state is visually comparable with measured
 reply times. This is a UI presentation change only; preserve all recorded
 outcomes, bounds and Go-owned findings. Recheck with assistance disclosed.
+
+### Silent hop: aligned-value recheck
+
+Prompt after the path presentation change: refresh `i13highsilent` and report
+the **Reply time** values for Hop 1 and Hop 2. The prior discussion had
+repeatedly taught that a silent hop has no measured reply time, so this is an
+assisted recheck. The participant operated Chrome; the agent did not observe
+the screen directly.
+
+Actual response: “Reply time says Not measured for Hop 1 and 450 ms for Hop
+2. Also, maybe, write "Reply time:" with the :.”
+
+Assessment: **assisted recheck passed for distinguishing missing from
+measured reply time** in the same path. P1 correctly located the aligned
+values and no longer assigned 0 ms to the silent hop. This does not
+establish unassisted first-use comprehension, packet-loss rate or website
+health. The participant requested a punctuation improvement to make the
+field label read naturally; add a colon in both hop states without altering
+the values or evidence.
