@@ -613,3 +613,23 @@ when its reply gets back to that computer. It explicitly says the time
 includes both directions. The time-between-hops and website-slowdown limits
 remain visible. Measurements, schema v1, Go-owned findings and the approved
 composition are unchanged. The participant recheck is pending.
+
+Verification: the focused rendered-browser check failed on the former note
+and passed after the edit. TypeScript/Vite build passed. Full UI tests passed
+**22 checks with 1 opt-in system-clipboard skip**, including three packaged
+browser journeys. The clean-source verification executable is
+`.tools/issue-16/hopvista-hop-roundtrip-20261104.exe`, source `b319d85`,
+Go 1.27.2, Windows amd64, `CGO_ENABLED=0`, `vcs.modified=false`; SHA-256
+`16397C663E50A80082205813B177C2AAD0F8A4E95D760CE45C37568F750E4CDF`.
+It is not the issue #17 release candidate. Full root `go test ./...
+-count=1`, `go vet ./...`, and `git diff --check` passed. Ten isolated
+headless combinations for `i13highsilent` and 64-hop content had no layout
+failure and zero reduced-motion animations; report
+`.impeccable/review/issue-16/observations-2026-11-05T03-37-36.440Z.json`.
+Logs: `.tools/issue-16/hop-roundtrip-{red,green,ui-test,go-test,observe}.log`.
+No real Chrome, screen-reader or native zoom check is claimed for this edit.
+
+Independent read-only review of `git diff 209b756...b319d85` found **0
+Standards findings** and **0 Spec findings**. Both reviewers checked the
+send-and-return meaning, unchanged result/schema boundary and honest pending
+participant recheck. They did not edit or operate a browser.
