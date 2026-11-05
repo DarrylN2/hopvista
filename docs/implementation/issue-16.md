@@ -644,3 +644,25 @@ The path row now states that no reply time was recorded, explains that a
 and lack of a reply address. It uses “reply time” in the primary text
 instead of “RTT”. Outcomes, bounds, schema v1 and Go-owned findings remain
 unchanged. A participant recheck is pending.
+
+Verification: the focused rendered-browser test failed on the prior
+“No address or RTT observed” row and passed on the explicit no-time row.
+TypeScript/Vite build passed. Full UI tests passed **23 checks with 1 opt-in
+system-clipboard skip**, including three packaged browser journeys. The
+clean-source verification executable is
+`.tools/issue-16/hopvista-silent-zero-20261104.exe`, source `51e55a4`,
+Go 1.27.2, Windows amd64, `CGO_ENABLED=0`, `vcs.modified=false`; SHA-256
+`61582CD3E2DEDFC04AAC9525AC4EDAEAFC5C2CB3D46A63FB1CB5A787D3B8F07D`.
+It is not the issue #17 release candidate. Full root `go test ./...
+-count=1`, `go vet ./...`, and `git diff --check` passed. Ten isolated
+headless path/width combinations had no layout failure and zero
+reduced-motion animations; report
+`.impeccable/review/issue-16/observations-2026-11-05T03-57-55.443Z.json`.
+Logs: `.tools/issue-16/silent-zero-{red,green,ui-test,go-test,observe}.log`.
+No real Chrome, screen-reader or native zoom check is claimed for this edit.
+
+Independent read-only review of `git diff c95c956...51e55a4` found **0
+Standards findings** and **0 Spec findings**. Both reviewers checked the
+missing-versus-zero meaning, unchanged data/schema boundary, factual
+participant record and pending human recheck. They did not edit or
+operate a browser.
