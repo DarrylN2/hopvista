@@ -718,3 +718,15 @@ Logs: `.tools/issue-16/reply-colon-{red,green,ui-test,go-test}.log`.
 Independent read-only review of `git diff 43b4ace...1e442b7` found **0
 Standards findings** and **0 Spec findings**. Both reviewers checked the
 requested colon in both states, exact participant quote and unchanged data.
+
+## Participant follow-up: unreachable reply versus silence
+
+P1 correctly read `i13limit1` as a configured one-hop stop, then read
+`i13unreachable` as “unreachable response” but said HopVista received no
+answer. The exact responses and assistance are in
+`issue-16-participant-review.md`. This capture records a reply at hop 2
+from `192.0.2.253` (6 ms) reporting unreachable; it is not silence.
+The trace outcome now has an adjacent plain explanation that HopVista
+received a device reply and that the website request is a separate check.
+The outcome, hop limit, evidence, Go-owned findings, schema v1 and approved
+composition remain unchanged. Human recheck is pending.

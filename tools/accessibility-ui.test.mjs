@@ -355,6 +355,22 @@ test('the path note says dotted markers do not measure links between hops', asyn
   assert.equal(await page.locator('.technical').getAttribute('open'), null);
 });
 
+test('an unreachable path outcome explains that a device replied', async t => {
+  const { page, run } = await review(t);
+  const trace = run.families[0].paths[0].trace;
+  trace.outcome = 'unreachable_response';
+  trace.max_hops = 4;
+  trace.highest_attempted_ttl = 2;
+  Object.assign(trace.hops[1], { status: 'unreachable_reply', outcome: 'completed', reply_address: '192.0.2.253', rtt_ms: 6 });
+  await page.getByRole('button', { name: 'Start diagnostic run', exact: true }).press('Enter');
+  await page.locator('.run-heading').waitFor();
+  const path = page.locator('.path-column');
+  assert.match(await path.innerText(), /Trace outcome:\s*unreachable response/);
+  assert.match(await path.innerText(), /received a reply.*device.*target address.*unreachable/i);
+  assert.match(await path.innerText(), /website request is a separate check/i);
+  assert.equal(await page.locator('.technical').getAttribute('open'), null);
+});
+
 test('a slow intermediate reply explains its limits without networking jargon', async t => {
   const { page } = await review(t);
   await page.getByRole('button', { name: 'Start diagnostic run', exact: true }).press('Enter');

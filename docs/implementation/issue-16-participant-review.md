@@ -776,3 +776,21 @@ rather than receiving no reply. The facilitator clarified that distinction
 after the answer. Ask a narrow response-versus-silence follow-up before
 scoring the observed-response criterion. The capture does not establish a
 general website failure or physical path break.
+
+### Unreachable-response versus silence
+
+Prompt after P1 named the outcome: “In the unreachable response example, did
+a device send HopVista an answer, or did HopVista receive no answer at all?”
+The facilitator's preceding message had explicitly explained that a device
+sent an unreachable message, so this is an assisted check.
+
+Actual response: “HopVista received no answer at all i think”.
+
+Assessment: **not passed after assistance**. The `i13unreachable` capture
+records an `unreachable_reply` at hop 2 from `192.0.2.253` with a 6 ms reply
+time; the trace outcome is `unreachable_response`. P1 interpreted it as
+silence instead of a received response. The visible raw outcome label and
+hop status do not explain this in everyday words. The facilitator corrected
+the interpretation after the answer. Add an adjacent plain explanation of
+the observed unreachable reply without changing the outcome, hop limit,
+evidence, website finding or schema; recheck with prior help disclosed.

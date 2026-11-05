@@ -265,6 +265,11 @@ silent hop shows **Not measured**, the time limit, and the absence of a
 reply address; a short note explains that 0 ms requires an observed reply.
 This separate value position responds to the participant treating a missing
 reply time as zero even after reading an inline explanation.
+For an unreachable trace outcome, a visible sentence beneath the recorded
+outcome explains that HopVista received a device's unreachable reply and
+that the website request is a separate check. This answers the participant's
+confusion between a received unreachable message and silence without
+changing the structured outcome or the hop diagram.
 For an intermediate reply with a time, the visible row note names the
 round trip: HopVista sends a check from the user's computer toward the hop,
 then receives the hop's reply back at that computer. It explains that this
