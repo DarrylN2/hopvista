@@ -740,3 +740,20 @@ establish unassisted first-use comprehension, packet-loss rate or website
 health. The participant requested a punctuation improvement to make the
 field label read naturally; add a colon in both hop states without altering
 the values or evidence.
+
+### Configured hop-limit reading
+
+Prompt: refresh the controlled preview, run `i13limit1`, read **Trace
+outcome**, and explain why the path check stopped. The prompt supplied the
+case URL but not its expected outcome. Earlier path explanations and
+facilitator help make this an assisted participant review.
+
+Actual response: “It says that hop limit reached. I think cause its limited
+to 1 hops”.
+
+Assessment: **guided recheck passed for a configured stopping rule**. P1
+identified `hop_limit_reached` and associated it with the one-hop setting,
+matching this capture's `max_hops: 1` and highest attempted hop 1. The
+answer does not infer an unreachable reply or website failure. The next
+case should test whether P1 distinguishes this configured stop from an
+observed unreachable response; no fresh network measurement is inferred.
