@@ -635,3 +635,18 @@ does not yet give the reason the 450 ms cannot establish website slowdown.
 The question mark indicates uncertainty. The facilitator may explain the
 separate-check distinction and ask one narrow follow-up; do not score a
 full causal explanation from this response.
+
+### Silent hop: displayed result
+
+Prompt on `i13highsilent`: “In the same path, Hop 1 says ‘No reply.’ What do
+you think that means for its time reading?” The facilitator had just
+explained that the Hop 2 number times a separate check and that it cannot
+establish website-request delay.
+
+Actual response: “No address or RTT observed”.
+
+Assessment: **guided check passed for locating the displayed missing
+address/reply-time outcome**. P1 repeated the path row's explanation that no
+reply address or RTT was observed. This does not yet establish whether they
+interpret the missing time as zero or understand that a silent hop can be
+followed by later replies. Ask for the missing-versus-zero meaning next.
