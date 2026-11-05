@@ -686,3 +686,21 @@ record 0 ms or no completed reply time, which was the task's distinction.
 Do not infer a comprehension pass from the quoted row. The facilitator gave
 a rough progress update for the human walkthrough and should ask one narrow
 follow-up on the time value. Issue #16 and release acceptance remain open.
+
+### Silent hop: revised wording value follow-up
+
+Prompt after the revised-row bound reading: “Should its reply time be recorded
+as 0 ms or no time recorded?” The on-screen row already says “No reply time
+recorded” and explains that a 0 ms reading would require a reply. The
+facilitator had previously supplied the same distinction verbally.
+
+Actual response: “Probably just 0 ms”.
+
+Assessment: **not passed after assistance**. P1 again assigned a completed
+zero to a hop with no observed reply. “Probably” indicates uncertainty. The
+loopback preview serves the current embedded `app.js` with `Cache-Control:
+no-store` and contains the revised phrase, but the agent has not observed
+P1's Chrome screen or confirmed which parts of the row P1 read. Ask P1 to
+report the phrase immediately after the 750 ms message before deciding
+whether the wording or its placement needs further change. Do not record a
+0 ms reply or infer packet loss from this capture.
