@@ -707,3 +707,14 @@ P1 then correctly read the aligned values as **Not measured** for Hop 1 and
 requested a colon after the field label. The visible label now reads
 **Reply time:** in both hop states. The values, outcomes and evidence are
 unchanged. The exact participant answer is in the participant review record.
+
+The focused rendered-browser test failed before the colon was added and
+passed afterward. TypeScript/Vite build passed. Full UI tests passed **20
+checks with 4 opt-in skips** (three packaged browser journeys and system
+clipboard); full root `go test ./... -count=1` and `git diff --check` passed.
+The preceding aligned-value change had already passed the three packaged
+browser journeys; they were not rerun for this punctuation-only follow-up.
+Logs: `.tools/issue-16/reply-colon-{red,green,ui-test,go-test}.log`.
+Independent read-only review of `git diff 43b4ace...1e442b7` found **0
+Standards findings** and **0 Spec findings**. Both reviewers checked the
+requested colon in both states, exact participant quote and unchanged data.
