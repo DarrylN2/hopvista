@@ -650,3 +650,20 @@ address/reply-time outcome**. P1 repeated the path row's explanation that no
 reply address or RTT was observed. This does not yet establish whether they
 interpret the missing time as zero or understand that a silent hop can be
 followed by later replies. Ask for the missing-versus-zero meaning next.
+
+### Silent hop: missing versus zero
+
+Prompt: “If Hop 1 gave no reply, should we treat its reply time as 0 ms? Why
+or why not?” The preceding prompt had drawn attention to the no-reply row;
+the expected distinction was not supplied before this response.
+
+Actual response: “Treat it as 0 ms”.
+
+Assessment: **not passed**. P1 read the displayed “No address or RTT
+observed” text, then treated the missing reply time as a completed zero.
+This repeats the earlier timeout-versus-zero confusion in a different path
+measurement. The current path row uses technical “RTT” and does not
+explicitly distinguish missing time from a recorded 0 ms reply. The
+facilitator corrected the distinction after the answer. Clarify the visible
+no-reply row without changing the outcome, bound, evidence or Go-owned
+findings, then recheck with assistance recorded.

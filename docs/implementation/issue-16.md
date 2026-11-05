@@ -633,3 +633,14 @@ Independent read-only review of `git diff 209b756...b319d85` found **0
 Standards findings** and **0 Spec findings**. Both reviewers checked the
 send-and-return meaning, unchanged result/schema boundary and honest pending
 participant recheck. They did not edit or operate a browser.
+
+## Participant follow-up: silent hop versus zero (2026-11-04)
+
+On `i13highsilent`, P1 read the old Hop 1 text “No address or RTT observed”
+but answered “Treat it as 0 ms” when asked what time to assign a silent hop.
+The exact answer and assistance are in `issue-16-participant-review.md`.
+The path row now states that no reply time was recorded, explains that a
+0 ms reading would require an observed reply, and retains the time limit
+and lack of a reply address. It uses “reply time” in the primary text
+instead of “RTT”. Outcomes, bounds, schema v1 and Go-owned findings remain
+unchanged. A participant recheck is pending.

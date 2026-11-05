@@ -368,3 +368,14 @@ test('a slow intermediate reply explains its limits without networking jargon', 
   assert.match(await help.innerText(), /does not prove.*website slow/i);
   assert.doesNotMatch(await help.innerText(), /ICMP|RTT|bottleneck/i);
 });
+
+test('a silent hop says its missing reply time is different from measured zero', async t => {
+  const { page } = await review(t);
+  await page.getByRole('button', { name: 'Start diagnostic run', exact: true }).press('Enter');
+  await page.locator('.run-heading').waitFor();
+  const silent = page.locator('.hop-list li').nth(1);
+  assert.match(await silent.innerText(), /No reply within 750 ms/);
+  assert.match(await silent.innerText(), /No reply time recorded/);
+  assert.match(await silent.innerText(), /0 ms.*reply arrived/);
+  assert.doesNotMatch(await silent.innerText(), /RTT/);
+});
