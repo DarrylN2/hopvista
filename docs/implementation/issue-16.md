@@ -679,3 +679,25 @@ the recorded raw RTT, while the latter says **Not measured**. The no-reply
 time limit, missing address and explanation of what 0 ms means remain
 visible. Numeric RTTs, outcomes, bounds, evidence, schema v1 and Go-owned
 findings are unchanged. A human recheck of the revised layout is pending.
+
+Verification: the focused rendered-browser test failed on the former
+unmatched “Raw RTT”/no-reply prose and passed after both rows exposed a
+**Reply time** value. TypeScript/Vite build passed. Full UI tests passed
+**23 checks with 1 opt-in system-clipboard skip**, including three packaged
+browser journeys. The clean-source verification executable is
+`.tools/issue-16/hopvista-aligned-reply-20261104.exe`, source `14fe376`,
+Go 1.27.2, Windows amd64, `CGO_ENABLED=0`, `vcs.modified=false`; SHA-256
+`6B9DE1E135164315ABC9F01F18962FCFBBCEE47EDEC88F29AE7C3D647B4C6FE5`.
+It is not the issue #17 release candidate. Full root `go test ./...
+-count=1`, `go vet ./...`, and `git diff --check` passed. Ten isolated
+headless path/width combinations had no layout failure and zero
+reduced-motion animations; report
+`.impeccable/review/issue-16/observations-2026-11-05T04-08-13.165Z.json`.
+Logs: `.tools/issue-16/aligned-reply-{red,green,ui-test,go-test,observe}.log`.
+No real Chrome, screen-reader or native zoom check is claimed for this edit.
+
+Independent read-only review of `git diff eb641c8...14fe376` found **0
+Standards findings** and **0 Spec findings**. Reviewers checked the raw
+RTT/missing distinction, unchanged data/schema boundary, truthful
+participant scope, public rendered test seam and pending human recheck.
+They did not edit or operate a browser.
