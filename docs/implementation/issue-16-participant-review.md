@@ -618,3 +618,20 @@ understanding of why device reply time differs from website-request delay
 remains unverified. Prior teaching and the visible note mean this is not
 unassisted first-use comprehension. Ask for the reason once; do not infer
 an actual network bottleneck or lack of one from this replay.
+
+### High intermediate reply: reason follow-up
+
+Prompt: “What's the difference between Hop 2 taking 450 ms to answer
+HopVista and Hop 2 slowing the website request? It's fine to say if you're
+unsure.” Prior UI and facilitator help had already supplied the no-link-delay
+and no-website-cause limits.
+
+Actual response: “It doesn;t measure the time between hops?”
+
+Assessment: **partial assisted understanding**. P1 identifies a true limit:
+the reply time does not measure the interval between hops. The answer does
+not explain that this is a separate check from the website request, so it
+does not yet give the reason the 450 ms cannot establish website slowdown.
+The question mark indicates uncertainty. The facilitator may explain the
+separate-check distinction and ask one narrow follow-up; do not score a
+full causal explanation from this response.
