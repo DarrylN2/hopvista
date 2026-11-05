@@ -259,10 +259,12 @@ Compact, softly rounded badges pair state text with the status colors described 
 ### Path and evidence
 
 Hop rows pair hop number, observed reply information, raw RTT where present, and an evidence button. Dotted connectors express probe order. Evidence controls pair underlined text with an inline arrow, with a minimum height of (32px), increasing to (44px) for coarse pointers.
-When no hop reply arrives, the row says no reply time was recorded and
-explains that a 0 ms reading would require an observed reply. The recorded
-time limit and absence of a reply address remain visible. This clarification
-responds to the participant treating a missing reply time as zero.
+Hop rows use the same visible **Reply time** field for observed and missing
+replies. An observed reply shows its raw recorded RTT in milliseconds. A
+silent hop shows **Not measured**, the time limit, and the absence of a
+reply address; a short note explains that 0 ms requires an observed reply.
+This separate value position responds to the participant treating a missing
+reply time as zero even after reading an inline explanation.
 For an intermediate reply with a time, the visible row note names the
 round trip: HopVista sends a check from the user's computer toward the hop,
 then receives the hop's reply back at that computer. It explains that this

@@ -704,3 +704,20 @@ P1's Chrome screen or confirmed which parts of the row P1 read. Ask P1 to
 report the phrase immediately after the 750 ms message before deciding
 whether the wording or its placement needs further change. Do not record a
 0 ms reply or infer packet loss from this capture.
+
+### Silent hop: visible wording confirmation
+
+Prompt: after the 750 ms message in Hop 1, do you see the bold words “No reply
+time recorded”? The facilitator had already stated the correct missing-time
+interpretation in the preceding reply.
+
+Actual response: “Yes i do”.
+
+Assessment: **visibility confirmed by participant self-report; comprehension
+still not passed**. The current no-reply text is present on P1's Chrome view,
+so stale asset delivery does not explain the repeated 0 ms answer. The
+participant has not yet interpreted the value correctly in their own words.
+Move the reply-time outcome into a consistent, labeled value position beside
+other hop readings so the missing state is visually comparable with measured
+reply times. This is a UI presentation change only; preserve all recorded
+outcomes, bounds and Go-owned findings. Recheck with assistance disclosed.

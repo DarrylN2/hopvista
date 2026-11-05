@@ -184,6 +184,7 @@ footer > span { color: var(--ink); font-weight: 600; }
 .raw-rtt { font-size: .8125rem; }
 .raw-rtt strong { font-weight: 600; }
 .reply-address, .data-address, .raw-rtt strong { font-family: var(--font-data); }
+.echo-note { grid-column: 1 / -1; color: var(--muted); font-size: .8125rem; }
 .echo-reading > .error { grid-column: 1 / -1; }
 @media (max-width: 400px) { .echo-reading { grid-template-columns: minmax(0, 1fr); } }
 @media (pointer: coarse) { .evidence-link, .copy-button { min-height: 44px; } }

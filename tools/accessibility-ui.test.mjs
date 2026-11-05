@@ -373,9 +373,11 @@ test('a silent hop says its missing reply time is different from measured zero',
   const { page } = await review(t);
   await page.getByRole('button', { name: 'Start diagnostic run', exact: true }).press('Enter');
   await page.locator('.run-heading').waitFor();
+  const replied = page.locator('.hop-list li').first();
   const silent = page.locator('.hop-list li').nth(1);
+  assert.match(await replied.locator('.raw-rtt').innerText(), /Reply time\s+450 ms/);
   assert.match(await silent.innerText(), /No reply within 750 ms/);
-  assert.match(await silent.innerText(), /No reply time recorded/);
+  assert.match(await silent.locator('.raw-rtt').innerText(), /Reply time\s+Not measured/);
   assert.match(await silent.innerText(), /0 ms.*reply arrived/);
   assert.doesNotMatch(await silent.innerText(), /RTT/);
 });

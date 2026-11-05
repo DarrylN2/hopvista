@@ -666,3 +666,16 @@ Standards findings** and **0 Spec findings**. Both reviewers checked the
 missing-versus-zero meaning, unchanged data/schema boundary, factual
 participant record and pending human recheck. They did not edit or
 operate a browser.
+
+## Participant follow-up: aligned reply-time value
+
+After the silent-hop copy change, P1 still answered “Probably just 0 ms”
+when asked whether Hop 1 had a measured reply time. P1 then confirmed the
+bold “No reply time recorded” text was visible. The exact responses and
+assistance are in `issue-16-participant-review.md`. The issue is therefore
+not explained by a stale preview asset. The path row now uses the same
+**Reply time** field for an observed hop and a silent hop: the former shows
+the recorded raw RTT, while the latter says **Not measured**. The no-reply
+time limit, missing address and explanation of what 0 ms means remain
+visible. Numeric RTTs, outcomes, bounds, evidence, schema v1 and Go-owned
+findings are unchanged. A human recheck of the revised layout is pending.
