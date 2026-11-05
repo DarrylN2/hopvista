@@ -601,3 +601,20 @@ directed attention to what happens after the outward check, and P1 had
 received prior help; this is not unassisted first-use comprehension. It does
 not by itself establish understanding of whether the 450 ms proves link
 delay or a website bottleneck. Check that causal limit separately.
+
+### High intermediate reply: causal-limit recheck
+
+Prompt after the round-trip explanation: “Now that Hop 3 shows 12 ms, does
+Hop 2's 450 ms prove Hop 2 slowed the website? Why or why not?” The revised
+row note explicitly says the reply time does not prove a website slowdown,
+and the facilitator had corrected P1's earlier bottleneck inference.
+
+Actual response: “No it does not”.
+
+Assessment: **assisted recheck passed narrowly for rejecting the causal
+claim**. P1 no longer treats the higher intermediate reply as proof that
+Hop 2 slowed the website. They did not give a reason despite the prompt, so
+understanding of why device reply time differs from website-request delay
+remains unverified. Prior teaching and the visible note mean this is not
+unassisted first-use comprehension. Ask for the reason once; do not infer
+an actual network bottleneck or lack of one from this replay.
