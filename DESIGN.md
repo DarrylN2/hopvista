@@ -259,11 +259,12 @@ Compact, softly rounded badges pair state text with the status colors described 
 ### Path and evidence
 
 Hop rows pair hop number, observed reply information, raw RTT where present, and an evidence button. Dotted connectors express probe order. Evidence controls pair underlined text with an inline arrow, with a minimum height of (32px), increasing to (44px) for coarse pointers.
-For an intermediate reply with a time, the visible row note says the time
-starts when HopVista sends a check and ends when it receives that device's
-reply; it explains that this is neither time between stops
-nor proof the device slowed the website. This replaces ICMP/RTT/bottleneck
-jargon in the primary reading layer while preserving the recorded value.
+For an intermediate reply with a time, the visible row note names the
+round trip: HopVista sends a check from the user's computer toward the hop,
+then receives the hop's reply back at that computer. It explains that this
+is neither time between hops nor proof the hop slowed the website. This
+replaces ICMP/RTT/bottleneck jargon in the primary reading layer while
+preserving the recorded value.
 
 Finding references use phase names when available, such as “View TCP evidence”. Main visual labels omit raw IDs; accessible names and titles retain them, and technical evidence shows them. Technical evidence uses a native disclosure. Selecting a measurement's evidence opens it, focuses and scrolls to the matching record, and marks the record with a blue border. A return control restores focus to the originating measurement. Raw JSON is separately disclosed, wraps, and has a maximum height of (28rem) with internal scrolling.
 

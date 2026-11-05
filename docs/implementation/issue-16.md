@@ -600,3 +600,16 @@ found **0 remaining Standards findings** and **0 Spec findings**. The
 Standards reviewer confirmed the send-to-reply interval resolves the earlier
 device-only timing ambiguity; Spec confirmed the unchanged data and
 still-pending human comprehension check. Reviewers did not operate a browser.
+
+## Participant follow-up: round-trip endpoints (2026-11-04)
+
+P1 resumed the controlled `i13highsilent` reading and described Hop 2's
+450 ms as “The time it takes to get from hopvista to my device”. This omits
+the outward trip and suggests the row's “this device's reply” did not make
+the endpoints clear. The exact answer, assistance and assessment are in
+`issue-16-participant-review.md`. The row now says the timer starts when
+HopVista sends a check from the user's computer toward this hop and stops
+when its reply gets back to that computer. It explicitly says the time
+includes both directions. The time-between-hops and website-slowdown limits
+remain visible. Measurements, schema v1, Go-owned findings and the approved
+composition are unchanged. The participant recheck is pending.

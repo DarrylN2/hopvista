@@ -546,3 +546,23 @@ answer. Replace the static on-screen explanation with plain words that
 distinguish the device's answer to HopVista from time between hops or website
 slowdown. Keep the recorded RTT, outcome, trace and Go-owned findings intact;
 recheck after the wording change with assistance noted.
+
+### High intermediate reply: precise-note recheck (2026-11-04)
+
+After a pause in the review, the local controlled replay was restarted at a
+new loopback port. P1 was asked to rerun `i13highsilent`, read the revised Hop 2
+note, and explain what its 450 ms measures. Prior facilitator explanations had
+already corrected the bottleneck claim. The participant opened and operated
+Chrome; the browser action was not independently observed by the agent.
+
+Actual response: “The time it takes to get from hopvista to my device”.
+
+Assessment: **not passed for the send-to-reply interval**. HopVista runs on
+P1's computer; the recorded reply time starts when the check leaves that
+computer and ends when a reply from the network device at Hop 2 returns.
+The answer describes travel toward P1's device and omits the outward trip,
+showing that “this device's reply” still leaves the endpoints ambiguous for
+this participant. The facilitator clarified the round trip after the answer.
+Revise the visible note to name the user's computer, the hop and the return
+reply, while preserving the result and no-bottleneck limit. Any later success
+will be assisted.
