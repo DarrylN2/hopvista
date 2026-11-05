@@ -566,3 +566,22 @@ this participant. The facilitator clarified the round trip after the answer.
 Revise the visible note to name the user's computer, the hop and the return
 reply, while preserving the result and no-bottleneck limit. Any later success
 will be assisted.
+
+### High intermediate reply: round-trip wording recheck
+
+After the UI explicitly named the user's computer as both the start and
+return endpoint, P1 was asked to refresh the controlled `i13highsilent`
+replay, read the Hop 2 note, and explain what 450 ms covers. The facilitator
+had already explained the out-and-back meaning before this prompt, and the
+browser refresh was participant-performed rather than agent-observed.
+
+Actual response: “The time it takes to send a check from my computer to the
+hop”.
+
+Assessment: **partial; the return reply remains unconfirmed**. P1 now
+identifies the outward direction and the correct starting computer, which
+corrects the earlier reversal. The answer omits the reply from Hop 2 back to
+the computer. Do not score this as a full round-trip understanding or infer
+that P1 rejects the return leg; ask one narrow follow-up before changing the
+UI again. The 450 ms remains a captured reply time, not proof of a link delay
+or website bottleneck.
