@@ -730,3 +730,37 @@ The trace outcome now has an adjacent plain explanation that HopVista
 received a device reply and that the website request is a separate check.
 The outcome, hop limit, evidence, Go-owned findings, schema v1 and approved
 composition remain unchanged. Human recheck is pending.
+
+Verification of the unreachable explanation: TypeScript/Vite build passed;
+the focused rendered test failed before the explanation and passed afterward.
+Full UI tests passed **24 checks with 1 system-clipboard opt-in skip**,
+including three packaged browser journeys. Full root Go tests, vet and diff
+check passed. The clean verification executable
+`.tools/issue-16/hopvista-unreachable-note-20261104.exe` is source `7987807`,
+Go 1.27.2 Windows amd64, cgo disabled, `vcs.modified=false`; SHA-256
+`4C0CF2A424717F403E35329428C8D2635A30FC0F07B7F9BC67A5D790F4346BB6`.
+It is not the release candidate. Ten isolated headless layout combinations
+passed; report
+`.impeccable/review/issue-16/observations-2026-11-05T04-23-11.279Z.json`.
+Logs: `.tools/issue-16/unreachable-{red,green,ui-test,go-test,observe}.log`.
+
+Independent review of `ab54d1b...7987807`: Spec **0 findings**; Standards
+found **1 test-fixture inconsistency**. The completed unreachable hop lacked
+`duration_ms`, and a later hop remained after the unreachable stop. The
+fixture was corrected with `duration_ms: 0` and two hops only. The focused
+rendered check passed afterward (1 pass, 21 pattern skips), log
+`.tools/issue-16/unreachable-fixture-fix.log`. Production UI was unaffected
+by this test-data correction. Human recheck of the new explanation remains
+pending. Reviewers did not operate a browser.
+The Standards reviewer confirmed the correction read-only: **0 remaining
+actionable findings**.
+
+Continuation point (2026-11-05): refresh the controlled preview and rerun
+`https://fixture.example/i13unreachable`. Ask P1 to read the new explanation
+beside Trace outcome and describe what reply HopVista received. Record the
+actual response with prior coaching disclosed. The last participant answer
+was that no answer was received, before this explanation was added. Remaining
+human cases include cutoff versus completion, stopping/cleanup, redirect
+policy/certificate stops, keyboard evidence/return/copy, and unfinished normal
+timing/uncertainty interpretations. Consult the participant task matrix;
+do not infer blanket acceptance from these partial assisted rechecks.

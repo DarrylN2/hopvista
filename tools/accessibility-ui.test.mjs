@@ -361,7 +361,8 @@ test('an unreachable path outcome explains that a device replied', async t => {
   trace.outcome = 'unreachable_response';
   trace.max_hops = 4;
   trace.highest_attempted_ttl = 2;
-  Object.assign(trace.hops[1], { status: 'unreachable_reply', outcome: 'completed', reply_address: '192.0.2.253', rtt_ms: 6 });
+  Object.assign(trace.hops[1], { status: 'unreachable_reply', outcome: 'completed', duration_ms: 0, reply_address: '192.0.2.253', rtt_ms: 6 });
+  trace.hops = trace.hops.slice(0, 2);
   await page.getByRole('button', { name: 'Start diagnostic run', exact: true }).press('Enter');
   await page.locator('.run-heading').waitFor();
   const path = page.locator('.path-column');
