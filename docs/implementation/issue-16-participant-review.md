@@ -757,3 +757,22 @@ matching this capture's `max_hops: 1` and highest attempted hop 1. The
 answer does not infer an unreachable reply or website failure. The next
 case should test whether P1 distinguishes this configured stop from an
 observed unreachable response; no fresh network measurement is inferred.
+
+### Unreachable-response comparison
+
+Prompt: run `i13unreachable`, read **Trace outcome**, and explain how its
+stopping reason differs from the one-hop limit. The expected answer was not
+provided in the prompt; prior path guidance and the immediately preceding
+hop-limit case were available.
+
+Actual response: “It says unreachable response, the limit is 4 hops, it
+stopped cause the response was unreachable”.
+
+Assessment: **partial understanding**. P1 located the outcome and correctly
+noticed this case allows four hops, distinguishing it from the one-hop
+configuration. “The response was unreachable” does not show whether P1
+understands that HopVista actually received a device's unreachable message,
+rather than receiving no reply. The facilitator clarified that distinction
+after the answer. Ask a narrow response-versus-silence follow-up before
+scoring the observed-response criterion. The capture does not establish a
+general website failure or physical path break.
