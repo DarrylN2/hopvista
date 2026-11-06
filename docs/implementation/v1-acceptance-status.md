@@ -1,5 +1,39 @@
 # HopVista v1 acceptance status
 
+## Current release decision — 2026-11-06
+
+**Release acceptance remains open for explicit human approval.** Issue #16 is
+closed with all seven criteria checked after the user's approval. The updated
+[issue #17 candidate record](issue-17.md) identifies executable source
+`28dd288fe84e0d4a3763d18be69382e784fa7c1b`, version
+`v0.0.0-20261106215437-28dd288fe84e`, SHA-256
+`5A5606FA711AAD0D420CDAFEB903DC9C4AE480681691F784B8B12B2BD5C5847C`.
+It includes the participant-driven UI improvements. Historical `a159f9c`
+evidence below does not establish checks of this updated binary.
+
+| Acceptance area | Current evidence and disposition |
+| --- | --- |
+| Versioned results, policy, direct HTTP/TLS, findings and incomplete outcomes | Existing #11–#13 controlled evidence retains exact scope. No production logic/schema v1/Go finding changes in this preparation. Current packaged journeys and representative native loopback/public runs pass against the updated executable. |
+| Packaging and browser UI | Clean single `windows/amd64` executable, `vcs.modified=false`, embedded current production assets; isolated copies run with System32-only PATH. Full UI suite: **25 passed, 0 failed, 1 system-clipboard opt-in skip**, including all three real packaged journeys. Browser UI and measurement backend run locally on the person's laptop; no remote hosting change. |
+| Windows IPv4 comparisons | Exact candidate selected/peer/path IP `104.20.23.154`; matching Windows source/interface/next-hop/on-link status, first-hop tracert semantics and proxy-disabled pinned HTTPS curl **200**, matching peer, certificate result **0**. Separate loopback comparisons also pass. Later hops and timings can differ. |
+| Lifecycle | Exact candidate passes native cancellation/stopping/busy/retained evidence and the externally paused real-minute cutoff. The pause is an induced scheduling fixture. Natural native work spanning cutoff and genuine route stalls remain unverified; no hard drain/completion bound. |
+| Local security and privacy | Exact candidate passes Host/Origin/token/no-CORS and three-launch restart/output/directory checks, including completed/incomplete result loss and old-token rejection. Source review supports memory-only/same-origin/no-default-telemetry scope; no OS-wide tracing or secure-erasure claim. |
+| Keyboard, actual NVDA, human reading and zoom | **#16 complete at recorded scopes**, including P1's final assisted phase-meaning/uncertainty reading. Exact words, earlier misunderstandings, assistance and facilitator errors remain recorded. Mouse operation does not establish keyboard use; separate keyboard/real NVDA evidence covers the criteria. No new participant, screen-reader or native zoom check in this candidate pass. |
+| Current candidate presentation | **65 layout/replay cases passed**, including 320px and long URL/ID/64-hop stress, evidence focus/return and exact finding retention. Reduced-motion runtime checks and 20 sampled contrast pairs pass. Synthetic manual-copy fallback passes; system clipboard remains untouched. Existing wordmark's enhanced 44px coarse-pointer exception remains disclosed. Replays are not native or human evidence. |
+| Supported condition | **Experimental Windows 11 x64 tested on Windows 11 Pro 25H2 build 26200.9711, unelevated medium-integrity token**. Wider accounts/builds/networks/VPN, Windows 10, ARM64, IPv6 and comprehensive Windows 11 support unverified. The 250ms margin remains empirical. |
+| Release decision | #15/#16/#24 completed at their documented scopes. #17 stays open; PR #27 stays draft. The user must explicitly accept this exact candidate and its experimental limits. No merge, tag, asset upload or publication is authorized. |
+
+Unavailable/skipped checks and source regression outcomes are itemized in the
+current candidate record. P1's unperformed personal keyboard/clipboard fallback
+and live cleanup tasks are evidence limits, not additional acceptance gates.
+Development-gate approval remains separate from release acceptance.
+
+## Historical acceptance records
+
+The dated entries and original matrix below preserve prior observations and
+pending work at those dates. Current dispositions and exact-binary evidence are
+in the matrix above; statements below that #16 remains open are historical.
+
 Current disposition after P1's 2026-11-06 final assisted recheck: all seven
 [#16 criteria](issue-16-acceptance-audit.md) are covered at their recorded
 scopes. The exact answer is in the participant record. Earlier statements about
