@@ -771,3 +771,8 @@ The exact answer, prior assistance and limited assessment are in
 `issue-16-participant-review.md`. This resolves that specific comprehension
 gap for an assisted recheck; the remaining human tasks and issue #16 acceptance
 remain open.
+
+In `i14pausedminute`, P1 said “Completed means that the process is done, but
+maybe not all metrics have a value.” This supports the basic run-state versus
+measurement-completeness distinction. Cutoff and cleanup interpretation remain
+unchecked; see the participant record for the exact prompt and scope.

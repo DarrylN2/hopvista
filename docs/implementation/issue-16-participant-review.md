@@ -815,3 +815,21 @@ reply from silence**. P1's words match the captured hop-2 unreachable reply.
 This answer does not establish that P1 interpreted the separate website request,
 the path's physical route, or other outstanding human tasks. The earlier
 incorrect “no answer” response remains above as part of the record.
+
+### Completed versus complete measurements (2026-11-05)
+
+Prompt: in the controlled `i14pausedminute` replay, “In your own words, does
+**Completed** mean every measurement finished?” The facilitator supplied the
+case URL and identified it as a captured example, but did not give the expected
+answer. Earlier timing and missing-value explanations remain prior exposure.
+The facilitator did not observe P1's Chrome or confirm the run directly.
+
+Actual response: “Completed means that the process is done, but maybe not all
+metrics have a value”
+
+Assessment: **passed for the basic distinction between run completion and
+measurement completeness**. P1 correctly avoided assuming every measurement
+has a value. This answer does not yet explain the cutoff rule, whether new work
+can start after cutoff, or when cleanup ends. Those parts of the task remain
+unchecked; the `i14pausedminute` capture involved an induced whole-process
+pause, not a naturally stalled diagnostic run.
