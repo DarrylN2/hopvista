@@ -833,3 +833,25 @@ has a value. This answer does not yet explain the cutoff rule, whether new work
 can start after cutoff, or when cleanup ends. Those parts of the task remain
 unchecked; the `i14pausedminute` capture involved an induced whole-process
 pause, not a naturally stalled diagnostic run.
+
+### Cutoff follow-up: prompt mismatch (2026-11-05)
+
+Prompt: still on `i14pausedminute`, read **What this run found** and its
+explanation, then say what cutoff stops and whether work already underway can
+finish afterward. The facilitator had already asked about completion versus
+measurement values. The prompt incorrectly implied that this example's finding
+panel explains the cutoff rule. Its actual `http_phase_incomplete` finding
+explains an unfinished connection step and retained earlier timings; the
+`measurement_cutoff` guidance does not appear in this captured finding.
+
+Actual response: “The steps didn't finish so it has no completed time. Earlier
+steps still can be usable. I don't think work alrdy underway can finish
+afterward”
+
+Assessment: **the participant correctly read the available incomplete-phase
+explanation; cutoff understanding remains unassessed**. The last sentence does
+not match the intended cutoff rule, but the requested panel did not present
+that rule. This is a facilitator prompt error, not a scored interface
+comprehension failure. The participant's browser operation was not observed.
+Use a case and visible wording that actually expose stopping/cleanup for the
+next check; record any later answer separately.

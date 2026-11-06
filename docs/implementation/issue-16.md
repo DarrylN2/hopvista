@@ -776,3 +776,10 @@ In `i14pausedminute`, P1 said “Completed means that the process is done, but
 maybe not all metrics have a value.” This supports the basic run-state versus
 measurement-completeness distinction. Cutoff and cleanup interpretation remain
 unchecked; see the participant record for the exact prompt and scope.
+
+The subsequent cutoff question pointed P1 to a finding panel that does not
+explain cutoff in `i14pausedminute`. P1 correctly described its incomplete
+connection step and retained earlier timings, but said underway work could not
+finish afterward. This was a facilitator prompt mismatch, so cutoff
+comprehension is unassessed rather than failed. The exact answer and correction
+are in the participant record.
