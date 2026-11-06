@@ -817,3 +817,9 @@ This guided recheck matches the `i11sensitive` captured policy reason. It
 does not yet establish what P1 concludes about the redirected website's
 reachability or the distinction from a failed connection; see the participant
 record for the exact answer and assistance.
+
+Asked directly whether this result establishes the redirected website's
+reachability, P1 answered “No it doesn't tell me”. This guided yes-or-no
+recheck supports the finding's limit narrowly. A spontaneous distinction
+between deliberate policy stop and failed connection remains unverified;
+see the participant record for the exact prompt and context.

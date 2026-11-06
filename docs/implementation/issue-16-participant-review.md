@@ -946,3 +946,19 @@ P1 understands whether the redirected website is reachable, or that this
 was a deliberate policy stop rather than a failed connection. Those
 distinctions remain unchecked. The replay is captured evidence, not a fresh
 request to that host.
+
+### Redirected website reachability: guided follow-up (2026-11-05)
+
+Prompt: “From this result, can you tell whether the redirected website
+itself is reachable?” This followed the guided private-address policy
+discussion and was a direct yes-or-no question. The facilitator did not
+observe P1's browser.
+
+Actual response: “No it doesn't tell me”
+
+Assessment: **guided recheck passed narrowly for withholding a reachability
+conclusion**. The answer matches the captured finding's limit: the policy
+stop does not establish whether the redirected website is reachable. The
+prompt and prior assistance prevent an unassisted first-use claim. P1 did
+not explicitly contrast a deliberate policy stop with a failed connection,
+or identify any later phase measurement.
