@@ -1115,3 +1115,19 @@ confirmation, or report pasting or inspecting clipboard contents. This is
 not evidence that copying succeeded in P1's Chrome session, nor a keyboard
 or clipboard-fallback pass. Ask one narrow follow-up about the displayed
 address and feedback without suggesting the expected values.
+
+### Copy confirmation and review pace (2026-11-05)
+
+Prompt: “What words appear on the **Copy IPv4** button immediately after you
+click it?” This followed the mouse copy task; the facilitator named the
+button but did not supply the expected feedback.
+
+Actual response: “It says Copied. How far are we in into this testing stuff?
+Can we speed this up a little bit?”
+
+Assessment: **participant-reported visible copy confirmation passed
+narrowly**. P1 identified the `Copied` label. Clipboard contents and manual
+fallback were not observed; mouse operation does not establish keyboard
+copy. P1 explicitly requested faster pacing. Continue with a small bundled
+set of remaining reading prompts, avoid serial micro-prompts, and leave
+unverified tasks open rather than coaching to a pass.

@@ -881,3 +881,9 @@ Asked to click **Copy IPv4** and report the address and confirmation, P1 said
 not verify the numeric address, confirmation, or clipboard contents in P1's
 Chrome session. The participant record preserves the exact response and
 mouse-only prompt; the copy task remains partial.
+
+P1 reported that the button says “Copied” after a mouse click, a narrow
+visible-confirmation recheck. Clipboard contents, manual fallback and human
+keyboard copying were not checked. P1 also asked to speed up the review;
+remaining participant prompts will be bundled rather than asked one label
+at a time. The exact response is in the participant record.
