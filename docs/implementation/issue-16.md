@@ -764,3 +764,10 @@ human cases include cutoff versus completion, stopping/cleanup, redirect
 policy/certificate stops, keyboard evidence/return/copy, and unfinished normal
 timing/uncertainty interpretations. Consult the participant task matrix;
 do not infer blanket acceptance from these partial assisted rechecks.
+
+P1's 2026-11-05 recheck of the revised `i13unreachable` explanation correctly
+identified a received device reply saying the target address was unreachable.
+The exact answer, prior assistance and limited assessment are in
+`issue-16-participant-review.md`. This resolves that specific comprehension
+gap for an assisted recheck; the remaining human tasks and issue #16 acceptance
+remain open.

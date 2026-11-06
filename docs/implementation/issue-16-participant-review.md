@@ -794,3 +794,24 @@ hop status do not explain this in everyday words. The facilitator corrected
 the interpretation after the answer. Add an adjacent plain explanation of
 the observed unreachable reply without changing the outcome, hop limit,
 evidence, website finding or schema; recheck with prior help disclosed.
+
+### Revised unreachable explanation: assisted recheck (2026-11-05)
+
+The facilitator verified the controlled replay at `http://127.0.0.1:58433/`
+served HTTP 200, the replay banner and the current production JavaScript with
+the revised explanation. P1 was asked to enter and run
+`https://fixture.example/i13unreachable`, read the explanation beside **Trace
+outcome**, and describe what happened. P1 had reported using Chrome, but the
+facilitator did not observe their browser or confirm the run directly. Earlier
+discussion
+had already explicitly taught the received-reply distinction, so this is an
+assisted recheck, not an unassisted first-use pass.
+
+Actual response: “HopVista got a reply from a device saying the target address
+was unreachable.”
+
+Assessment: **assisted recheck passed for distinguishing a received unreachable
+reply from silence**. P1's words match the captured hop-2 unreachable reply.
+This answer does not establish that P1 interpreted the separate website request,
+the path's physical route, or other outstanding human tasks. The earlier
+incorrect “no answer” response remains above as part of the record.
