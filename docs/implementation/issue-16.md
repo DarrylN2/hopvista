@@ -823,3 +823,9 @@ reachability, P1 answered “No it doesn't tell me”. This guided yes-or-no
 recheck supports the finding's limit narrowly. A spontaneous distinction
 between deliberate policy stop and failed connection remains unverified;
 see the participant record for the exact prompt and context.
+
+For `i11certificate`, P1 read that the run stopped during the TLS handshake
+phase. This locates the recorded stop but does not yet establish understanding
+of the completed connection, failed certificate verification, or absent final
+HTTP response. The exact answer and prior assistance are in the participant
+record; the certificate case remains partial.

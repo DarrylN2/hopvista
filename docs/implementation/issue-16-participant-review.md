@@ -962,3 +962,21 @@ stop does not establish whether the redirected website is reachable. The
 prompt and prior assistance prevent an unassisted first-use claim. P1 did
 not explicitly contrast a deliberate policy stop with a failed connection,
 or identify any later phase measurement.
+
+### Certificate failure: first reading (2026-11-05)
+
+Prompt: run the controlled `i11certificate` replay, read **What this run
+found**, and describe in P1's own words what happened on the final website
+request. The facilitator supplied the case URL but no expected outcome.
+P1 had prior guidance on website timing steps; browser operation was not
+observed.
+
+Actual response: “This diagnostic run stopped during the TLS handshake phase”
+
+Assessment: **partial: P1 located the recorded stopping phase**. The answer
+repeats the Go-owned finding but does not show whether P1 understands that
+the connection to the selected address completed, certificate verification
+failed during the encryption step, and no HTTP response was measured for the
+final request. The capture records those outcomes; do not infer P1 understood
+them from naming TLS handshake. Ask a plain-language follow-up without first
+supplying the explanation.
