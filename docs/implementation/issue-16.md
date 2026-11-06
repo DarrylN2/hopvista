@@ -849,3 +849,13 @@ think it worked.” No specific keyboard action or returned focus target was
 described, and the facilitator did not observe Chrome. This is a subjective
 success report, not a verified keyboard task pass; the participant record
 retains the exact prompt and answer.
+
+P1's screenshot follow-up reports returning to Target Echo with an outline at
+`path-1-target-5`. The image shows that evidence card outlined with Return
+still visible, not the prompted final Response begins evidence. It does not
+prove whether Return was activated before capture or where focus landed
+afterward. An isolated headless keyboard check of Target Echo evidence return
+passed, but the human final-HTTP keyboard task remains unverified. The exact
+participant words and screenshot assessment are in the participant record.
+The full UI suite then passed 22 checks with four opt-in skips: three packaged
+browser journeys without `HOPVISTA_PACKAGED_EXE` and the system clipboard test.

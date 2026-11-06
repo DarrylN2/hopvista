@@ -196,6 +196,19 @@ test('each website phase opens its exact evidence and returns keyboard focus', a
   assert.equal(await page.locator('.technical').getAttribute('open'), null);
 });
 
+test('target echo evidence returns keyboard focus to its source', async t => {
+  const { page } = await review(t);
+  await page.getByRole('button', { name: 'Start diagnostic run', exact: true }).press('Enter');
+  await page.locator('.run-heading').waitFor();
+  const source = page.getByRole('button', { name: 'View evidence target-echo-1', exact: true });
+  await source.press('Enter');
+  await page.waitForFunction(() => document.activeElement.id === 'evidence-target-echo-1');
+  await page.keyboard.press('Tab');
+  assert.equal(await page.evaluate(() => document.activeElement.textContent), 'Return to measurement');
+  await page.keyboard.press('Enter');
+  assert.equal(await source.evaluate(button => button === document.activeElement), true);
+});
+
 test('browser-enforced clipboard policy exposes the manual-copy fallback', async t => {
   const { page } = await review(t);
   await page.goto(`${origin}/?block-clipboard`);

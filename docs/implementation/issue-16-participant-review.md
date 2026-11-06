@@ -1034,3 +1034,30 @@ verified**. The answer does not say whether P1 used only the keyboard,
 reached the intended Exchange 4 evidence, activated Return, or saw focus
 return to the originating measurement. Ask one narrow follow-up about the
 focused control. Do not count this as a keyboard task pass.
+
+### Keyboard evidence and return: screenshot follow-up (2026-11-05)
+
+Prompt: after activating **Return to measurement**, identify the control
+with the visible keyboard outline, or report if unclear. The participant
+provided a Chrome screenshot and said: “Afte Return to measurement, it just
+takes me back to the \"Target Echo\" and the outline is at
+\"path-1-target-5\"”. The image shows the selected `path-1-target-5`
+technical evidence card with a blue outline and its **Return to measurement**
+control visible. It does not show the final website request's
+`exchange-4-http` evidence or the originating Response begins control.
+
+Assessment: **the requested final HTTP evidence/return task remains
+unverified**. P1's report and screenshot show a Target Echo evidence record,
+which is different from the prompted final Response begins measurement. The
+outline shown is on the evidence card; the image alone cannot establish
+whether Return was activated before capture or where keyboard focus landed
+after activation. Do not infer an incorrect focus restoration from this
+image. The facilitator did not operate Chrome or observe the keystrokes.
+
+An isolated headless keyboard check of the same return mechanism using a
+Target Echo source (`target-echo-1`) passed: opening evidence focused the
+record, Tab reached Return, and Enter restored focus to the source button.
+That automated result does not replace P1's human task or prove the exact
+`path-1-target-5` interaction in Chrome. Ask which evidence link P1 opened
+and whether Return was actually activated before the screenshot; avoid
+counting another guided attempt as unassisted.
