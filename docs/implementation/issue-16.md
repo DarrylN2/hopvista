@@ -868,3 +868,10 @@ recorded. The participant did not specify pointer versus keyboard activation,
 and the returned View evidence control has no visible focus outline in the
 image. Human keyboard-only focus restoration is therefore still unverified.
 See the participant record for exact words and image assessment.
+
+P1 then clarified: “With the mouse cause I dont know how to use the keyboard.”
+The final HTTP evidence return shown in the screenshots was mouse-operated.
+No human keyboard-only focus result is claimed from this exchange; the prior
+headless keyboard checks retain their separate automated scope. The
+participant record preserves both the earlier general keyboard-familiarity
+report and this later statement; P1's overall keyboard familiarity is unclear.

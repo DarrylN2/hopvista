@@ -1083,3 +1083,20 @@ shows a visible focus outline on the returned View evidence control. P1 said
 keyboard; the facilitator did not observe the input method. Therefore this
 does not verify keyboard-only operation or restored keyboard focus. The
 existing isolated headless keyboard checks retain their separate scope.
+
+### Evidence return input method: participant clarification (2026-11-05)
+
+Prompt: “Did you activate **Return to measurement** with the keyboard or
+with the mouse?”
+
+Actual response: “With the mouse cause I dont know how to use the keyboard.”
+
+Assessment: **mouse-operated final HTTP evidence return confirmed by P1's
+self-report; the human keyboard-only task was not performed**. This resolves
+the input-method uncertainty above. Earlier P1 said they could navigate
+with mouse and keyboard generally; the later statement says they do not
+know how to use the keyboard. Their overall keyboard familiarity is unclear.
+Do not count
+the mouse navigation or screenshots as a keyboard focus check. The isolated
+headless keyboard tests remain automated supporting evidence only. Do not
+coach repeated attempts into an unassisted first-use pass.
