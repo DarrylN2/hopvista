@@ -793,3 +793,9 @@ one finishes, without promising a cleanup time. The exact answer and prior
 assistance are recorded in `issue-16-participant-review.md`; human recheck is
 pending. A focused rendered-browser regression failed before the copy change
 and passed after rebuilding the production UI.
+
+P1 then read the revised `i14cutoffstopping` message as “Its waiting for checks
+already started to end and clear up”. This is an assisted recheck pass for the
+stopping wait. Reply versus no-reply, starting another run, and cleanup timing
+were not established by that answer; the participant record preserves the
+prompt, prior help and exact wording.

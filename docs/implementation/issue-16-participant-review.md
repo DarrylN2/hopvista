@@ -875,3 +875,20 @@ that P1 asserted every check must receive a reply. The stopping text now says
 that a started check may receive a reply or end without one, and that another
 run can start after this one finishes. The answer predates that change; human
 recheck remains pending. This static replay does not show live cleanup timing.
+
+### Stopping explanation: assisted recheck (2026-11-05)
+
+The facilitator asked P1 to refresh the controlled preview, rerun
+`i14cutoffstopping`, read the revised **Stopping…** message and describe what
+HopVista was waiting for. P1 had already seen the prior wording and received
+facilitator discussion about stopping, so this is an assisted recheck. The
+facilitator verified that the preview served the revised asset but did not
+observe P1's Chrome or confirm their refresh directly.
+
+Actual response: “Its waiting for checks already started to end and clear up”
+
+Assessment: **assisted recheck passed for the meaning of the stopping wait**.
+P1's answer matches the revised message. It does not explicitly address that
+a check may end without a reply, when another run becomes available, or how
+long cleanup takes. The static replay does not demonstrate a live transition
+from stopping to a final state. Those parts remain to be checked separately.
