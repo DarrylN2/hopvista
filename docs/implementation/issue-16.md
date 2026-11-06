@@ -799,3 +799,9 @@ already started to end and clear up”. This is an assisted recheck pass for the
 stopping wait. Reply versus no-reply, starting another run, and cleanup timing
 were not established by that answer; the participant record preserves the
 prompt, prior help and exact wording.
+
+P1 then answered “I can start another run after this run finishes” in the
+stopping replay. This is an assisted pass for the stated next-run timing. P1
+did not identify an on-screen control or attempt a new run, and the static
+capture does not demonstrate the live busy-slot transition. Those checks
+remain open in the participant record.

@@ -892,3 +892,19 @@ P1's answer matches the revised message. It does not explicitly address that
 a check may end without a reply, when another run becomes available, or how
 long cleanup takes. The static replay does not demonstrate a live transition
 from stopping to a final state. Those parts remain to be checked separately.
+
+### Another-run availability while stopping (2026-11-05)
+
+Prompt: in the same captured **Stopping…** example, can P1 start another run
+yet, and what on screen supports the answer? Earlier facilitator discussion
+and the revised message had already stated that another run can start after
+this one finishes. This is an assisted reading, not an unassisted first-use
+task. The facilitator did not observe the participant's browser controls.
+
+Actual response: “I can start another run after this run finishes”
+
+Assessment: **assisted recheck passed for the stated timing of another run**.
+P1 correctly placed the next run after this one finishes. They did not name
+an on-screen control or report attempting to start one, so the requested
+control evidence and live busy-slot behavior remain unchecked. The static
+replay cannot demonstrate the transition from stopping to a terminal state.
