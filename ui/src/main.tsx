@@ -17,7 +17,7 @@ function outcome(value: string) { return value.replaceAll("_", " "); }
 function runDescription(state: RunResult["state"]): string {
   switch (state) {
     case "running": return "Measurements appear as they arrive. The observed finding will be available when this run finishes.";
-    case "stopping": return "No new measurements will start. Waiting for work already started to finish and release its resources. Completed evidence remains available.";
+    case "stopping": return "No new checks will start. HopVista is waiting for checks already started to end and clear up. A check may receive a reply or end without one. You can start another run after this one finishes; there is no promised end time. Completed evidence remains available.";
     case "completed": return "Measurement work has finished. Read each outcome below; completion does not mean every measurement received a response.";
     case "cancelled": return "You stopped this diagnostic run. Completed measurements remain available; unfinished measurements are marked cancelled.";
     case "failed": return "The diagnostic run could not finish coherently. Any recorded evidence remains available below.";

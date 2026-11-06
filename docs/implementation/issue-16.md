@@ -783,3 +783,13 @@ connection step and retained earlier timings, but said underway work could not
 finish afterward. This was a facilitator prompt mismatch, so cutoff
 comprehension is unassessed rather than failed. The exact answer and correction
 are in the participant record.
+
+In `i14cutoffstopping`, P1 answered “I think its stopping for a response to get
+back to HopVista?” when asked what the **Stopping…** message meant. The old
+description did not explicitly separate waiting for a reply from waiting for
+started checks to end and clear up. The new text says a started check may
+receive a reply or end without one and that another run can start when this
+one finishes, without promising a cleanup time. The exact answer and prior
+assistance are recorded in `issue-16-participant-review.md`; human recheck is
+pending. A focused rendered-browser regression failed before the copy change
+and passed after rebuilding the production UI.

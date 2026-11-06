@@ -855,3 +855,23 @@ that rule. This is a facilitator prompt error, not a scored interface
 comprehension failure. The participant's browser operation was not observed.
 Use a case and visible wording that actually expose stopping/cleanup for the
 next check; record any later answer separately.
+
+### Stopping explanation: first reading (2026-11-05)
+
+Prompt: in the captured `i14cutoffstopping` replay, read the **Stopping…**
+message near the top and say what HopVista is waiting for. The facilitator
+provided the case URL but no expected answer. The participant had prior
+discussion about completed versus incomplete measurements; their browser
+operation was not observed.
+
+Actual response: “I think its stopping for a response to get back to
+HopVista?”
+
+Assessment: **the stopping/cleanup meaning was not established**. The answer
+suggests P1 read the wait as waiting for a reply, while the interface intended
+to describe started checks ending and resources being released. The question
+mark indicates uncertainty. This is an interface wording gap, not evidence
+that P1 asserted every check must receive a reply. The stopping text now says
+that a started check may receive a reply or end without one, and that another
+run can start after this one finishes. The answer predates that change; human
+recheck remains pending. This static replay does not show live cleanup timing.

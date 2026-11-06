@@ -126,6 +126,8 @@ test('cancellation retains focus while stopping and after the control disappears
   await page.waitForFunction(() => document.querySelector('main').dataset.state === 'stopping');
   assert.equal(await page.evaluate(() => document.activeElement.getAttribute('role')), 'status');
   assert.match(await page.locator('.answer').innerText(), /Pending until the diagnostic run finishes/);
+  assert.match(await page.locator('.run-description').innerText(), /may receive a reply or end without one/);
+  assert.match(await page.locator('.run-description').innerText(), /start another run after this one finishes/);
   assert.equal(await page.getByRole('button', { name: 'Stopping…', exact: true }).isEnabled(), false);
   run.state = 'cancelled';
   await page.waitForFunction(() => document.querySelector('main').dataset.state === 'cancelled');
