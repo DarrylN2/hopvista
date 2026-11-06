@@ -6,7 +6,7 @@ Issue #17 remains open: the historical `a159f9c` executable predates later UI
 changes, so an updated exact candidate and its applicable checks/reconciliation
 are still required before an explicit human release decision.
 
-Current disposition, 2026-11-06: human review has resumed and P1's assisted
+Pre-recheck audit, 2026-11-06: human review has resumed and P1's assisted
 participation counts. The [#16 acceptance audit](issue-16-acceptance-audit.md)
 identifies only the remaining normal phase-meaning/uncertainty recheck, without
 requiring a new reader or P1 keyboard/fallback/live-cleanup tasks. #17 remains

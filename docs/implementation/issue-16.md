@@ -7,7 +7,7 @@ recheck for normal DNS/TCP/TLS meanings and the finding's uncertainty.
 stated acceptance at recorded scopes. Earlier pending statements below are
 historical. Issue #17 and release acceptance remain separate and open.
 
-Current disposition, 2026-11-06: the [criterion-by-criterion audit](issue-16-acceptance-audit.md)
+Pre-recheck audit, 2026-11-06: the [criterion-by-criterion audit](issue-16-acceptance-audit.md)
 counts P1's assisted review and the existing keyboard, real NVDA, layout and
 feedback checks at their recorded scopes. One bundled human recheck remains
 for normal DNS/TCP/TLS meanings and the finding's uncertainty. A fresh reader,
