@@ -810,3 +810,10 @@ In `i11sensitive`, P1 identified the HTTP 302 response and the redirect stop,
 but did not explain the deliberate URL-policy reason or what remains unknown
 about the redirected website. The exact first reading and assistance are in
 `issue-16-participant-review.md`; that part of the human review is partial.
+
+After being directed to the visible explanation, P1 said the redirect was
+stopped because it selected a non-public IPv4 address on a different host.
+This guided recheck matches the `i11sensitive` captured policy reason. It
+does not yet establish what P1 concludes about the redirected website's
+reachability or the distinction from a failed connection; see the participant
+record for the exact answer and assistance.

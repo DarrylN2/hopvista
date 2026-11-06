@@ -927,3 +927,22 @@ network failure, or describe what is known about the redirected website. The
 visible finding says `redirect_requires_new_run` and its adjacent explanation
 describes the policy. Ask one narrower follow-up without supplying the answer;
 do not score the policy distinction from this first response.
+
+### Redirect policy: guided follow-up (2026-11-05)
+
+Prompt: still on `i11sensitive`, read the explanation next to the finding and
+say why HopVista did not follow the redirect. The facilitator directed P1 to
+the explanation after the first partial answer, but did not supply the reason.
+This is a guided recheck; the facilitator did not observe P1's browser.
+
+Actual response: “Cause it selected a non-public IPv4 address on a different
+host”
+
+Assessment: **guided recheck passed for the private-address policy reason**.
+The capture records a redirect to `private.example`, resolution of that host
+to selected private IPv4 `10.0.0.5`, and no exchange with that host. P1
+identified the key reason in their own words. This does not establish that
+P1 understands whether the redirected website is reachable, or that this
+was a deliberate policy stop rather than a failed connection. Those
+distinctions remain unchecked. The replay is captured evidence, not a fresh
+request to that host.
