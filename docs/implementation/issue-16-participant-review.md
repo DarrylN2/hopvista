@@ -999,3 +999,21 @@ response headers. “Only ones” implies the Connection step finished, but P1
 did not name it or explain the completed TCP connection. The answer does not
 establish the certificate-verification reason or that no final HTTP request
 reached the redirected host. Those interpretations remain unchecked.
+
+### Certificate case: visible error reading (2026-11-05)
+
+Prompt: still in `i11certificate`, read the error message under **What this
+run found** and explain in P1's own words what caused Encryption to stop.
+The facilitator directed P1 to the error message after the earlier phase
+questions. Browser operation was not observed.
+
+Actual response: “TLS certificate verification failed for the attempted URL
+and The HTTP request for that exchange was not sent”
+
+Assessment: **guided reading passed for identifying the recorded certificate
+failure and unsent final HTTP request**. P1 repeated the two key clauses of
+the visible Go-owned error message. This is accurate extraction, but it is
+not an independent plain-language explanation of what a certificate is or
+why verification failed. It does not establish the final website's general
+availability. The earlier completed TCP connection remains a separate
+unconfirmed interpretation.

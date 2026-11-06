@@ -836,3 +836,10 @@ matches the captured phase outcomes; it does not establish P1's understanding
 of the completed connection, certificate-verification failure, or lack of a
 final HTTP response. The participant record retains the exact wording and
 assistance.
+
+P1 then repeated the visible certificate error's key clauses: verification
+failed for the attempted URL, and the HTTP request for that exchange was not
+sent. This guided reading identifies the recorded failure and unsent request,
+without establishing an independent explanation of certificate verification
+or the final website's availability. See the participant record for the exact
+answer and prompt.
