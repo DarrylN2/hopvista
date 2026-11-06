@@ -980,3 +980,22 @@ failed during the encryption step, and no HTTP response was measured for the
 final request. The capture records those outcomes; do not infer P1 understood
 them from naming TLS handshake. Ask a plain-language follow-up without first
 supplying the explanation.
+
+### Certificate case: phase-outcome follow-up (2026-11-05)
+
+Prompt: for the final website request in `i11certificate`, look at
+**Connection** and **Encryption** under **Website timing** and say which
+finished and which did not. The facilitator named the rows but did not give
+the expected outcomes. P1 had already read the finding and received earlier
+general timing guidance. Browser operation was not observed.
+
+Actual response: “I think the only ones that didn't finish was the exchange 3
+TLS encryption and HTTP first byte”
+
+Assessment: **guided recheck passed for locating the unfinished final-request
+phases**. P1 identified Exchange 3 and the TLS/encryption and HTTP-first-byte
+rows as unfinished, consistent with the capture's TLS error and absent HTTP
+response headers. “Only ones” implies the Connection step finished, but P1
+did not name it or explain the completed TCP connection. The answer does not
+establish the certificate-verification reason or that no final HTTP request
+reached the redirected host. Those interpretations remain unchecked.

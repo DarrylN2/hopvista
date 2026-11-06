@@ -829,3 +829,10 @@ phase. This locates the recorded stop but does not yet establish understanding
 of the completed connection, failed certificate verification, or absent final
 HTTP response. The exact answer and prior assistance are in the participant
 record; the certificate case remains partial.
+
+Directed to the final request's timing rows, P1 identified Exchange 3 TLS
+encryption and HTTP first byte as the unfinished phases. This guided answer
+matches the captured phase outcomes; it does not establish P1's understanding
+of the completed connection, certificate-verification failure, or lack of a
+final HTTP response. The participant record retains the exact wording and
+assistance.
