@@ -908,3 +908,22 @@ P1 correctly placed the next run after this one finishes. They did not name
 an on-screen control or report attempting to start one, so the requested
 control evidence and live busy-slot behavior remain unchecked. The static
 replay cannot demonstrate the transition from stopping to a terminal state.
+
+### Redirect stop: first reading (2026-11-05)
+
+Prompt: run the controlled `i11sensitive` replay, read **What this run found**,
+and explain in P1's own words why the website journey stopped. The case URL
+was supplied, but no explanation of the expected policy reason was given in
+this prompt. P1 had prior assistance on other network concepts. The
+facilitator did not observe their Chrome operation.
+
+Actual response: “It received the HTTP status 302 and then stopped at the
+redirect”
+
+Assessment: **partial**. P1 correctly identified the recorded 302 response
+and that the journey stopped at the redirect. Their answer does not state why
+HopVista chose to stop there, distinguish a deliberate URL-policy stop from a
+network failure, or describe what is known about the redirected website. The
+visible finding says `redirect_requires_new_run` and its adjacent explanation
+describes the policy. Ask one narrower follow-up without supplying the answer;
+do not score the policy distinction from this first response.

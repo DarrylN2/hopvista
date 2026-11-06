@@ -805,3 +805,8 @@ stopping replay. This is an assisted pass for the stated next-run timing. P1
 did not identify an on-screen control or attempt a new run, and the static
 capture does not demonstrate the live busy-slot transition. Those checks
 remain open in the participant record.
+
+In `i11sensitive`, P1 identified the HTTP 302 response and the redirect stop,
+but did not explain the deliberate URL-policy reason or what remains unknown
+about the redirected website. The exact first reading and assistance are in
+`issue-16-participant-review.md`; that part of the human review is partial.
