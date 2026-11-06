@@ -859,3 +859,12 @@ passed, but the human final-HTTP keyboard task remains unverified. The exact
 participant words and screenshot assessment are in the participant record.
 The full UI suite then passed 22 checks with four opt-in skips: three packaged
 browser journeys without `HOPVISTA_PACKAGED_EXE` and the system clipboard test.
+
+P1 then clarified with two Chrome screenshots that they opened
+`exchange-4-http` evidence and Return took them to the final **HTTP first
+byte / Response begins** row. This corrects the earlier ambiguity about
+which evidence was involved; the Target Echo screenshot remains separately
+recorded. The participant did not specify pointer versus keyboard activation,
+and the returned View evidence control has no visible focus outline in the
+image. Human keyboard-only focus restoration is therefore still unverified.
+See the participant record for exact words and image assessment.

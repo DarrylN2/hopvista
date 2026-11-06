@@ -1061,3 +1061,25 @@ That automated result does not replace P1's human task or prove the exact
 `path-1-target-5` interaction in Chrome. Ask which evidence link P1 opened
 and whether Return was actually activated before the screenshot; avoid
 counting another guided attempt as unassisted.
+
+### Final HTTP evidence return: participant clarification (2026-11-05)
+
+After the facilitator asked whether Return had been activated before the
+earlier Target Echo screenshot, P1 supplied two more Chrome screenshots and
+said: “Now, I had pressed view evidence before I took the screenshot. When I
+click \"Return to measurement\", it returns me to the HTTP first byte
+section”. The first new image shows `exchange-4-http` selected and outlined
+in Technical evidence, with Return visible. The second shows the final
+request's **HTTP first byte / Response begins** row and its **View evidence**
+control after the reported Return action. These clarify that the intended
+final HTTP evidence and source row were reached in this follow-up. The
+earlier Target Echo screenshot remains a separate observed record; it should
+not be treated as proof that final HTTP Return failed.
+
+Assessment: **participant-reported navigation to final HTTP evidence and
+back to its measurement is supported by the two images**. Neither image
+shows a visible focus outline on the returned View evidence control. P1 said
+“click”, but did not state whether Return was activated with pointer or
+keyboard; the facilitator did not observe the input method. Therefore this
+does not verify keyboard-only operation or restored keyboard focus. The
+existing isolated headless keyboard checks retain their separate scope.
