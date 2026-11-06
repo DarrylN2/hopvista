@@ -1,10 +1,13 @@
 # Issue 16: accessibility and human comprehension acceptance
 
-Latest participant follow-up, 2026-10-27: human review has resumed. The same
-participant reports Chrome at 100% zoom and difficulty understanding the main
-observation, limits and selected IPv4. [Their actual answers](issue-16-participant-review.md)
-are retained. The follow-up below adds plainer visible guidance and labels;
-the participant's recheck and issue #16 acceptance remain pending.
+Current disposition, 2026-11-06: the [criterion-by-criterion audit](issue-16-acceptance-audit.md)
+counts P1's assisted review and the existing keyboard, real NVDA, layout and
+feedback checks at their recorded scopes. One bundled human recheck remains
+for normal DNS/TCP/TLS meanings and the finding's uncertainty. A fresh reader,
+unassisted first-use pass, P1 keyboard task, personal clipboard fallback and
+live cleanup observation are not added acceptance gates. #16, #17 and release
+acceptance remain open. The dated entries below preserve the original history;
+their pending-task lists are superseded by the audit's current disposition.
 
 Independent checks first performed on 2026-10-20 (America/Los_Angeles) for
 [issue #16](https://github.com/DarrylN2/hopvista/issues/16), which had no comments

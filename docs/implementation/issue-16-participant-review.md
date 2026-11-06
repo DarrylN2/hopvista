@@ -1,9 +1,15 @@
 # Issue 16 participant review
 
-Status: in progress; **partial participant feedback recorded below**. This script
-does not yet establish human acceptance. Overall issue #10 release acceptance is
-separate. Use the current production assets and the verified API captures from
-issues #11–#14, with their documented native versus simulated provenance.
+Status, 2026-11-06: **assisted participant evidence counts; a narrow reading
+recheck remains**. See the [acceptance audit](issue-16-acceptance-audit.md) for
+the current criterion mapping and one bundled prompt for normal DNS/TCP/TLS
+meanings and the finding's uncertainty. No fresh reader or unassisted first-use
+pass is required. P1's unperformed keyboard task, clipboard fallback and live
+cleanup observation are evidence limits, not extra acceptance gates. Historical
+answers, assistance, errors and task-level assessments below are preserved;
+their pending lists do not override the audit. #16 and overall issue #10 release
+acceptance remain open and separate. Replays retain their documented native
+versus simulated provenance.
 
 ## Setup and reviewer scope
 
@@ -18,8 +24,9 @@ No request is sent to fixture.example.
 Ask the participant to use their own words and think aloud. Do not explain the
 expected answer first. Record their first response, difficulty locating content,
 any facilitator help, and their answer after help separately. A repo owner or
-developer can participate, but record their prior knowledge; that alone does
-not establish comprehension for an unfamiliar nontechnical reader. An agent,
+developer can participate; record their prior knowledge and assistance. Their
+actual reading and affected-case rechecks count toward the issue; first-use
+comprehension by an unfamiliar reader is an optional evidence scope. An agent,
 API fixture, expected answer or unreturned questionnaire is not a participant.
 
 Record: date/time; participant's chosen identifier and role; familiarity with

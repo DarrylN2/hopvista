@@ -1,5 +1,17 @@
 # HopVista v1 acceptance status
 
+Current disposition, 2026-11-06: the [#16 acceptance audit](issue-16-acceptance-audit.md)
+maps every required criterion to the existing record. Keyboard, real NVDA,
+layout/zoom and feedback checks are covered at their recorded scopes. P1's
+assisted readings count; one bundled recheck of normal DNS/TCP/TLS meanings
+and the finding's uncertainty remains. A new reader, unassisted first use,
+P1 keyboard copying/fallback and live cleanup observation are not extra gates.
+#16, #17 and release acceptance remain open. #17 needs a candidate containing
+the completed work, exact-candidate checks/reconciliation and explicit human
+release approval. The `a159f9c` candidate below predates the later UI changes.
+Earlier pending/deferred statements and matrix entries below are historical;
+use the audit for the current #16 disposition.
+
 Human review resumed on 2026-10-27. [Issue #16's participant record](issue-16-participant-review.md)
 records new difficulty interpreting the observation, limits and selected IPv4.
 The UI wording follow-up adds a visible number-address explanation and simpler

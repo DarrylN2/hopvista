@@ -1,5 +1,14 @@
 # Issue #17: experimental candidate preparation
 
+Current disposition, 2026-11-06: human review has resumed and P1's assisted
+participation counts. The [#16 acceptance audit](issue-16-acceptance-audit.md)
+identifies only the remaining normal phase-meaning/uncertainty recheck, without
+requiring a new reader or P1 keyboard/fallback/live-cleanup tasks. #17 remains
+open for completed blockers, an updated identifiable candidate and its required
+checks/reconciliation, and explicit human release approval. The candidate below
+is historical and does not contain later participant-driven UI changes.
+References below to deferred review describe the preparation date.
+
 Prepared on 2026-10-24 (America/Los_Angeles) for
 [issue #17](https://github.com/DarrylN2/hopvista/issues/17), after
 [PR #25](https://github.com/DarrylN2/hopvista/pull/25) merged. This is a
@@ -172,10 +181,10 @@ Replay report: `.impeccable/review/issue-16/observations-2026-10-25T03-48-00.907
   broader persistence/telemetry claim is inferred from absence in the launch
   directory alone. See [restart/privacy evidence](packaged-restart-privacy.md).
   Closed on GitHub on 2026-10-24 with the evidence disposition recorded there.
-- **#16 remains open:** partial participant feedback and facilitator help remain
-  recorded. Human comprehension is deferred; automation is not a substitute.
-  No fresh real-reader check of changed timing wording or native 200% zoom was
-  performed here; earlier checks retain their dated scope.
+- **#16 remains open:** at this candidate's preparation date, human review was
+  deferred; subsequent assisted P1 review and the remaining reading gap are
+  mapped in the audit above. No human reading or native 200% zoom recheck was
+  performed in this candidate pass; earlier checks retain their dated scope.
 - **#17 remains open:** the candidate is available for review, but its criterion
   requiring completed blockers and an explicit human release decision is not
   satisfied while #16 is open. No release tag, signing, installer, upload or
