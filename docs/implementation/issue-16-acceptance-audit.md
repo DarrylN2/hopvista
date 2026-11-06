@@ -96,3 +96,33 @@ release approval. Historical `a159f9c` is a pre-acceptance candidate and predate
 the participant-driven UI improvements. Do not relabel it as containing them.
 Keep #16, #17 and release acceptance open for the actual remaining criteria;
 preparing evidence does not authorize publication.
+
+## Audit validation
+
+Documentation-only change; no production assets or candidate binary changed.
+`git diff --check` and TypeScript checking passed. The full UI suite's first
+sandbox attempt failed in the shared Edge launch hook (22 hook failures,
+4 skips), before browser assertions could run. An authorized isolated headless
+retry outside that sandbox passed **22 tests, 0 failures, 4 opt-in skips**:
+three packaged journeys without `HOPVISTA_PACKAGED_EXE` and system clipboard.
+No existing desktop browser, clipboard or screen reader was operated. This
+retry is UI regression evidence, not new human or native acceptance evidence.
+
+Independent code-review of `git diff 80192ff...4b9d5f6`:
+
+### Standards
+
+**0 findings.** The documentation follows issue-source and domain-language
+rules, preserves participant history, and links current dispositions to one
+audit. No applicable code-smell findings. Reviewer made no edits or test runs.
+
+### Spec
+
+**0 actionable findings.** The seven-criterion mapping and narrow remaining
+phase-meaning/uncertainty recheck follow the actual evidence. Assisted readings
+count without invented participant/input/live-cleanup gates. Exact-candidate
+requirements and human release approval remain separate. Reviewer performed no
+tests or desktop/browser operations.
+
+Review summary: Standards **0 findings**; Spec **0 findings**. The subsequent
+validation/review appendix records outcomes only and changes no disposition.
