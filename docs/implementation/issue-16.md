@@ -887,3 +887,17 @@ visible-confirmation recheck. Clipboard contents, manual fallback and human
 keyboard copying were not checked. P1 also asked to speed up the review;
 remaining participant prompts will be bundled rather than asked one label
 at a time. The exact response is in the participant record.
+
+P1's final bundled `i14cutoffstopping` answer accurately described the
+revised rule: no new checks start; checks underway may end with or without a
+reply; another run can start after this one finishes. This is a guided
+recheck after earlier assistance, not first-use evidence or a live cleanup
+observation. The exact words and prompt are in the participant record.
+
+The 2026-11-05 participant session is consolidated there. Assisted readings
+cover many normal and edge-case meanings, while human keyboard-only use,
+clipboard contents/fallback, some normal timing/uncertainty interpretations
+and live cutoff cleanup remain unverified or partial. The controlled replay
+does not refresh native timing evidence. Issue #16, issue #17 and release
+acceptance stay open; no release candidate is updated or published from this
+session.

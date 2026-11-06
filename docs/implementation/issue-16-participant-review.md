@@ -1131,3 +1131,41 @@ fallback were not observed; mouse operation does not establish keyboard
 copy. P1 explicitly requested faster pacing. Continue with a small bundled
 set of remaining reading prompts, avoid serial micro-prompts, and leave
 unverified tasks open rather than coaching to a pass.
+
+### Cutoff and stopping: bundled guided recheck (2026-11-05)
+
+After P1 asked to speed up, the facilitator offered one final combined
+question for `i14cutoffstopping`: “What happens to new checks at cutoff, and
+what can happen to checks already started?” P1 had read the revised
+**Stopping…** message and received earlier discussion about cutoff and
+cleanup. This is a guided recheck, not unassisted first-use evidence.
+
+Actual response: “No new checks will start. HopVista is waiting for checks
+already started to end and clear up. A check may receive a reply or end
+without one. You can start another run after this one finishes”
+
+Assessment: **guided recheck passed for the displayed stopping rule and
+next-run condition**. P1 accurately described that new checks stop, existing
+checks can end with or without a reply, and another run can start after this
+one finishes. The response closely follows the revised visible wording and
+prior assistance. It does not establish a maximum cleanup time, observed
+live transition, or first-use understanding from an unfamiliar reader. The
+static replay supplies no fresh native timing evidence.
+
+### Review consolidation (2026-11-05)
+
+P1 requested faster pacing, so no further serial participant prompts were
+issued in this session. Assisted/guided readings now cover the selected
+number address, recorded website response, missing versus measured reply
+time, hop-limit versus received unreachable reply, completed-run versus
+complete-measurement distinction, stopping/cleanup wording, private redirect
+policy and reachability limit, and the certificate stop's visible phase/error
+outcomes. The exact words, earlier misses and help remain above; none is an
+unassisted first-use pass. Mouse navigation from final HTTP evidence back to
+its row and visible **Copied** feedback were reported, with screenshot support
+for the navigation. The participant did not perform the keyboard-only task;
+clipboard contents and manual copy fallback were not checked. Some normal
+timing/uncertainty interpretations remain partial, and a live cutoff/cleanup
+transition was not observed. Human acceptance for issue #16 and release
+acceptance remain open. Do not promote automated checks or the controlled
+captures to human or fresh native evidence.
