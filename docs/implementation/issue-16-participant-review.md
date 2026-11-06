@@ -1,14 +1,13 @@
 # Issue 16 participant review
 
-Status, 2026-11-06: **assisted participant evidence counts; a narrow reading
-recheck remains**. See the [acceptance audit](issue-16-acceptance-audit.md) for
-the current criterion mapping and one bundled prompt for normal DNS/TCP/TLS
-meanings and the finding's uncertainty. No fresh reader or unassisted first-use
+Status, 2026-11-06: **the final assisted reading recheck passed**. See the
+[acceptance audit](issue-16-acceptance-audit.md) for the criterion mapping and
+final disposition. No fresh reader or unassisted first-use
 pass is required. P1's unperformed keyboard task, clipboard fallback and live
 cleanup observation are evidence limits, not extra acceptance gates. Historical
 answers, assistance, errors and task-level assessments below are preserved;
 their pending lists do not override the audit. #16 and overall issue #10 release
-acceptance remain open and separate. Replays retain their documented native
+acceptance remain separate. Replays retain their documented native
 versus simulated provenance.
 
 ## Setup and reviewer scope
@@ -1158,6 +1157,38 @@ one finishes. The response closely follows the revised visible wording and
 prior assistance. It does not establish a maximum cleanup time, observed
 live transition, or first-use understanding from an unfamiliar reader. The
 static replay supplies no fresh native timing evidence.
+
+### Final bundled normal-reading recheck (2026-11-06)
+
+The facilitator restarted the controlled preview at
+`http://127.0.0.1:61405/` and directed P1 to the captured `i11completed`
+result with technical details closed. The prompt asked in one bundle what
+Address lookup (DNS), Connection (TCP) and Encryption (TLS) each time, and what
+“What this does not tell us” leaves unknown about Chrome loading the whole
+page or the cause of a wait. The facilitator supplied no expected answer in
+this prompt. P1 had prior definitions, corrections and UI rechecks, so this is
+an assisted reading. The facilitator did not observe P1's Chrome operation or
+verify the screen state directly; this is a captured replay, not a fresh
+network measurement.
+
+P1's actual response:
+
+> 1. Address lookup is the time spent for finding an IPv4 address for the
+> website name. Connection is the time spent opening a connection to the
+> selected IPv4 address. Encryption it the time spent for setting up encryption
+> and checking the website's security certificate for the HTTPS connection.
+> 2. It doesn't establish the browser timing or what stuff cause the wait
+
+Assessment: **assisted recheck passed for the remaining normal phase meanings
+and finding limit**. P1 accurately describes the three measured steps and
+correctly withholds a browser timing and causal conclusion. “What stuff cause
+the wait” is broad but expresses the relevant limit; it does not identify a
+specific cause or imply that one was measured. Earlier first attempts,
+misunderstandings and assistance remain recorded above. This response is not
+an unassisted first-use pass, a live measurement, or evidence about P1's
+keyboard operation. Together with the earlier narrowly assessed human readings
+and separate accessibility checks, it completes issue #16's stated criteria
+at their recorded scopes. Issue #17 and release acceptance remain separate.
 
 ### Review consolidation (2026-11-05)
 

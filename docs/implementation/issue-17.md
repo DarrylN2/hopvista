@@ -1,5 +1,11 @@
 # Issue #17: experimental candidate preparation
 
+Current disposition, 2026-11-06: [issue #16's human reading and accessibility
+criteria](issue-16-acceptance-audit.md) are now covered at recorded scopes.
+Issue #17 remains open: the historical `a159f9c` executable predates later UI
+changes, so an updated exact candidate and its applicable checks/reconciliation
+are still required before an explicit human release decision.
+
 Current disposition, 2026-11-06: human review has resumed and P1's assisted
 participation counts. The [#16 acceptance audit](issue-16-acceptance-audit.md)
 identifies only the remaining normal phase-meaning/uncertainty recheck, without

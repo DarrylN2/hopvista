@@ -1,5 +1,12 @@
 # HopVista v1 acceptance status
 
+Current disposition after P1's 2026-11-06 final assisted recheck: all seven
+[#16 criteria](issue-16-acceptance-audit.md) are covered at their recorded
+scopes. The exact answer is in the participant record. Earlier statements about
+a remaining normal reading gap are historical. #17 and release acceptance stay
+open for an updated exact candidate, applicable checks/reconciliation and an
+explicit human release decision.
+
 Current disposition, 2026-11-06: the [#16 acceptance audit](issue-16-acceptance-audit.md)
 maps every required criterion to the existing record. Keyboard, real NVDA,
 layout/zoom and feedback checks are covered at their recorded scopes. P1's

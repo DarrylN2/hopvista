@@ -1,5 +1,18 @@
 # Issue #16 acceptance audit — 2026-11-06
 
+## Final disposition — 2026-11-06
+
+P1 answered the single bundled prompt in the controlled `i11completed` replay.
+Their [exact words and assistance scope](issue-16-participant-review.md) are
+recorded. They accurately explained Address lookup (DNS), Connection (TCP) and
+Encryption (TLS), and said the result does not establish browser timing or
+what caused the wait. This closes the two narrow human-reading gaps identified
+in the audit below. **All seven issue #16 criteria are satisfied at their
+documented scopes.** Earlier pending statements below are the pre-recheck
+audit, retained to show the basis for the prompt. The participant response
+does not update native or packaged evidence. Issue #17 and release acceptance
+remain open.
+
 ## Authority and disposition
 
 Audited the live [issue #16](https://github.com/DarrylN2/hopvista/issues/16)
