@@ -174,6 +174,33 @@ experimental release at these tested conditions and limits. Until that explicit
 decision, #17 stays open, PR #27 stays draft, and merge/tag/publication/assets
 remain unapproved. Candidate preparation alone grants none of those actions.
 
+### Updated-candidate review
+
+Independent read-only review of `git diff 28dd288...bf9d5dd` (the candidate
+record, README and acceptance-matrix update):
+
+#### Standards
+
+**0 findings.** The three documentation changes follow the repository's
+issue-source and domain-language rules, preserve approved product/design
+boundaries, and distinguish the updated executable from historical evidence.
+Build identity, checksum, packaged/UI outcomes and replay counts match the
+inspected artifacts. No applicable baseline code-smell findings; documentation
+only. The reviewer edited no files and reran no tests.
+
+#### Spec
+
+**0 actionable findings.** The reviewer independently checked the candidate
+checksum and clean Windows amd64 build metadata. Packaged, cutoff, network,
+UI and replay logs support the recorded outcomes; skips and experimental limits
+remain distinct from passes. Instructions/matrix are reconciled without changing
+assets, reopening #16 or implying release authority. Explicit human release
+approval remains outstanding. No tests or desktop/browser operations were run
+by the reviewer.
+
+Review summary: Standards **0 findings**; Spec **0 findings**. This review
+appendix is documentation only and leaves the identified executable unchanged.
+
 ## Historical candidate — 2026-10-24
 
 Everything below retains the earlier candidate's dated evidence and acceptance
