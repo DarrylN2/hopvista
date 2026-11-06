@@ -1017,3 +1017,20 @@ not an independent plain-language explanation of what a certificate is or
 why verification failed. It does not establish the final website's general
 availability. The earlier completed TCP connection remains a separate
 unconfirmed interpretation.
+
+### Keyboard evidence and return: first report (2026-11-05)
+
+Prompt: run captured `i11completed`, use only the keyboard to open
+**Response begins** evidence for the final website request, activate
+**Return to measurement**, and report where focus landed or where P1 got
+stuck. The facilitator named the controls and case but did not operate the
+browser. P1 previously reported general mouse/keyboard familiarity; their
+specific actions and focus were not observed.
+
+Actual response: “I think it worked”
+
+Assessment: **subjective success reported; keyboard focus/return outcome not
+verified**. The answer does not say whether P1 used only the keyboard,
+reached the intended Exchange 4 evidence, activated Return, or saw focus
+return to the originating measurement. Ask one narrow follow-up about the
+focused control. Do not count this as a keyboard task pass.

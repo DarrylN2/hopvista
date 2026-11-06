@@ -843,3 +843,9 @@ sent. This guided reading identifies the recorded failure and unsent request,
 without establishing an independent explanation of certificate verification
 or the final website's availability. See the participant record for the exact
 answer and prompt.
+
+For the keyboard evidence/return task on `i11completed`, P1 reported “I
+think it worked.” No specific keyboard action or returned focus target was
+described, and the facilitator did not observe Chrome. This is a subjective
+success report, not a verified keyboard task pass; the participant record
+retains the exact prompt and answer.
