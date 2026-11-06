@@ -1096,7 +1096,22 @@ self-report; the human keyboard-only task was not performed**. This resolves
 the input-method uncertainty above. Earlier P1 said they could navigate
 with mouse and keyboard generally; the later statement says they do not
 know how to use the keyboard. Their overall keyboard familiarity is unclear.
-Do not count
-the mouse navigation or screenshots as a keyboard focus check. The isolated
+Do not count the mouse navigation or screenshots as a keyboard focus check. The isolated
 headless keyboard tests remain automated supporting evidence only. Do not
 coach repeated attempts into an unassisted first-use pass.
+
+### Copy IPv4: first mouse report (2026-11-05)
+
+Prompt: in the controlled completed example, click **Copy IPv4** with the
+mouse and report the copied address and visible confirmation. The facilitator
+named the control and requested mouse operation after P1 said they did not
+know how to use the keyboard. P1's screen and clipboard were not observed.
+
+Actual response: “it copies the IPv4”
+
+Assessment: **general copy-action understanding reported; exact result
+unverified**. P1 did not identify the numeric address, describe a **Copied**
+confirmation, or report pasting or inspecting clipboard contents. This is
+not evidence that copying succeeded in P1's Chrome session, nor a keyboard
+or clipboard-fallback pass. Ask one narrow follow-up about the displayed
+address and feedback without suggesting the expected values.

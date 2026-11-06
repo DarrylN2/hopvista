@@ -875,3 +875,9 @@ No human keyboard-only focus result is claimed from this exchange; the prior
 headless keyboard checks retain their separate automated scope. The
 participant record preserves both the earlier general keyboard-familiarity
 report and this later statement; P1's overall keyboard familiarity is unclear.
+
+Asked to click **Copy IPv4** and report the address and confirmation, P1 said
+“it copies the IPv4”. This conveys the control's apparent purpose but does
+not verify the numeric address, confirmation, or clipboard contents in P1's
+Chrome session. The participant record preserves the exact response and
+mouse-only prompt; the copy task remains partial.
