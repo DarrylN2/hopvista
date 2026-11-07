@@ -2,9 +2,10 @@
 
 ## Current release decision — 2026-11-06
 
-**Release acceptance remains open for explicit human approval.** Issue #16 is
-closed with all seven criteria checked after the user's approval. The updated
-[issue #17 candidate record](issue-17.md) identifies executable source
+**Experimental release acceptance approved by the user on 2026-11-06 for the
+exact candidate below.** Issue #16 is closed with all seven criteria checked
+after the user's approval. Issue #17's release-decision criterion is complete.
+The updated [issue #17 candidate record](issue-17.md) identifies executable source
 `28dd288fe84e0d4a3763d18be69382e784fa7c1b`, version
 `v0.0.0-20261106215437-28dd288fe84e`, SHA-256
 `5A5606FA711AAD0D420CDAFEB903DC9C4AE480681691F784B8B12B2BD5C5847C`.
@@ -21,7 +22,7 @@ evidence below does not establish checks of this updated binary.
 | Keyboard, actual NVDA, human reading and zoom | **#16 complete at recorded scopes**, including P1's final assisted phase-meaning/uncertainty reading. Exact words, earlier misunderstandings, assistance and facilitator errors remain recorded. Mouse operation does not establish keyboard use; separate keyboard/real NVDA evidence covers the criteria. No new participant, screen-reader or native zoom check in this candidate pass. |
 | Current candidate presentation | **65 layout/replay cases passed**, including 320px and long URL/ID/64-hop stress, evidence focus/return and exact finding retention. Reduced-motion runtime checks and 20 sampled contrast pairs pass. Synthetic manual-copy fallback passes; system clipboard remains untouched. Existing wordmark's enhanced 44px coarse-pointer exception remains disclosed. Replays are not native or human evidence. |
 | Supported condition | **Experimental Windows 11 x64 tested on Windows 11 Pro 25H2 build 26200.9711, unelevated medium-integrity token**. Wider accounts/builds/networks/VPN, Windows 10, ARM64, IPv6 and comprehensive Windows 11 support unverified. The 250ms margin remains empirical. |
-| Release decision | #15/#16/#24 completed at their documented scopes. #17 stays open; PR #27 stays draft. The user must explicitly accept this exact candidate and its experimental limits. No merge, tag, asset upload or publication is authorized. |
+| Release decision | #15/#16/#24 completed at their documented scopes. The user explicitly accepted this exact candidate and its experimental limits on 2026-11-06; issue #17 can close. PR #27 stays draft. Merge, tag, asset upload and publication require separate approval. |
 
 Unavailable/skipped checks and source regression outcomes are itemized in the
 current candidate record. P1's unperformed personal keyboard/clipboard fallback

@@ -1,5 +1,22 @@
 # Issue #17: experimental candidate preparation
 
+## Release acceptance — 2026-11-06
+
+After reviewing what acceptance means and seeing the candidate's local browser
+interface and completed loopback diagnostic, the user explicitly said **“I
+accept.”** This is approval of the exact experimental Windows 11 x64 candidate
+identified below: source `28dd288fe84e0d4a3763d18be69382e784fa7c1b`,
+SHA-256 `5A5606FA711AAD0D420CDAFEB903DC9C4AE480681691F784B8B12B2BD5C5847C`.
+The decision accepts the completed evidence and disclosed experimental limits
+in this record. It completes issue #17's release-decision criterion. The
+screenshots show one local loopback run and do not expand the tested platform
+or native timing claims.
+
+This approval does **not** authorize merging draft PR #27, tagging, uploading
+the executable or publishing a GitHub release. Those actions require a
+separate explicit instruction. The pre-decision statements below are retained
+as the dated preparation record.
+
 ## Updated candidate — 2026-11-06
 
 Prepared for review, **not accepted or published**. Issue #16 is closed with all

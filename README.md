@@ -35,9 +35,11 @@ checks. The local candidate is
 It includes the participant-driven UI improvements; the older `a159f9c`
 candidate is historical. Issue #16 is closed with human reading and accessibility
 criteria covered at their [recorded scopes](docs/implementation/issue-16-acceptance-audit.md).
-Issue #17 and release acceptance await an explicit human release decision;
-candidate preparation does not authorize merge or publication. PR #27 stays
-draft. See [packaged checks](tools/app-smoke/README.md) to verify another build;
+The user accepted this exact candidate for an experimental Windows 11 x64
+release on 2026-11-06; [issue #17's record](docs/implementation/issue-17.md)
+retains the decision and limits. PR #27 stays draft. Merge, tagging, asset
+upload and publication require separate approval. See
+[packaged checks](tools/app-smoke/README.md) to verify another build;
 do not assign it this checksum without checking it.
 
 For this version, run the executable on the laptop you want to measure from,
