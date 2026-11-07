@@ -8,7 +8,8 @@ accept.”** This is approval of the exact experimental Windows 11 x64 candidate
 identified below: source `28dd288fe84e0d4a3763d18be69382e784fa7c1b`,
 SHA-256 `5A5606FA711AAD0D420CDAFEB903DC9C4AE480681691F784B8B12B2BD5C5847C`.
 The decision accepts the completed evidence and disclosed experimental limits
-in this record. It completes issue #17's release-decision criterion. The
+in this record. It completes issue #17's release-decision criterion; the issue
+is closed with all seven criteria checked. The
 screenshots show one local loopback run and do not expand the tested platform
 or native timing claims.
 
