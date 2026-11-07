@@ -200,12 +200,17 @@ test('target echo evidence returns keyboard focus to its source', async t => {
   const { page } = await review(t);
   await page.getByRole('button', { name: 'Start diagnostic run', exact: true }).press('Enter');
   await page.locator('.run-heading').waitFor();
+  const details = page.getByText('Target reply details', { exact: true });
+  await details.press('Enter');
   const source = page.getByRole('button', { name: 'View evidence target-echo-1', exact: true });
   await source.press('Enter');
   await page.waitForFunction(() => document.activeElement.id === 'evidence-target-echo-1');
+  // Returning should also recover a source inside a disclosure closed meanwhile.
+  await details.evaluate(summary => { summary.parentElement.open = false; });
   await page.keyboard.press('Tab');
   assert.equal(await page.evaluate(() => document.activeElement.textContent), 'Return to measurement');
   await page.keyboard.press('Enter');
+  assert.equal(await source.isVisible(), true);
   assert.equal(await source.evaluate(button => button === document.activeElement), true);
 });
 
@@ -303,12 +308,17 @@ test('website timing explains the four steps in plain language before opening ev
   const { page } = await review(t);
   await page.getByRole('button', { name: 'Start diagnostic run', exact: true }).press('Enter');
   await page.locator('.run-heading').waitFor();
-  const introduction = await page.locator('.timing > .section-help').innerText();
-  assert.match(introduction, /DNS finds an address/);
-  assert.match(introduction, /TCP opens a connection/);
-  assert.match(introduction, /TLS secures it/);
-  assert.match(introduction, /HTTP first byte waits for the response to start/);
-  assert.match(introduction, /do not measure a full page load/);
+  const rows = page.locator('.phases > div');
+  for (const [index, [label, meaning]] of [
+    ['Address lookup', /finding an IPv4 address/],
+    ['Connection', /opening a connection/],
+    ['Encryption', /encryption.*security certificate/],
+    ['Response begins', /writing the request.*response starts/],
+  ].entries()) {
+    assert.equal(await rows.nth(index).locator('dt').evaluate(dt => dt.firstChild.textContent), label);
+    assert.match(await rows.nth(index).locator('dd > span').first().innerText(), meaning);
+  }
+  assert.match(await page.locator('.timing > .section-help').innerText(), /not downloading or displaying the page/);
   assert.equal(await page.locator('.technical').getAttribute('open'), null);
 });
 
@@ -342,6 +352,10 @@ test('the result explains its purpose and number address without opening technic
   assert.match(await page.locator('.limit').innerText(), /What this does not tell us/);
   assert.equal(await page.locator('.observation').innerText(), run.findings[0].observation);
   assert.ok((await page.locator('.limit').innerText()).includes(run.findings[0].limit));
+  assert.equal(await page.locator('.observation').evaluate(observation =>
+    !!(observation.compareDocumentPosition(document.querySelector('.selected')) & Node.DOCUMENT_POSITION_FOLLOWING)), true);
+  assert.equal(await page.locator('.limit').evaluate(limit =>
+    !!(limit.compareDocumentPosition(document.querySelector('.selected')) & Node.DOCUMENT_POSITION_FOLLOWING)), true);
   assert.equal(await page.locator('.technical').getAttribute('open'), null);
 });
 
@@ -352,6 +366,9 @@ test('the direct-connection note explains why Chrome timing can differ', async t
   const note = page.locator('.caveat');
   assert.equal(await note.isVisible(), true);
   assert.match(await note.innerText(), /HopVista opens its own direct connection/);
+  assert.match(await note.innerText(), /times can differ/);
+  assert.equal(await note.locator('details > p').isVisible(), false);
+  await note.getByText('Why browser times can differ', { exact: true }).press('Enter');
   assert.match(await note.innerText(), /Chrome.*keep a connection.*open from an earlier visit/);
   assert.match(await note.innerText(), /use it again instead of opening another/);
   assert.match(await note.innerText(), /times can differ/);
@@ -387,18 +404,19 @@ test('an unreachable path outcome explains that a device replied', async t => {
   assert.equal(await page.locator('.technical').getAttribute('open'), null);
 });
 
-test('a slow intermediate reply explains its limits without networking jargon', async t => {
+test('a shared visible guide explains reply-time limits without repeating them at every hop', async t => {
   const { page } = await review(t);
   await page.getByRole('button', { name: 'Start diagnostic run', exact: true }).press('Enter');
   await page.locator('.run-heading').waitFor();
-  const help = page.locator('.hop-list li').first().locator('small');
+  const help = page.locator('.path-reading-guide');
   assert.equal(await help.isVisible(), true);
-  assert.match(await help.innerText(), /starts when HopVista sends a check from your computer toward this hop/i);
+  assert.match(await help.innerText(), /starts when HopVista sends a check from your computer toward a hop/i);
   assert.match(await help.innerText(), /stops when.*reply gets back to your computer/i);
   assert.match(await help.innerText(), /includes both directions/i);
   assert.match(await help.innerText(), /does not measure time between hops/i);
-  assert.match(await help.innerText(), /does not prove.*website slow/i);
+  assert.match(await help.innerText(), /or prove.*website slow/i);
   assert.doesNotMatch(await help.innerText(), /ICMP|RTT|bottleneck/i);
+  assert.equal(await page.locator('.hop-list').getByText(/time between hops/i).count(), 0);
 });
 
 test('a silent hop says its missing reply time is different from measured zero', async t => {
@@ -412,4 +430,35 @@ test('a silent hop says its missing reply time is different from measured zero',
   assert.match(await silent.locator('.raw-rtt').innerText(), /Reply time:\s+Not measured/);
   assert.match(await silent.innerText(), /0 ms.*reply arrived/);
   assert.doesNotMatch(await silent.innerText(), /RTT/);
+});
+
+test('recorded zero remains a measured value alongside missing reply times', async t => {
+  const { page, run } = await review(t);
+  run.families[0].exchanges[0].tcp.duration_ms = 0;
+  run.families[0].paths[0].trace.hops[0].rtt_ms = 0;
+  await page.getByRole('button', { name: 'Start diagnostic run', exact: true }).press('Enter');
+  await page.locator('.run-heading').waitFor();
+  assert.equal(await page.locator('.phases > div').nth(1).locator('.measured-value').innerText(), '0 ms');
+  assert.match(await page.locator('.hop-list li').first().locator('.raw-rtt').innerText(), /Reply time:\s+0 ms/);
+  assert.match(await page.locator('.hop-list li').nth(1).locator('.raw-rtt').innerText(), /Not measured/);
+});
+
+test('echo samples stay available behind keyboard disclosures with visible counts', async t => {
+  const { page, run } = await review(t);
+  await page.getByRole('button', { name: 'Start diagnostic run', exact: true }).press('Enter');
+  await page.locator('.run-heading').waitFor();
+  const path = run.families[0].paths[0];
+  for (const [group, title, echo] of [
+    ['.route-block', 'Gateway reply details', path.gateway],
+    ['.echo-summary', 'Target reply details', path.target],
+  ]) {
+    const section = page.locator(group);
+    assert.ok((await section.innerText()).includes(`${echo.attempted} ${group === '.route-block' ? 'gateway checks' : 'checks'} attempted; ${echo.replied} replied`));
+    const details = section.locator('details');
+    assert.equal(await details.getAttribute('open'), null);
+    await section.getByText(title, { exact: true }).press('Enter');
+    for (const sample of echo.samples) {
+      assert.equal(await section.getByRole('button', { name: `View evidence ${sample.id}`, exact: true }).isVisible(), true);
+    }
+  }
 });
