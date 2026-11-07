@@ -189,6 +189,12 @@ The current stylesheet defines no shadows. Depth comes from neutral surface chan
 
 Panels use the shared rounded panel token; controls and raw evidence blocks use the control radius. Status badges and text-like evidence controls have smaller corners. Borders are generally (1px), with (2px) ink section rules and the (3px) finding accent. The finding has square top corners and rounded bottom corners. The path uses circular nodes and dotted vertical connectors; those connectors mean probe order only and do not establish physical links or the HTTP route.
 
+The participant read the connectors as direct links despite the earlier muted
+technical caveat. The adjacent note now uses normal body text and states that
+the dots order numbered checks, no direct marker-to-marker connection was
+measured, and the website request may have taken another route. The approved
+path composition and connector geometry stay in place pending human recheck.
+
 ## Components
 
 ### Buttons
@@ -206,6 +212,26 @@ requests focus the persistent status message with the shared outline, preserving
 focus when action controls disable or disappear. The selected scope includes an
 assistive-text label without changing its visible styling. See the scoped
 [issue #16 evidence](docs/implementation/issue-16.md); human review remains open.
+
+The participant follow-up labels the finding panel “What this run found” and
+the limit “What this does not tell us”. “Address for path checks (IPv4)” has a
+visible, blue-tinted explanation of the number address and its difference from
+the entered website link. Existing static finding guidance comes before the
+exact Go-owned observation; it explains terms without calculating a finding.
+The intro describes connection and response-start timing in everyday language.
+When a timing step times out, its visible value states that it has **no
+completed time** and identifies the time limit; the incomplete-finding context
+contrasts it with earlier finished steps. A recorded 0 ms remains a completed
+value. This distinction responds to the participant's missing-versus-zero
+confusion without changing measurement outcomes or Go-owned finding text.
+Typography, layout, colors and evidence navigation retain the approved design.
+The direct-connection note states why a browser's times may differ and gives
+concrete examples: reusing an open connection, using a saved or different
+number address, or going through another service (a proxy). It uses the same
+visible note position and does not claim to measure Chrome's actual path.
+After a participant interpreted “open connection” as an open tab, the note
+spells out that a browser may keep a website connection open from an earlier
+visit and use it again instead of opening another.
 
 ### Inputs and disclosures
 
@@ -233,6 +259,23 @@ Compact, softly rounded badges pair state text with the status colors described 
 ### Path and evidence
 
 Hop rows pair hop number, observed reply information, raw RTT where present, and an evidence button. Dotted connectors express probe order. Evidence controls pair underlined text with an inline arrow, with a minimum height of (32px), increasing to (44px) for coarse pointers.
+Hop rows use the same visible **Reply time:** field for observed and missing
+replies. An observed reply shows its raw recorded RTT in milliseconds. A
+silent hop shows **Not measured**, the time limit, and the absence of a
+reply address; a short note explains that 0 ms requires an observed reply.
+This separate value position responds to the participant treating a missing
+reply time as zero even after reading an inline explanation.
+For an unreachable trace outcome, a visible sentence beneath the recorded
+outcome explains that HopVista received a device's unreachable reply and
+that the website request is a separate check. This answers the participant's
+confusion between a received unreachable message and silence without
+changing the structured outcome or the hop diagram.
+For an intermediate reply with a time, the visible row note names the
+round trip: HopVista sends a check from the user's computer toward the hop,
+then receives the hop's reply back at that computer. It explains that this
+is neither time between hops nor proof the hop slowed the website. This
+replaces ICMP/RTT/bottleneck jargon in the primary reading layer while
+preserving the recorded value.
 
 Finding references use phase names when available, such as “View TCP evidence”. Main visual labels omit raw IDs; accessible names and titles retain them, and technical evidence shows them. Technical evidence uses a native disclosure. Selecting a measurement's evidence opens it, focuses and scrolls to the matching record, and marks the record with a blue border. A return control restores focus to the originating measurement. Raw JSON is separately disclosed, wraps, and has a maximum height of (28rem) with internal scrolling.
 

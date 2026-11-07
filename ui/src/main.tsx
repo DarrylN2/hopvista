@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import type { Echo, Exchange, Family, Finding, Measurement, Path, RunResult } from "./types";
 import "./style.css";
 
-const directPathCaveat = "HopVista tests a direct connection from this computer. Your browser may use another IP, a proxy, cached DNS, or an existing connection.";
+const directPathCaveat = "HopVista opens its own direct connection to the website. A browser such as Chrome may keep a connection to the website open from an earlier visit and use it again instead of opening another. It may also use a saved or different number address, or go through another service (a proxy). Their times can differ.";
 const terminal = new Set(["completed", "cancelled", "failed"]);
 const phaseHelp = {
   DNS: "Time spent finding an IPv4 address for the website name. This computer's resolver may use a saved (cached) answer.",
@@ -17,7 +17,7 @@ function outcome(value: string) { return value.replaceAll("_", " "); }
 function runDescription(state: RunResult["state"]): string {
   switch (state) {
     case "running": return "Measurements appear as they arrive. The observed finding will be available when this run finishes.";
-    case "stopping": return "No new measurements will start. Waiting for work already started to finish and release its resources. Completed evidence remains available.";
+    case "stopping": return "No new checks will start. HopVista is waiting for checks already started to end and clear up. A check may receive a reply or end without one. You can start another run after this one finishes; there is no promised end time. Completed evidence remains available.";
     case "completed": return "Measurement work has finished. Read each outcome below; completion does not mean every measurement received a response.";
     case "cancelled": return "You stopped this diagnostic run. Completed measurements remain available; unfinished measurements are marked cancelled.";
     case "failed": return "The diagnostic run could not finish coherently. Any recorded evidence remains available below.";
@@ -25,7 +25,7 @@ function runDescription(state: RunResult["state"]): string {
 }
 function phaseValue(m: Measurement): string {
   if (m.outcome === "completed" && m.duration_ms !== undefined) return ms(m.duration_ms);
-  if (m.outcome === "timeout" && m.bound_ms !== undefined) return `No response within ${ms(m.bound_ms)}`;
+  if (m.outcome === "timeout" && m.bound_ms !== undefined) return `Did not finish within ${ms(m.bound_ms)} (no completed time)`;
   if (m.outcome === "skipped") return m.method === "reused_selection" ? "Reused selection" : "Not applicable";
   return outcome(m.outcome);
 }
@@ -38,7 +38,7 @@ function phaseRows(exchange: Exchange) {
   ];
 }
 function phaseLabel(m: Measurement) {
-  if (m.outcome === "timeout" && m.bound_ms !== undefined && m.method === "request_written_to_first_response_header_byte") return `No first response byte within ${ms(m.bound_ms)}`;
+  if (m.outcome === "timeout" && m.bound_ms !== undefined && m.method === "request_written_to_first_response_header_byte") return `No response start within ${ms(m.bound_ms)} (no completed time)`;
   return phaseValue(m);
 }
 function selectedIP(family: Family): string | undefined {
@@ -190,7 +190,7 @@ function App() {
   return <main className={run || runID || submitting ? "has-run" : undefined} data-state={run?.state || (runID || submitting ? "running" : "ready")}>
     <a className="skip-link" href="#run-workspace">Skip to diagnostic run</a>
     <header className="masthead"><a className="wordmark" href="#"><svg aria-hidden="true" viewBox="0 0 32 32"><path d="M5 25V7m22 18V7M5 16h22"/><circle cx="5" cy="16" r="3"/><circle cx="16" cy="16" r="3"/><circle cx="27" cy="16" r="3"/></svg><span>HopVista</span></a><p className="scope">Local IPv4 diagnostic <span>Experimental · Windows 11 x64</span></p></header>
-    <section className="intro" aria-labelledby="intro-title"><h1 id="intro-title">See the path.<br/><span>Understand the wait.</span></h1><p>Observed hop replies and website timings, from this computer.</p></section>
+    <section className="intro" aria-labelledby="intro-title"><h1 id="intro-title">See the path.<br/><span>Understand the wait.</span></h1><p>Check how long it takes this computer to connect to a website and receive the start of its response.</p></section>
     <section className="workspace" id="run-workspace" aria-label="Diagnostic run">
     <form className="start-form" onSubmit={start}>
       <div className="target-input"><label htmlFor="target">Target URL</label><input id="target" type="url" required placeholder="https://example.com/" autoComplete="url" spellCheck={false} value={target} onChange={(event) => setTarget(event.target.value)} /></div>
@@ -208,8 +208,9 @@ function App() {
       <p className="run-description">{runDescription(run.state)}{incomplete && <> Some measurements are incomplete; their individual outcomes explain why.</>}</p>
       <div className="result-grid">
         <aside className="summary-column">
-          <section className="panel answer" aria-labelledby="answer-title"><h3 id="answer-title">What this run observed</h3>
-            <p className="selected"><strong>Selected IPv4</strong><span className="selected-address">{address || (terminal.has(run.state) ? "No IPv4 address selected" : "Pending")}</span>{family && selectedScope(family) && <span className="address-scope"><span className="visually-hidden">, address scope: </span>{outcome(selectedScope(family)!)}</span>}{address && <CopyAddress key={address} address={address} />}</p>
+          <section className="panel answer" aria-labelledby="answer-title"><h3 id="answer-title">What this run found</h3>
+            <p className="selected"><strong>Address for path checks (IPv4)</strong><span className="selected-address">{address || (terminal.has(run.state) ? "No number address recorded" : "Waiting for an address…")}</span>{family && selectedScope(family) && <span className="address-scope"><span className="visually-hidden">, address scope: </span>{outcome(selectedScope(family)!)}</span>}{address && <CopyAddress key={address} address={address} />}</p>
+            <p className="address-help">An IPv4 address is a number address computers use to reach websites. It is different from the website link you enter. Each website request below lists its own address.</p>
             {finalFinding ? <FindingView finding={finalFinding} exchange={family?.exchanges.find((exchange) => exchange.id === finalFinding.exchange_ref)} showEvidence={showEvidence} /> : terminal.has(run.state) ? <p>No observed finding is available for this run result.</p> : <p>Pending until the diagnostic run finishes.</p>}
             {run.error && <p className="error">{run.error.message}</p>}
             {family?.error && <p className="error">{family.error.message}</p>}
@@ -273,14 +274,14 @@ function EvidenceButton({ id, label = "View evidence", showEvidence }: { id: str
 }
 function FindingView({ finding, exchange, showEvidence }: { finding: Finding; exchange?: Exchange; showEvidence: (id: string) => void }) {
   const context: Record<string, string> = {
-    dominant_measured_wait: "This compares completed phases in one exchange. The longest measured wait does not locate the cause.",
-    http_response_observed: "A recorded response describes this exchange, not the website’s overall speed. HTTP 4xx and 5xx statuses are still responses.",
-    http_phase_incomplete: "Earlier completed timings remain useful. The unfinished phase has its own outcome; it is not a zero-duration measurement.",
+    dominant_measured_wait: "One measured step took longer than the others in this website request. That alone does not tell us what caused the wait.",
+    http_response_observed: "The website sent back a response to this request. An error response also counts. This alone does not tell us why a page feels slow or how fast the full page loads.",
+    http_phase_incomplete: "This step did not finish, so it has no completed time. Earlier finished steps still have usable times.",
     redirect_stopped: "A redirect asks for another URL. Stopping under the URL policy is deliberate and does not establish a network failure.",
     ipv4_selection_incomplete: "This run needs a usable IPv4 address. No IPv6 connection is attempted in v1.",
     measurement_cutoff: "The cutoff stops new measurement work. Work already started may finish later; no maximum cleanup time is promised.",
   };
-  return <><p className="observation">{finding.observation}</p>{context[finding.type] && <p className="finding-context">{context[finding.type]}</p>}{["dominant_measured_wait", "http_response_observed"].includes(finding.type) && <details className="finding-help"><summary>What does “dominant wait” mean?</summary><p>At least two completed phases in the same exchange must be comparable. The longest must be at least 100 ms and at least twice the next longest. If no phase meets that rule, it does not establish that the website or browser was fast.</p></details>}<p className="limit"><strong>What this cannot establish</strong>{finding.limit}</p><div className="evidence-refs">{finding.evidence_refs.map((id) => { const phase = exchange && phaseRows(exchange).find((row) => row.measurement.id === id); return <EvidenceButton key={id} id={id} label={phase ? `View ${phase.label} evidence` : undefined} showEvidence={showEvidence} />; })}</div></>;
+  return <>{context[finding.type] && <p className="finding-context">{context[finding.type]}</p>}<p className="observation">{finding.observation}</p>{["dominant_measured_wait", "http_response_observed"].includes(finding.type) && <details className="finding-help"><summary>What does “dominant wait” mean?</summary><p>At least two completed steps in the same website request must have timings we can compare. We highlight the longest wait only if it is at least 100 ms and twice the next longest. Otherwise, these timings do not single out one main wait or prove that the website was fast.</p></details>}<p className="limit"><strong>What this does not tell us</strong>{finding.limit}</p><div className="evidence-refs">{finding.evidence_refs.map((id) => { const phase = exchange && phaseRows(exchange).find((row) => row.measurement.id === id); return <EvidenceButton key={id} id={id} label={phase ? `View ${phase.label} evidence` : undefined} showEvidence={showEvidence} />; })}</div></>;
 }
 function ExchangeView({ exchange, showEvidence }: { exchange: Exchange; showEvidence: (id: string) => void }) {
   return <div className="exchange"><h4>Exchange {exchange.redirect_index + 1}</h4><p className="exchange-url">{exchange.requested_url}</p><p><strong>IPv4 {exchange.selected_ip}</strong> · {outcome(exchange.selected_scope)}{exchange.actual_peer_ip && <> · Actual peer {exchange.actual_peer_ip}</>}</p>
@@ -289,18 +290,19 @@ function ExchangeView({ exchange, showEvidence }: { exchange: Exchange; showEvid
   </div>;
 }
 function EchoText({ echo }: { echo: Echo }) {
-  if (echo.status === "no_reply") return <>No reply within the recorded timeout{echo.bound_ms !== undefined ? ` (${ms(echo.bound_ms)})` : ""}. No address or RTT observed.</>;
+  if (echo.status === "no_reply") return <span className="echo-reading"><span className="echo-status">No reply within {echo.bound_ms !== undefined ? ms(echo.bound_ms) : "the recorded time limit"}</span><span className="reply-address">No reply address</span><span className="raw-rtt">Reply time: <strong>Not measured</strong></span><span className="echo-note">A 0 ms reading would mean a reply arrived.</span></span>;
   if (echo.status === "not_sent") return <>Not sent ({outcome(echo.outcome)}).</>;
-  return <span className="echo-reading"><span className="echo-status">{outcome(echo.status)}</span>{echo.reply_address && <strong className="reply-address">{echo.reply_address}</strong>}{echo.rtt_ms !== undefined && <span className="raw-rtt">Raw RTT <strong>{ms(echo.rtt_ms)}</strong></span>}{echo.error && <span className="error">{echo.error.message}</span>}</span>;
+  return <span className="echo-reading"><span className="echo-status">{outcome(echo.status)}</span>{echo.reply_address && <strong className="reply-address">{echo.reply_address}</strong>}{echo.rtt_ms !== undefined && <span className="raw-rtt">Reply time: <strong>{ms(echo.rtt_ms)}</strong></span>}{echo.error && <span className="error">{echo.error.message}</span>}</span>;
 }
 function PathView({ path, showEvidence }: { path: Path; showEvidence: (id: string) => void }) {
   const { route, trace } = path;
   return <><p><strong>Trace to {trace.target_role === "attempted_host" ? "attempted host" : "final host"}: {trace.selected_ip || path.selected_ip}</strong></p>
-    <p className="muted">Dotted connectors show probe order only. They do not establish a physical link or the HTTP route.</p>
+    <p>The dotted line only puts these numbered checks in order. HopVista did not measure a direct connection between one marker and the next. The website request may have taken a different route.</p>
     <div className="route-block"><h4>Route-specific gateway</h4><p>{route.outcome === "completed" ? route.on_link ? "On-link route: this address needs no separate gateway." : route.next_hop ? <>Next hop <span className="data-address">{route.next_hop}</span>.</> : "No separate gateway recorded." : `Route selection ${outcome(route.outcome)}.`}</p><p>{path.gateway.attempted} gateway echoes attempted; {path.gateway.replied} replied.</p>{path.gateway.samples.map((sample) => <p key={sample.id}><EchoText echo={sample} /> <EvidenceButton id={sample.id} showEvidence={showEvidence} /></p>)}<EvidenceButton id={route.id} showEvidence={showEvidence} /></div>
-    <ol className="hop-list">{trace.hops.map((hop) => <li key={hop.id}><div className="hop"><span className="ttl">Hop <span>{hop.ttl}</span></span><span><EchoText echo={hop} />{hop.status === "time_exceeded" && hop.rtt_ms !== undefined && <small> This is one router’s ICMP response; its RTT is not link delay or proof of a bottleneck.</small>}</span><EvidenceButton id={hop.id} showEvidence={showEvidence} /></div></li>)}</ol>
+    <ol className="hop-list">{trace.hops.map((hop) => <li key={hop.id}><div className="hop"><span className="ttl">Hop <span>{hop.ttl}</span></span><span><EchoText echo={hop} />{hop.status === "time_exceeded" && hop.rtt_ms !== undefined && <small> The timer starts when HopVista sends a check from your computer toward this hop. It stops when this hop's reply gets back to your computer. It includes both directions. It does not measure time between hops. It does not prove this hop made the website slow.</small>}</span><EvidenceButton id={hop.id} showEvidence={showEvidence} /></div></li>)}</ol>
     {trace.hops.length === 0 && <p>No trace hops recorded.</p>}
     <p><strong>Trace outcome:</strong> {outcome(trace.outcome)} · {trace.highest_attempted_ttl} of {trace.max_hops} allowed hops attempted. <EvidenceButton id={trace.id} showEvidence={showEvidence} /></p>
+    {trace.outcome === "unreachable_response" && <p className="trace-explanation">HopVista received a reply from a device saying the target address was unreachable. The website request is a separate check.</p>}
     <div className="echo-summary"><h4>Target echo</h4><p>{path.target.attempted} attempted; {path.target.replied} replied. ICMP echo is separate from website timing and does not measure page load.</p>{path.target.samples.map((sample) => <p key={sample.id}><EchoText echo={sample} /> <EvidenceButton id={sample.id} showEvidence={showEvidence} /></p>)}{path.target.variation && <p>RTT variation: {path.target.variation.value_ms !== undefined ? ms(path.target.variation.value_ms) : outcome(path.target.variation.outcome)}. <EvidenceButton id={path.target.variation.id} showEvidence={showEvidence} /></p>}</div>
   </>;
 }

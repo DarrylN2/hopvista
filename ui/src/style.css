@@ -94,6 +94,7 @@ main[data-state="failed"] .status-dot { background: var(--error); }
 .selected strong { flex-basis: 100%; color: var(--muted); font-weight: 500; }
 .selected-address { font: 600 1rem var(--font-data); }
 .address-scope { color: var(--muted); }
+.address-help { color: var(--blue-muted); font-size: .875rem; margin-top: -8px; }
 .observation { font-size: 1.125rem; line-height: 1.5; font-weight: 700; margin-top: 20px; }
 .finding-context { font-size: .9375rem; margin-top: 12px; }
 .finding-help { margin-top: 12px; font-size: .875rem; }
@@ -183,6 +184,7 @@ footer > span { color: var(--ink); font-weight: 600; }
 .raw-rtt { font-size: .8125rem; }
 .raw-rtt strong { font-weight: 600; }
 .reply-address, .data-address, .raw-rtt strong { font-family: var(--font-data); }
+.echo-note { grid-column: 1 / -1; color: var(--muted); font-size: .8125rem; }
 .echo-reading > .error { grid-column: 1 / -1; }
 @media (max-width: 400px) { .echo-reading { grid-template-columns: minmax(0, 1fr); } }
 @media (pointer: coarse) { .evidence-link, .copy-button { min-height: 44px; } }

@@ -126,6 +126,8 @@ test('cancellation retains focus while stopping and after the control disappears
   await page.waitForFunction(() => document.querySelector('main').dataset.state === 'stopping');
   assert.equal(await page.evaluate(() => document.activeElement.getAttribute('role')), 'status');
   assert.match(await page.locator('.answer').innerText(), /Pending until the diagnostic run finishes/);
+  assert.match(await page.locator('.run-description').innerText(), /may receive a reply or end without one/);
+  assert.match(await page.locator('.run-description').innerText(), /start another run after this one finishes/);
   assert.equal(await page.getByRole('button', { name: 'Stopping…', exact: true }).isEnabled(), false);
   run.state = 'cancelled';
   await page.waitForFunction(() => document.querySelector('main').dataset.state === 'cancelled');
@@ -192,6 +194,19 @@ test('each website phase opens its exact evidence and returns keyboard focus', a
   }
   await page.locator('.technical > summary').press('Enter');
   assert.equal(await page.locator('.technical').getAttribute('open'), null);
+});
+
+test('target echo evidence returns keyboard focus to its source', async t => {
+  const { page } = await review(t);
+  await page.getByRole('button', { name: 'Start diagnostic run', exact: true }).press('Enter');
+  await page.locator('.run-heading').waitFor();
+  const source = page.getByRole('button', { name: 'View evidence target-echo-1', exact: true });
+  await source.press('Enter');
+  await page.waitForFunction(() => document.activeElement.id === 'evidence-target-echo-1');
+  await page.keyboard.press('Tab');
+  assert.equal(await page.evaluate(() => document.activeElement.textContent), 'Return to measurement');
+  await page.keyboard.press('Enter');
+  assert.equal(await source.evaluate(button => button === document.activeElement), true);
 });
 
 test('browser-enforced clipboard policy exposes the manual-copy fallback', async t => {
@@ -295,4 +310,106 @@ test('website timing explains the four steps in plain language before opening ev
   assert.match(introduction, /HTTP first byte waits for the response to start/);
   assert.match(introduction, /do not measure a full page load/);
   assert.equal(await page.locator('.technical').getAttribute('open'), null);
+});
+
+test('a timed out connection says there is no completed time instead of looking like zero', async t => {
+  const { page, run } = await review(t);
+  const connection = run.families[0].exchanges[0].tcp;
+  connection.outcome = 'timeout';
+  connection.bound_ms = 2000;
+  delete connection.duration_ms;
+  await page.getByRole('button', { name: 'Start diagnostic run', exact: true }).press('Enter');
+  await page.locator('.run-heading').waitFor();
+  const firstExchange = page.locator('.timing .exchange').first();
+  const connectionRow = firstExchange.locator('.phases > div').nth(1);
+  assert.match(await connectionRow.innerText(), /no completed time/i);
+  assert.match(await connectionRow.innerText(), /2000 ms/);
+  assert.notEqual(await connectionRow.locator('dd strong').innerText(), '0 ms');
+});
+
+test('the result explains its purpose and number address without opening technical details', async t => {
+  const { page, run } = await review(t);
+  await page.getByRole('button', { name: 'Start diagnostic run', exact: true }).press('Enter');
+  await page.locator('.run-heading').waitFor();
+  assert.match(await page.locator('.intro').innerText(), /connect to a website.*response/i);
+  assert.equal(await page.getByRole('heading', { name: 'What this run found', exact: true }).isVisible(), true);
+  assert.match(await page.locator('.selected').innerText(), /Address for path checks/);
+  assert.equal(await page.locator('.selected-address').innerText(), '192.0.2.10');
+  const explanation = page.locator('.address-help');
+  assert.equal(await explanation.isVisible(), true);
+  assert.match(await explanation.innerText(), /IPv4.*number address/);
+  assert.match(await explanation.innerText(), /different from the website link/);
+  assert.match(await page.locator('.limit').innerText(), /What this does not tell us/);
+  assert.equal(await page.locator('.observation').innerText(), run.findings[0].observation);
+  assert.ok((await page.locator('.limit').innerText()).includes(run.findings[0].limit));
+  assert.equal(await page.locator('.technical').getAttribute('open'), null);
+});
+
+test('the direct-connection note explains why Chrome timing can differ', async t => {
+  const { page } = await review(t);
+  await page.getByRole('button', { name: 'Start diagnostic run', exact: true }).press('Enter');
+  await page.locator('.run-heading').waitFor();
+  const note = page.locator('.caveat');
+  assert.equal(await note.isVisible(), true);
+  assert.match(await note.innerText(), /HopVista opens its own direct connection/);
+  assert.match(await note.innerText(), /Chrome.*keep a connection.*open from an earlier visit/);
+  assert.match(await note.innerText(), /use it again instead of opening another/);
+  assert.match(await note.innerText(), /times can differ/);
+  assert.equal(await page.locator('.technical').getAttribute('open'), null);
+});
+
+test('the path note says dotted markers do not measure links between hops', async t => {
+  const { page } = await review(t);
+  await page.getByRole('button', { name: 'Start diagnostic run', exact: true }).press('Enter');
+  await page.locator('.run-heading').waitFor();
+  const note = page.locator('.path-column p').filter({ hasText: /dotted line|dotted connectors/i }).first();
+  assert.equal(await note.isVisible(), true);
+  assert.match(await note.innerText(), /dotted line.*numbered checks.*order/i);
+  assert.match(await note.innerText(), /did not measure a direct connection between one marker and the next/i);
+  assert.match(await note.innerText(), /website request may have taken a different route/i);
+  assert.equal(await page.locator('.technical').getAttribute('open'), null);
+});
+
+test('an unreachable path outcome explains that a device replied', async t => {
+  const { page, run } = await review(t);
+  const trace = run.families[0].paths[0].trace;
+  trace.outcome = 'unreachable_response';
+  trace.max_hops = 4;
+  trace.highest_attempted_ttl = 2;
+  Object.assign(trace.hops[1], { status: 'unreachable_reply', outcome: 'completed', duration_ms: 0, reply_address: '192.0.2.253', rtt_ms: 6 });
+  trace.hops = trace.hops.slice(0, 2);
+  await page.getByRole('button', { name: 'Start diagnostic run', exact: true }).press('Enter');
+  await page.locator('.run-heading').waitFor();
+  const path = page.locator('.path-column');
+  assert.match(await path.innerText(), /Trace outcome:\s*unreachable response/);
+  assert.match(await path.innerText(), /received a reply.*device.*target address.*unreachable/i);
+  assert.match(await path.innerText(), /website request is a separate check/i);
+  assert.equal(await page.locator('.technical').getAttribute('open'), null);
+});
+
+test('a slow intermediate reply explains its limits without networking jargon', async t => {
+  const { page } = await review(t);
+  await page.getByRole('button', { name: 'Start diagnostic run', exact: true }).press('Enter');
+  await page.locator('.run-heading').waitFor();
+  const help = page.locator('.hop-list li').first().locator('small');
+  assert.equal(await help.isVisible(), true);
+  assert.match(await help.innerText(), /starts when HopVista sends a check from your computer toward this hop/i);
+  assert.match(await help.innerText(), /stops when.*reply gets back to your computer/i);
+  assert.match(await help.innerText(), /includes both directions/i);
+  assert.match(await help.innerText(), /does not measure time between hops/i);
+  assert.match(await help.innerText(), /does not prove.*website slow/i);
+  assert.doesNotMatch(await help.innerText(), /ICMP|RTT|bottleneck/i);
+});
+
+test('a silent hop says its missing reply time is different from measured zero', async t => {
+  const { page } = await review(t);
+  await page.getByRole('button', { name: 'Start diagnostic run', exact: true }).press('Enter');
+  await page.locator('.run-heading').waitFor();
+  const replied = page.locator('.hop-list li').first();
+  const silent = page.locator('.hop-list li').nth(1);
+  assert.match(await replied.locator('.raw-rtt').innerText(), /Reply time:\s+450 ms/);
+  assert.match(await silent.innerText(), /No reply within 750 ms/);
+  assert.match(await silent.locator('.raw-rtt').innerText(), /Reply time:\s+Not measured/);
+  assert.match(await silent.innerText(), /0 ms.*reply arrived/);
+  assert.doesNotMatch(await silent.innerText(), /RTT/);
 });
