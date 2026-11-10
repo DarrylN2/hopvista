@@ -1,9 +1,14 @@
 # Issue 16 participant review
 
-Status: in progress; **partial participant feedback recorded below**. This script
-does not yet establish human acceptance. Overall issue #10 release acceptance is
-separate. Use the current production assets and the verified API captures from
-issues #11–#14, with their documented native versus simulated provenance.
+Status, 2026-11-06: **the final assisted reading recheck passed**. See the
+[acceptance audit](issue-16-acceptance-audit.md) for the criterion mapping and
+final disposition. No fresh reader or unassisted first-use
+pass is required. P1's unperformed keyboard task, clipboard fallback and live
+cleanup observation are evidence limits, not extra acceptance gates. Historical
+answers, assistance, errors and task-level assessments below are preserved;
+their pending lists do not override the audit. #16 and overall issue #10 release
+acceptance remain separate. Replays retain their documented native
+versus simulated provenance.
 
 ## Setup and reviewer scope
 
@@ -18,8 +23,9 @@ No request is sent to fixture.example.
 Ask the participant to use their own words and think aloud. Do not explain the
 expected answer first. Record their first response, difficulty locating content,
 any facilitator help, and their answer after help separately. A repo owner or
-developer can participate, but record their prior knowledge; that alone does
-not establish comprehension for an unfamiliar nontechnical reader. An agent,
+developer can participate; record their prior knowledge and assistance. Their
+actual reading and affected-case rechecks count toward the issue; first-use
+comprehension by an unfamiliar reader is an optional evidence scope. An agent,
 API fixture, expected answer or unreturned questionnaire is not a participant.
 
 Record: date/time; participant's chosen identifier and role; familiarity with
@@ -69,3 +75,1135 @@ participant's recheck.
 | `i11completed`: revised-copy phase recheck | “Okay, so I don't really know, but I think DNS. DNS finds and then establishes TCP makes the connection, TLS, secures the connection, HTTP is a protocol. I don't really know. I also don't know if these timings include downloading and displaying the whole page.” | Asked to refresh, run the same case and read updated timing guidance. No definitions supplied before this answer. Refresh/version was not independently observed. | Partial TCP/TLS understanding; DNS boundary unclear, HTTP timing boundary not explained, full-page exclusion unknown. Revised wording has not established comprehension acceptance. | Facilitator then explained address lookup, connection opening, encryption/certificate setup and request-to-first-response-byte timing, excluding body download and page display. Any subsequent recheck must be labelled assisted; no assisted answer yet. |
 | Browser and input scope | “I'm using google chrome, and I can navigate with mouse and keyboard” | No operation assistance supplied. | Browser/input familiarity recorded; this is not evidence that the specific keyboard evidence/copy tasks passed. | Specific tasks still pending. |
 | Browser/direct path, missing vs zero, cutoff/completion, hop limit/unreachable and keyboard evidence/copy | No response yet. | No help yet. | Not checked. | Pending later rounds. |
+
+## Resumed review: 2026-10-27
+
+P1 explicitly resumed issue #16 in this chat: “ALright lets do 16”. The earlier
+deferral is lifted for this review. Participant is the same repo owner/user;
+the earlier networking explanations and subsequent personal use of HopVista
+are prior exposure. Phase-meaning rechecks must retain that assisted history;
+they cannot establish first-use comprehension for a new participant.
+
+Review baseline: clean `b67eaee` (PR #26 merged); production UI source and
+embedded assets are unchanged from candidate source `a159f9c`. Required local
+captures were checked against `.tools/issue-16/manifest.json` SHA-256 entries.
+The loopback replay listener was started and its HTTP 200 response/replay
+banner verified. The participant opens and operates the browser themselves;
+no desktop or existing browser is controlled by the agent. This uses fixed
+captured examples, not fresh measurements of the participant's network.
+
+The first prompt asks P1 to locate the observation, uncertainty and selected
+IPv4 in `i11completed` without opening technical details, and to report their
+browser/zoom. No expected answer was supplied. Initial socket-restricted server
+readiness failed; the disposable listener was stopped and restarted with
+permitted loopback access. HTTP 200 and the replay banner were then verified.
+
+P1 reports **Google Chrome at 100% zoom**; version and exact CSS viewport are
+unknown. Ambient in-app browser state is not substituted for this self-report.
+No specific keyboard-only operation is reported in this round.
+
+| Task | Actual response | Assessment / follow-up |
+| --- | --- | --- |
+| Main observation | “I think it observes the links or hops or connections between my computer and the fixture link.” | P1 described the path concept, but did not identify the particular returned response/finding in this example. The prompt was broad, so this is not evidence of an incorrect network diagnosis; locating/interpreting the intended main observation remains unverified. |
+| Uncertainty | “I think the language here is still too technical, even for me. Maybe like simplify the language or dumb it down a little bit.” | Explicit readability difficulty; no interpretation of the limit supplied. Simplify the primary explanations and labels, then recheck. |
+| Selected address | “I don't know what you mean by selected. Is is the \"https://start.example/start\"? What is even IPv4?” | The participant could not distinguish the website link from the selected numeric address; IPv4 is undefined for this reader. This criterion is not met in this attempt. Add a visible definition and plain address label without changing the recorded selection. |
+
+Response to this feedback: the agent acknowledged a wording gap without giving
+the expected numeric address or finding. The UI follow-up explains the purpose
+in everyday words, defines IPv4 and its difference from the entered link,
+renames the summary/address/limit headings, and simplifies existing static
+finding guidance. Exact Go-owned observation/limit strings remain visible and
+unchanged, with the same measurements, schema and evidence references. This
+records a readability fix whose human recheck begins below. Results are scoped
+to the particular task and assistance actually supplied.
+
+Facilitator follow-up: the participant is told that IPv4 is a number address
+computers use to reach a website, and asked to refresh/rerun the example and
+find the address using the updated screen. This definition is assistance and
+must remain part of the recheck scope. No expected numeric address is supplied.
+
+### Number-address recheck
+
+Prompt: refresh/rerun `i11completed`, look at “Address for path checks (IPv4)”,
+and say which number appears and what it is used for. This directs attention to
+the revised label. The visible UI and facilitator both supplied the IPv4
+definition before this answer; the facilitator did not supply `1.1.1.1`.
+
+Actual response: “It shows 1.1.1.1 public , and i think that basically that
+number is like an address for a website”.
+
+Assessment: **assisted recheck passed for locating the displayed number address
+and describing its basic role as a website address**. The reported number and
+public scope match the example's path selection. This answer does not establish
+understanding of public/private scope, redirects or multiple addresses, and is
+not first-use comprehension by an unfamiliar participant. The refresh and
+browser operation were participant-performed and not independently observed.
+Main finding, uncertainty, phase meanings and the other outstanding tasks remain
+open. The next prompt asks what happened when HopVista contacted the website,
+using the “What this run found” panel, without supplying the expected finding.
+
+### Main-finding recheck
+
+Prompt: “Now look at ‘What this run found.’ In your own words, what happened
+when HopVista contacted the website?” No expected response or status was
+supplied in this prompt.
+
+Actual response: “It returned a response and an HTTP status of 204”.
+
+Assessment: **guided recheck passed for identifying the recorded website
+response and status 204** in `i11completed`. The answer matches the final
+exchange and Go-owned finding in this captured example. The participant was
+directed to the summary panel after the wording fix; this is not an unassisted
+first-use finding-location check. It does not establish an understanding of
+status-code classes, dominant-wait rules, overall page success, browser timings
+or the finding's limits. No new live network observation is inferred from this
+replay. The next prompt asks the participant to explain the limits in their own
+words, without providing the expected explanation first.
+
+### Finding-limit recheck
+
+Prompt: “Now read ‘What this does not tell us.’ In your own words, what are we
+still unable to conclude from this run?” No expected limit or timing answer was
+supplied before the response.
+
+Actual response: “It doesn't give us the timings or like how slow/fast it needed
+to connect to the website?”
+
+Assessment: **not yet passed for the finding's limit**. P1 interpreted the
+limit as an absence of connection timing. This example does show measured
+steps, including connection timing, so the answer reveals a distinction the
+current wording did not convey to this reader: direct request timings versus
+browser/full-page timing and the cause of waits. The question mark also leaves
+some uncertainty about P1's confidence. Do not score this as a claim that the
+whole website was fast or slow. The facilitator may explain the distinction and
+ask a narrower assisted recheck; any later success must retain that assistance.
+
+### Connection-timing recheck
+
+Facilitator correction before this prompt: HopVista shows some measured times,
+including connection time; the limit concerns full-page timing in Chrome and
+the cause of a wait. Prompt: find the Connection row for the last website
+request in Website timing and report its time.
+
+Actual response: “0 ms? There are 4 exchanges”.
+
+Assessment: **assisted recheck passed for locating the recorded connection
+value, with residual uncertainty about which exchange to use**. The fourth
+exchange is the final request (`https://next.example/final`), and its TCP
+connection duration is recorded and displayed as 0 ms. P1 correctly noticed
+four exchanges; the prompt said “last website request” without explaining
+that the fourth exchange is the final one. The displayed 0 ms is a recorded
+value in this controlled replay; it does not show that real-world connection
+time is literally zero or that Chrome loaded the page instantly. The answer
+does not by itself establish the finding's browser-timing or causal limits.
+
+### Full-page timing recheck
+
+Prompt after the facilitator identified Exchange 4 and explained that its
+0 ms Connection value is one step of one website request: “Does that 0 ms tell
+you how long Chrome took to load and display the whole page?”
+
+Actual response: “No i don't think so? Does the connection mean that?”
+
+Assessment: **assisted recheck passed narrowly for rejecting a full-page
+timing inference**, with explicit uncertainty about what Connection means.
+The answer follows a direct yes/no prompt and prior facilitator explanation;
+it is not unassisted first-use comprehension. It does not establish an
+understanding of the connection step, the cause-of-wait limit, or browser
+versus direct-path differences. The facilitator should define Connection in
+plain language before a later task.
+
+### Response-begins timing prompt
+
+Facilitator explanation: Connection is the time HopVista recorded for opening
+a connection to the website's number address; it does not measure Chrome
+loading or displaying the page. Prompt: “In Exchange 4, what time do you see
+beside Response begins?”
+
+Actual response: “the encryption,  connection, and address lookup”.
+
+Assessment: **the requested Response begins value was not identified**. P1
+named the other three displayed timing steps instead of a time. This may
+reflect difficulty finding the fourth row or ambiguity in the facilitator's
+prompt; it is not evidence that P1 misunderstood the value itself. Rephrase
+with the exact row labels and ask again. Do not score phase-meaning comprehension
+from this response.
+
+### Response-begins value recheck
+
+Facilitator follow-up identified the fourth row below Encryption in Exchange 4
+as “Response begins” / “HTTP first byte” and asked for its displayed number;
+the expected value was not supplied.
+
+Actual response: “0 ms”.
+
+Assessment: **assisted recheck passed for locating the displayed Response
+begins value**. Exchange 4's HTTP-first-byte duration is recorded as 0 ms in
+this controlled replay. The facilitator pointed to the precise row after an
+earlier unsuccessful prompt. This does not establish unassisted finding of the
+row, understanding of what starts at that point, full-page speed, or a causal
+explanation. The 0 ms fixture value must not be generalized to real traffic.
+
+### Response-begins meaning recheck
+
+Prompt: “In your own words, what does Response begins measure? It’s fine to
+use the short explanation beside that row.” The label and inline help were
+available, and previous facilitator prompts had identified the row.
+
+Actual response: “The time between our request and website's response”.
+
+Assessment: **assisted recheck passed for the basic request-to-response wait**.
+P1 described the interval in ordinary words. The visible label “Response
+begins” supplies the start-of-response boundary, while the answer itself does
+not explicitly distinguish the first response byte from the completed body
+or rendered page. Prior explanation and row guidance mean this is not
+unassisted first-use phase comprehension. Continue checking incomplete versus
+zero timing in another example; do not infer whole-page timing from this answer.
+
+### Incomplete-connection value check
+
+Prompt: enter `https://fixture.example/i12tcptimeout`, start the replayed run,
+and report what Connection shows in Exchange 2. The expected outcome and
+number were not supplied in the prompt.
+
+Actual response: “No response within 2000 ms”.
+
+Assessment: **guided check passed for locating the displayed timeout text**.
+It matches Exchange 2's connection timeout and 2000 ms bound in this captured
+example. The participant was told the exact exchange and row. This answer
+does not yet establish the meaning of timeout, missing versus zero duration,
+or which earlier timings remain useful. Ask for an interpretation next.
+
+### Incomplete-connection meaning check
+
+Prompt: “What do you think ‘No response within 2000 ms’ means for that
+Connection step?” No expected interpretation was supplied before the answer.
+
+Actual response: “Opening a connection failed?”
+
+Assessment: **partial understanding**. P1 associated the message with the
+connection attempt rather than a full-page result, and expressed uncertainty.
+The captured outcome is specifically a timeout: the connection did not
+complete within the 2000 ms bound. This does not prove a permanent inability
+to connect or say what a later attempt would do. The facilitator then
+clarified that distinction. A later check should test whether P1 distinguishes
+this missing completed duration from a recorded 0 ms duration.
+
+### Missing-versus-zero check
+
+Prompt: “For Exchange 2, would you read the Connection time as 0 ms, or as no
+completed time recorded?” The facilitator had already explained that this
+attempt timed out after a two-second limit.
+
+Actual response: “0”.
+
+Assessment: **not passed**. P1 treated the timed-out connection as a recorded
+zero-duration connection despite reading the timeout text correctly and
+receiving an explanation. This is direct evidence that the result screen does
+not yet make missing completed time distinct enough from measured zero for
+this participant. Clarify the visible timeout label and incomplete finding
+context without changing the recorded outcome, bound, schema or Go finding.
+Recheck after the wording change; any success remains assisted.
+
+### Timeout wording human recheck
+
+After the UI began displaying “Did not finish within 2000 ms (no completed
+time)” for Exchange 2's timed-out Connection step, P1 was asked to refresh
+Chrome, rerun `i12tcptimeout`, and explain what that row says about its
+recorded time. This follows the facilitator's earlier explicit correction
+that a timeout has no completed time; the browser refresh/run was
+participant-performed and not independently observed by the agent.
+
+Actual response: “It ran out of time, it didn't finish under 2 seconds”.
+
+Assessment: **assisted recheck passed for the bounded timeout meaning**. P1
+now describes a step that did not finish within the two-second limit, rather
+than a completed 0 ms connection. The answer does not literally say “no
+completed time”, so the exact missing-versus-measured-zero distinction should
+still be checked against a separate completed-zero example. This is not a
+new participant or unassisted first-use pass. No new network measurement is
+inferred from the replay. Other issue #16 tasks remain open.
+
+### Measured-zero comparison
+
+Prompt: run `https://fixture.example/i12measuredzero`; in Exchange 2, report
+what Response begins shows and how it differs from the previous Connection
+timeout. The expected value was not supplied, but the participant had already
+been coached on completed versus missing time.
+
+Actual response: “It shows 0 ms and it;s different cause the response is
+immediate”.
+
+Assessment: **assisted recheck passed for distinguishing recorded zero from
+timeout/missing completed time**. Exchange 2's response-start phase is
+completed with duration 0 ms in this controlled capture; the previous
+connection phase timed out without a completed duration. The word “immediate”
+overstates what a recorded 0 ms proves, particularly outside this fixture and
+for a whole page. The facilitator clarified that 0 ms is the recorded value
+for the start of the response, not proof of literally instantaneous delivery
+or page rendering. This comparison does not establish first-use comprehension
+or other acceptance criteria.
+
+### Direct connection versus Chrome
+
+Prompt on the `i12measuredzero` result: read “A direct connection” and say
+whether HopVista's timing would necessarily match Chrome's timing for the same
+website, with a reason. No expected reason was supplied before the answer.
+
+Actual response: “I think it wont match chrome's timing cause its from my
+computer?”
+
+Assessment: **partial understanding**. P1 correctly rejects guaranteed
+matching timings but gives “from my computer” as the reason. Both HopVista and
+Chrome run on the participant's computer; that phrase alone does not explain
+the difference. The visible caveat's direct-versus-browser distinctions
+(another address, intermediary/proxy, saved address answer or reused
+connection) were not expressed. The facilitator should explain one or two
+concrete differences and recheck as assisted comprehension. This answer does
+not establish that the participant understood what the replay measures or
+prove any actual Chrome path or timing.
+
+### Browser difference assisted recheck
+
+Facilitator explanation: both tools run on this computer; HopVista opens its
+own direct connection, while Chrome may reuse an existing connection or use
+saved address information. Prompt: “In your own words, what’s one reason
+Chrome and HopVista could show different times?”
+
+Actual response: “Not too sure”.
+
+Assessment: **not passed after assistance**. P1 did not state a reason for
+different times despite the visible technical caveat and a plain verbal
+example. Do not treat the earlier correct rejection of guaranteed matching
+as comprehension of the mechanism. Simplify the on-screen caveat to connect
+the examples explicitly to different timings, preserve its direct-path
+limits, and recheck. Any later success is assisted.
+
+### Revised browser-note human recheck
+
+After the note was simplified, P1 was asked to refresh Chrome, read “A direct
+connection”, and explain in their own words one reason Chrome and HopVista
+might show different times. The facilitator had already given a direct
+connection/reused-connection explanation earlier. The participant's browser
+refresh was not independently observed by the agent.
+
+Actual response: “Cause "Chrome or another browser may reuse an open
+connection, use a saved or different number address, or go through another
+service (a proxy). Their times can differ."”
+
+Assessment: **the revised explanation was found, but comprehension remains
+unverified**. P1 copied the visible sentence rather than paraphrasing a
+reason, despite the prompt asking for their own words. The quote accurately
+matches the revised UI, so it supports visibility/locatability of the note
+after the reported refresh, not independent understanding of reuse, saved
+addresses, proxies, or why the times differ. This is an assisted participant
+recheck, not a new-reader first-use pass. Ask about one concrete phrase in
+ordinary language before scoring this criterion.
+
+### Open-connection phrase check
+
+Prompt: “When it says Chrome may ‘reuse an open connection,’ what do you think
+Chrome is reusing?” No definition of that phrase was supplied before the
+answer, though prior prompts had discussed direct versus browser connections.
+
+Actual response: “Like i guess an opened tab?”
+
+Assessment: **not passed for the connection-reuse mechanism**. P1 interpreted
+“open connection” as an open browser tab. The intended meaning is a network
+connection the browser may keep open to the site and use again. The wording
+should explain that concrete action without requiring familiarity with the
+term; preserve the direct-path caveat and other browser differences. The
+facilitator clarified the term after this response, so any later success is
+assisted. Do not infer P1's actual Chrome state from the answer.
+
+### Connection-reuse wording recheck
+
+After the UI explained that Chrome may keep a website connection open from
+an earlier visit and use it again, the facilitator asked P1 to refresh the
+page and answer: “If Chrome already has that connection open, what step could
+it skip on the next visit?” The facilitator had already corrected the earlier
+open-tab interpretation. Refresh was participant-performed and not
+independently observed.
+
+Actual response: “It might use the saved connection?”
+
+Assessment: **assisted recheck passed narrowly for the reuse example**. P1
+now identifies use of a connection already available, which implies skipping
+opening another one. The question and revised text supplied the situation;
+this does not establish first-use comprehension, the actual path Chrome took,
+or understanding of alternate addresses/proxies. The broader direct-path
+versus browser distinction remains only partially checked. Other issue #16
+human tasks remain open.
+
+### Dotted path connectors: first reading
+
+Prompt: run `https://fixture.example/i13highsilent` and say what the dotted
+line between hop markers in the IPv4 path diagram means. No expected answer
+or explanation was supplied in this prompt. The UI does have a nearby muted
+sentence about probe order, but the participant was not directed to it.
+
+Actual response: “Its like the connection, like a train station”.
+
+Assessment: **not yet passed for path-connector meaning**. The train-station
+analogy suggests P1 reads the connected markers as a journey or connection
+between stops. The answer does not establish the intended probe-order-only
+meaning and may imply a physical or website-request route; do not assign a
+more precise misunderstanding than the words support. Ask P1 to read the
+nearby explanatory sentence and interpret it before deciding whether the
+on-screen language requires revision.
+
+### Dotted path connectors: note recheck
+
+Facilitator follow-up directed P1 to the sentence below “Trace to…” about
+dotted connectors and asked for its meaning in their own words. The exact
+expected interpretation was not supplied in the prompt, but the on-screen
+sentence explicitly states probe order.
+
+Actual response: “It shows the order of hops”.
+
+Assessment: **guided recheck passed for the order meaning**. P1 identified
+the order of hop checks after attention was directed to the nearby note.
+This does not establish that the visual alone conveys the intended meaning,
+or that P1 understands the line does not prove physical links or the route
+of the website request. Check those limits separately. No physical topology
+or HTTP route is inferred from the replay.
+
+### Dotted path connectors: link inference
+
+Prompt after the order recheck: “Do the dots also prove there’s a direct
+connection between each pair of hops? What makes you think so?” The nearby
+on-screen sentence says they do not establish a physical link; the prompt
+did not supply the expected answer.
+
+Actual response: “I think so, cause it looks like that”.
+
+Assessment: **not passed for the physical-link limit**. Even after locating
+the order note, P1 inferred direct connections from the visual itself. This
+is evidence that the diagram's connected appearance outweighs the current
+technical caveat for this participant. The facilitator corrected the claim
+after the answer. Clarify the visible adjacent text in ordinary language and
+recheck; if the graphic still yields the inference, the connector treatment
+will need reconsideration within the approved composition. No actual
+hop-to-hop link or website-request route is established by this trace.
+
+### Revised dotted-line note recheck
+
+After the path note was made more explicit, P1 was asked to refresh Chrome,
+rerun `i13highsilent`, and say what the dotted line alone reveals about a
+direct connection between neighboring markers. Prior facilitator correction
+and the new on-screen note both supplied the distinction; the browser action
+was participant-performed and not independently observed.
+
+Actual response: “Thats about the order”.
+
+Assessment: **assisted recheck passed for order, but the direct-link limit
+remains unconfirmed in this answer**. P1 again describes the dots as ordering
+checks, consistent with the revised note, and does not repeat the earlier
+direct-link claim. The answer does not explicitly say whether the line can
+establish a direct connection. Ask that narrower question once before scoring
+the limit. Do not infer a website-request route from this replay.
+
+### Direct-link limit recheck
+
+Prompt after the revised note and prior correction: “Can the dotted line tell
+us whether two neighboring hop markers are directly connected?”
+
+Actual response: “No cause there's a note”.
+
+Assessment: **assisted recheck passed for rejecting the direct-link
+inference**. P1 now says the line cannot tell us that neighboring markers
+connect directly and cites the adjacent note. The answer confirms that the
+revised explanation corrected the earlier visual inference for this
+participant when the note was used. It does not prove the graphic alone is
+unambiguous, unassisted first-use comprehension, or knowledge of the actual
+website-request route. Keep the connector explanation visible and continue
+other path/echo questions.
+
+### High intermediate reply: first interpretation
+
+Prompt on `i13highsilent`: Hop 2 shows 450 ms and Hop 3 shows 12 ms; ask what,
+if anything, P1 concludes about delay between them. No expected conclusion
+was supplied. The row has a small caveat about ICMP response time versus
+link delay/bottleneck, but the prompt did not direct P1 to read it.
+
+Actual response: “Hop 2 is like the bottleneck”.
+
+Assessment: **not passed for the intermediate-reply limit**. A single 450 ms
+response from the device at Hop 2 followed by a 12 ms response at Hop 3 does
+not establish a bottleneck or a 450 ms link delay. P1 inferred a causal
+slowdown from the higher intermediate reply. This is a demonstrated
+comprehension miss, not evidence of an actual network bottleneck. The
+facilitator corrected the claim after the answer. Ask P1 to read the nearby
+row note before deciding whether its technical language needs revision.
+
+### High intermediate reply: row-note reading
+
+Facilitator prompt: read the small note beside Hop 2's 450 ms reading and say
+what the number can and cannot tell us; “not sure” was explicitly allowed.
+The expected interpretation was not supplied in the prompt. The note uses
+“router”, “ICMP”, “RTT”, “link delay” and “bottleneck”.
+
+Actual response: “I'm not too sure of the techincal words”.
+
+Assessment: **not passed; the note's language blocked comprehension** for
+this participant. Do not infer that P1 understood the ICMP-versus-transit
+distinction or revise their earlier bottleneck conclusion based on this
+answer. Replace the static on-screen explanation with plain words that
+distinguish the device's answer to HopVista from time between hops or website
+slowdown. Keep the recorded RTT, outcome, trace and Go-owned findings intact;
+recheck after the wording change with assistance noted.
+
+### High intermediate reply: precise-note recheck (2026-11-04)
+
+After a pause in the review, the local controlled replay was restarted at a
+new loopback port. P1 was asked to rerun `i13highsilent`, read the revised Hop 2
+note, and explain what its 450 ms measures. Prior facilitator explanations had
+already corrected the bottleneck claim. The participant opened and operated
+Chrome; the browser action was not independently observed by the agent.
+
+Actual response: “The time it takes to get from hopvista to my device”.
+
+Assessment: **not passed for the send-to-reply interval**. HopVista runs on
+P1's computer; the recorded reply time starts when the check leaves that
+computer and ends when a reply from the network device at Hop 2 returns.
+The answer describes travel toward P1's device and omits the outward trip,
+showing that “this device's reply” still leaves the endpoints ambiguous for
+this participant. The facilitator clarified the round trip after the answer.
+Revise the visible note to name the user's computer, the hop and the return
+reply, while preserving the result and no-bottleneck limit. Any later success
+will be assisted.
+
+### High intermediate reply: round-trip wording recheck
+
+After the UI explicitly named the user's computer as both the start and
+return endpoint, P1 was asked to refresh the controlled `i13highsilent`
+replay, read the Hop 2 note, and explain what 450 ms covers. The facilitator
+had already explained the out-and-back meaning before this prompt, and the
+browser refresh was participant-performed rather than agent-observed.
+
+Actual response: “The time it takes to send a check from my computer to the
+hop”.
+
+Assessment: **partial; the return reply remains unconfirmed**. P1 now
+identifies the outward direction and the correct starting computer, which
+corrects the earlier reversal. The answer omits the reply from Hop 2 back to
+the computer. Do not score this as a full round-trip understanding or infer
+that P1 rejects the return leg; ask one narrow follow-up before changing the
+UI again. The 450 ms remains a captured reply time, not proof of a link delay
+or website bottleneck.
+
+### High intermediate reply: return-leg follow-up
+
+Facilitator follow-up after P1 named only the outward check: “What has to
+happen after that for the 450 ms timer to stop?” Earlier UI and facilitator
+explanations had named the return reply, so this is a guided recheck.
+
+Actual response: “The reply needs to arrive to my computer”.
+
+Assessment: **assisted recheck passed for the return endpoint**. Taken with
+P1's preceding outward-leg answer, this identifies the round trip from the
+computer toward Hop 2 and the reply back to the computer. The question
+directed attention to what happens after the outward check, and P1 had
+received prior help; this is not unassisted first-use comprehension. It does
+not by itself establish understanding of whether the 450 ms proves link
+delay or a website bottleneck. Check that causal limit separately.
+
+### High intermediate reply: causal-limit recheck
+
+Prompt after the round-trip explanation: “Now that Hop 3 shows 12 ms, does
+Hop 2's 450 ms prove Hop 2 slowed the website? Why or why not?” The revised
+row note explicitly says the reply time does not prove a website slowdown,
+and the facilitator had corrected P1's earlier bottleneck inference.
+
+Actual response: “No it does not”.
+
+Assessment: **assisted recheck passed narrowly for rejecting the causal
+claim**. P1 no longer treats the higher intermediate reply as proof that
+Hop 2 slowed the website. They did not give a reason despite the prompt, so
+understanding of why device reply time differs from website-request delay
+remains unverified. Prior teaching and the visible note mean this is not
+unassisted first-use comprehension. Ask for the reason once; do not infer
+an actual network bottleneck or lack of one from this replay.
+
+### High intermediate reply: reason follow-up
+
+Prompt: “What's the difference between Hop 2 taking 450 ms to answer
+HopVista and Hop 2 slowing the website request? It's fine to say if you're
+unsure.” Prior UI and facilitator help had already supplied the no-link-delay
+and no-website-cause limits.
+
+Actual response: “It doesn;t measure the time between hops?”
+
+Assessment: **partial assisted understanding**. P1 identifies a true limit:
+the reply time does not measure the interval between hops. The answer does
+not explain that this is a separate check from the website request, so it
+does not yet give the reason the 450 ms cannot establish website slowdown.
+The question mark indicates uncertainty. The facilitator may explain the
+separate-check distinction and ask one narrow follow-up; do not score a
+full causal explanation from this response.
+
+### Silent hop: displayed result
+
+Prompt on `i13highsilent`: “In the same path, Hop 1 says ‘No reply.’ What do
+you think that means for its time reading?” The facilitator had just
+explained that the Hop 2 number times a separate check and that it cannot
+establish website-request delay.
+
+Actual response: “No address or RTT observed”.
+
+Assessment: **guided check passed for locating the displayed missing
+address/reply-time outcome**. P1 repeated the path row's explanation that no
+reply address or RTT was observed. This does not yet establish whether they
+interpret the missing time as zero or understand that a silent hop can be
+followed by later replies. Ask for the missing-versus-zero meaning next.
+
+### Silent hop: missing versus zero
+
+Prompt: “If Hop 1 gave no reply, should we treat its reply time as 0 ms? Why
+or why not?” The preceding prompt had drawn attention to the no-reply row;
+the expected distinction was not supplied before this response.
+
+Actual response: “Treat it as 0 ms”.
+
+Assessment: **not passed**. P1 read the displayed “No address or RTT
+observed” text, then treated the missing reply time as a completed zero.
+This repeats the earlier timeout-versus-zero confusion in a different path
+measurement. The current path row uses technical “RTT” and does not
+explicitly distinguish missing time from a recorded 0 ms reply. The
+facilitator corrected the distinction after the answer. Clarify the visible
+no-reply row without changing the outcome, bound, evidence or Go-owned
+findings, then recheck with assistance recorded.
+
+### Silent hop: revised wording recheck
+
+After the no-reply row was changed to distinguish a missing reply time from
+measured zero, P1 was asked to refresh `i13highsilent` and say what time, if
+any, they would record for Hop 1. Prior facilitator correction had explicitly
+explained missing versus zero; the browser operation was participant-performed
+and not independently observed by the agent.
+
+Actual response: “There is no reply within 750 ms. Also, can you let me know
+how far or like the percentage until we're done with this?”
+
+Assessment: **guided recheck passed for reading the no-reply bound, but the
+missing-duration interpretation remains unconfirmed**. P1 identified the
+750 ms no-reply result from the revised row. They did not state whether to
+record 0 ms or no completed reply time, which was the task's distinction.
+Do not infer a comprehension pass from the quoted row. The facilitator gave
+a rough progress update for the human walkthrough and should ask one narrow
+follow-up on the time value. Issue #16 and release acceptance remain open.
+
+### Silent hop: revised wording value follow-up
+
+Prompt after the revised-row bound reading: “Should its reply time be recorded
+as 0 ms or no time recorded?” The on-screen row already says “No reply time
+recorded” and explains that a 0 ms reading would require a reply. The
+facilitator had previously supplied the same distinction verbally.
+
+Actual response: “Probably just 0 ms”.
+
+Assessment: **not passed after assistance**. P1 again assigned a completed
+zero to a hop with no observed reply. “Probably” indicates uncertainty. The
+loopback preview serves the current embedded `app.js` with `Cache-Control:
+no-store` and contains the revised phrase, but the agent has not observed
+P1's Chrome screen or confirmed which parts of the row P1 read. Ask P1 to
+report the phrase immediately after the 750 ms message before deciding
+whether the wording or its placement needs further change. Do not record a
+0 ms reply or infer packet loss from this capture.
+
+### Silent hop: visible wording confirmation
+
+Prompt: after the 750 ms message in Hop 1, do you see the bold words “No reply
+time recorded”? The facilitator had already stated the correct missing-time
+interpretation in the preceding reply.
+
+Actual response: “Yes i do”.
+
+Assessment: **visibility confirmed by participant self-report; comprehension
+still not passed**. The current no-reply text is present on P1's Chrome view,
+so stale asset delivery does not explain the repeated 0 ms answer. The
+participant has not yet interpreted the value correctly in their own words.
+Move the reply-time outcome into a consistent, labeled value position beside
+other hop readings so the missing state is visually comparable with measured
+reply times. This is a UI presentation change only; preserve all recorded
+outcomes, bounds and Go-owned findings. Recheck with assistance disclosed.
+
+### Silent hop: aligned-value recheck
+
+Prompt after the path presentation change: refresh `i13highsilent` and report
+the **Reply time** values for Hop 1 and Hop 2. The prior discussion had
+repeatedly taught that a silent hop has no measured reply time, so this is an
+assisted recheck. The participant operated Chrome; the agent did not observe
+the screen directly.
+
+Actual response: “Reply time says Not measured for Hop 1 and 450 ms for Hop
+2. Also, maybe, write "Reply time:" with the :.”
+
+Assessment: **assisted recheck passed for distinguishing missing from
+measured reply time** in the same path. P1 correctly located the aligned
+values and no longer assigned 0 ms to the silent hop. This does not
+establish unassisted first-use comprehension, packet-loss rate or website
+health. The participant requested a punctuation improvement to make the
+field label read naturally; add a colon in both hop states without altering
+the values or evidence.
+
+### Configured hop-limit reading
+
+Prompt: refresh the controlled preview, run `i13limit1`, read **Trace
+outcome**, and explain why the path check stopped. The prompt supplied the
+case URL but not its expected outcome. Earlier path explanations and
+facilitator help make this an assisted participant review.
+
+Actual response: “It says that hop limit reached. I think cause its limited
+to 1 hops”.
+
+Assessment: **guided recheck passed for a configured stopping rule**. P1
+identified `hop_limit_reached` and associated it with the one-hop setting,
+matching this capture's `max_hops: 1` and highest attempted hop 1. The
+answer does not infer an unreachable reply or website failure. The next
+case should test whether P1 distinguishes this configured stop from an
+observed unreachable response; no fresh network measurement is inferred.
+
+### Unreachable-response comparison
+
+Prompt: run `i13unreachable`, read **Trace outcome**, and explain how its
+stopping reason differs from the one-hop limit. The expected answer was not
+provided in the prompt; prior path guidance and the immediately preceding
+hop-limit case were available.
+
+Actual response: “It says unreachable response, the limit is 4 hops, it
+stopped cause the response was unreachable”.
+
+Assessment: **partial understanding**. P1 located the outcome and correctly
+noticed this case allows four hops, distinguishing it from the one-hop
+configuration. “The response was unreachable” does not show whether P1
+understands that HopVista actually received a device's unreachable message,
+rather than receiving no reply. The facilitator clarified that distinction
+after the answer. Ask a narrow response-versus-silence follow-up before
+scoring the observed-response criterion. The capture does not establish a
+general website failure or physical path break.
+
+### Unreachable-response versus silence
+
+Prompt after P1 named the outcome: “In the unreachable response example, did
+a device send HopVista an answer, or did HopVista receive no answer at all?”
+The facilitator's preceding message had explicitly explained that a device
+sent an unreachable message, so this is an assisted check.
+
+Actual response: “HopVista received no answer at all i think”.
+
+Assessment: **not passed after assistance**. The `i13unreachable` capture
+records an `unreachable_reply` at hop 2 from `192.0.2.253` with a 6 ms reply
+time; the trace outcome is `unreachable_response`. P1 interpreted it as
+silence instead of a received response. The visible raw outcome label and
+hop status do not explain this in everyday words. The facilitator corrected
+the interpretation after the answer. Add an adjacent plain explanation of
+the observed unreachable reply without changing the outcome, hop limit,
+evidence, website finding or schema; recheck with prior help disclosed.
+
+### Revised unreachable explanation: assisted recheck (2026-11-05)
+
+The facilitator verified the controlled replay at `http://127.0.0.1:58433/`
+served HTTP 200, the replay banner and the current production JavaScript with
+the revised explanation. P1 was asked to enter and run
+`https://fixture.example/i13unreachable`, read the explanation beside **Trace
+outcome**, and describe what happened. P1 had reported using Chrome, but the
+facilitator did not observe their browser or confirm the run directly. Earlier
+discussion
+had already explicitly taught the received-reply distinction, so this is an
+assisted recheck, not an unassisted first-use pass.
+
+Actual response: “HopVista got a reply from a device saying the target address
+was unreachable.”
+
+Assessment: **assisted recheck passed for distinguishing a received unreachable
+reply from silence**. P1's words match the captured hop-2 unreachable reply.
+This answer does not establish that P1 interpreted the separate website request,
+the path's physical route, or other outstanding human tasks. The earlier
+incorrect “no answer” response remains above as part of the record.
+
+### Completed versus complete measurements (2026-11-05)
+
+Prompt: in the controlled `i14pausedminute` replay, “In your own words, does
+**Completed** mean every measurement finished?” The facilitator supplied the
+case URL and identified it as a captured example, but did not give the expected
+answer. Earlier timing and missing-value explanations remain prior exposure.
+The facilitator did not observe P1's Chrome or confirm the run directly.
+
+Actual response: “Completed means that the process is done, but maybe not all
+metrics have a value”
+
+Assessment: **passed for the basic distinction between run completion and
+measurement completeness**. P1 correctly avoided assuming every measurement
+has a value. This answer does not yet explain the cutoff rule, whether new work
+can start after cutoff, or when cleanup ends. Those parts of the task remain
+unchecked; the `i14pausedminute` capture involved an induced whole-process
+pause, not a naturally stalled diagnostic run.
+
+### Cutoff follow-up: prompt mismatch (2026-11-05)
+
+Prompt: still on `i14pausedminute`, read **What this run found** and its
+explanation, then say what cutoff stops and whether work already underway can
+finish afterward. The facilitator had already asked about completion versus
+measurement values. The prompt incorrectly implied that this example's finding
+panel explains the cutoff rule. Its actual `http_phase_incomplete` finding
+explains an unfinished connection step and retained earlier timings; the
+`measurement_cutoff` guidance does not appear in this captured finding.
+
+Actual response: “The steps didn't finish so it has no completed time. Earlier
+steps still can be usable. I don't think work alrdy underway can finish
+afterward”
+
+Assessment: **the participant correctly read the available incomplete-phase
+explanation; cutoff understanding remains unassessed**. The last sentence does
+not match the intended cutoff rule, but the requested panel did not present
+that rule. This is a facilitator prompt error, not a scored interface
+comprehension failure. The participant's browser operation was not observed.
+Use a case and visible wording that actually expose stopping/cleanup for the
+next check; record any later answer separately.
+
+### Stopping explanation: first reading (2026-11-05)
+
+Prompt: in the captured `i14cutoffstopping` replay, read the **Stopping…**
+message near the top and say what HopVista is waiting for. The facilitator
+provided the case URL but no expected answer. The participant had prior
+discussion about completed versus incomplete measurements; their browser
+operation was not observed.
+
+Actual response: “I think its stopping for a response to get back to
+HopVista?”
+
+Assessment: **the stopping/cleanup meaning was not established**. The answer
+suggests P1 read the wait as waiting for a reply, while the interface intended
+to describe started checks ending and resources being released. The question
+mark indicates uncertainty. This is an interface wording gap, not evidence
+that P1 asserted every check must receive a reply. The stopping text now says
+that a started check may receive a reply or end without one, and that another
+run can start after this one finishes. The answer predates that change; human
+recheck remains pending. This static replay does not show live cleanup timing.
+
+### Stopping explanation: assisted recheck (2026-11-05)
+
+The facilitator asked P1 to refresh the controlled preview, rerun
+`i14cutoffstopping`, read the revised **Stopping…** message and describe what
+HopVista was waiting for. P1 had already seen the prior wording and received
+facilitator discussion about stopping, so this is an assisted recheck. The
+facilitator verified that the preview served the revised asset but did not
+observe P1's Chrome or confirm their refresh directly.
+
+Actual response: “Its waiting for checks already started to end and clear up”
+
+Assessment: **assisted recheck passed for the meaning of the stopping wait**.
+P1's answer matches the revised message. It does not explicitly address that
+a check may end without a reply, when another run becomes available, or how
+long cleanup takes. The static replay does not demonstrate a live transition
+from stopping to a final state. Those parts remain to be checked separately.
+
+### Another-run availability while stopping (2026-11-05)
+
+Prompt: in the same captured **Stopping…** example, can P1 start another run
+yet, and what on screen supports the answer? Earlier facilitator discussion
+and the revised message had already stated that another run can start after
+this one finishes. This is an assisted reading, not an unassisted first-use
+task. The facilitator did not observe the participant's browser controls.
+
+Actual response: “I can start another run after this run finishes”
+
+Assessment: **assisted recheck passed for the stated timing of another run**.
+P1 correctly placed the next run after this one finishes. They did not name
+an on-screen control or report attempting to start one, so the requested
+control evidence and live busy-slot behavior remain unchecked. The static
+replay cannot demonstrate the transition from stopping to a terminal state.
+
+### Redirect stop: first reading (2026-11-05)
+
+Prompt: run the controlled `i11sensitive` replay, read **What this run found**,
+and explain in P1's own words why the website journey stopped. The case URL
+was supplied, but no explanation of the expected policy reason was given in
+this prompt. P1 had prior assistance on other network concepts. The
+facilitator did not observe their Chrome operation.
+
+Actual response: “It received the HTTP status 302 and then stopped at the
+redirect”
+
+Assessment: **partial**. P1 correctly identified the recorded 302 response
+and that the journey stopped at the redirect. Their answer does not state why
+HopVista chose to stop there, distinguish a deliberate URL-policy stop from a
+network failure, or describe what is known about the redirected website. The
+visible finding says `redirect_requires_new_run` and its adjacent explanation
+describes the policy. Ask one narrower follow-up without supplying the answer;
+do not score the policy distinction from this first response.
+
+### Redirect policy: guided follow-up (2026-11-05)
+
+Prompt: still on `i11sensitive`, read the explanation next to the finding and
+say why HopVista did not follow the redirect. The facilitator directed P1 to
+the explanation after the first partial answer, but did not supply the reason.
+This is a guided recheck; the facilitator did not observe P1's browser.
+
+Actual response: “Cause it selected a non-public IPv4 address on a different
+host”
+
+Assessment: **guided recheck passed for the private-address policy reason**.
+The capture records a redirect to `private.example`, resolution of that host
+to selected private IPv4 `10.0.0.5`, and no exchange with that host. P1
+identified the key reason in their own words. This does not establish that
+P1 understands whether the redirected website is reachable, or that this
+was a deliberate policy stop rather than a failed connection. Those
+distinctions remain unchecked. The replay is captured evidence, not a fresh
+request to that host.
+
+### Redirected website reachability: guided follow-up (2026-11-05)
+
+Prompt: “From this result, can you tell whether the redirected website
+itself is reachable?” This followed the guided private-address policy
+discussion and was a direct yes-or-no question. The facilitator did not
+observe P1's browser.
+
+Actual response: “No it doesn't tell me”
+
+Assessment: **guided recheck passed narrowly for withholding a reachability
+conclusion**. The answer matches the captured finding's limit: the policy
+stop does not establish whether the redirected website is reachable. The
+prompt and prior assistance prevent an unassisted first-use claim. P1 did
+not explicitly contrast a deliberate policy stop with a failed connection,
+or identify any later phase measurement.
+
+### Certificate failure: first reading (2026-11-05)
+
+Prompt: run the controlled `i11certificate` replay, read **What this run
+found**, and describe in P1's own words what happened on the final website
+request. The facilitator supplied the case URL but no expected outcome.
+P1 had prior guidance on website timing steps; browser operation was not
+observed.
+
+Actual response: “This diagnostic run stopped during the TLS handshake phase”
+
+Assessment: **partial: P1 located the recorded stopping phase**. The answer
+repeats the Go-owned finding but does not show whether P1 understands that
+the connection to the selected address completed, certificate verification
+failed during the encryption step, and no HTTP response was measured for the
+final request. The capture records those outcomes; do not infer P1 understood
+them from naming TLS handshake. Ask a plain-language follow-up without first
+supplying the explanation.
+
+### Certificate case: phase-outcome follow-up (2026-11-05)
+
+Prompt: for the final website request in `i11certificate`, look at
+**Connection** and **Encryption** under **Website timing** and say which
+finished and which did not. The facilitator named the rows but did not give
+the expected outcomes. P1 had already read the finding and received earlier
+general timing guidance. Browser operation was not observed.
+
+Actual response: “I think the only ones that didn't finish was the exchange 3
+TLS encryption and HTTP first byte”
+
+Assessment: **guided recheck passed for locating the unfinished final-request
+phases**. P1 identified Exchange 3 and the TLS/encryption and HTTP-first-byte
+rows as unfinished, consistent with the capture's TLS error and absent HTTP
+response headers. “Only ones” implies the Connection step finished, but P1
+did not name it or explain the completed TCP connection. The answer does not
+establish the certificate-verification reason or that no final HTTP request
+reached the redirected host. Those interpretations remain unchecked.
+
+### Certificate case: visible error reading (2026-11-05)
+
+Prompt: still in `i11certificate`, read the error message under **What this
+run found** and explain in P1's own words what caused Encryption to stop.
+The facilitator directed P1 to the error message after the earlier phase
+questions. Browser operation was not observed.
+
+Actual response: “TLS certificate verification failed for the attempted URL
+and The HTTP request for that exchange was not sent”
+
+Assessment: **guided reading passed for identifying the recorded certificate
+failure and unsent final HTTP request**. P1 repeated the two key clauses of
+the visible Go-owned error message. This is accurate extraction, but it is
+not an independent plain-language explanation of what a certificate is or
+why verification failed. It does not establish the final website's general
+availability. The earlier completed TCP connection remains a separate
+unconfirmed interpretation.
+
+### Keyboard evidence and return: first report (2026-11-05)
+
+Prompt: run captured `i11completed`, use only the keyboard to open
+**Response begins** evidence for the final website request, activate
+**Return to measurement**, and report where focus landed or where P1 got
+stuck. The facilitator named the controls and case but did not operate the
+browser. P1 previously reported general mouse/keyboard familiarity; their
+specific actions and focus were not observed.
+
+Actual response: “I think it worked”
+
+Assessment: **subjective success reported; keyboard focus/return outcome not
+verified**. The answer does not say whether P1 used only the keyboard,
+reached the intended Exchange 4 evidence, activated Return, or saw focus
+return to the originating measurement. Ask one narrow follow-up about the
+focused control. Do not count this as a keyboard task pass.
+
+### Keyboard evidence and return: screenshot follow-up (2026-11-05)
+
+Prompt: after activating **Return to measurement**, identify the control
+with the visible keyboard outline, or report if unclear. The participant
+provided a Chrome screenshot and said: “Afte Return to measurement, it just
+takes me back to the \"Target Echo\" and the outline is at
+\"path-1-target-5\"”. The image shows the selected `path-1-target-5`
+technical evidence card with a blue outline and its **Return to measurement**
+control visible. It does not show the final website request's
+`exchange-4-http` evidence or the originating Response begins control.
+
+Assessment: **the requested final HTTP evidence/return task remains
+unverified**. P1's report and screenshot show a Target Echo evidence record,
+which is different from the prompted final Response begins measurement. The
+outline shown is on the evidence card; the image alone cannot establish
+whether Return was activated before capture or where keyboard focus landed
+after activation. Do not infer an incorrect focus restoration from this
+image. The facilitator did not operate Chrome or observe the keystrokes.
+
+An isolated headless keyboard check of the same return mechanism using a
+Target Echo source (`target-echo-1`) passed: opening evidence focused the
+record, Tab reached Return, and Enter restored focus to the source button.
+That automated result does not replace P1's human task or prove the exact
+`path-1-target-5` interaction in Chrome. Ask which evidence link P1 opened
+and whether Return was actually activated before the screenshot; avoid
+counting another guided attempt as unassisted.
+
+### Final HTTP evidence return: participant clarification (2026-11-05)
+
+After the facilitator asked whether Return had been activated before the
+earlier Target Echo screenshot, P1 supplied two more Chrome screenshots and
+said: “Now, I had pressed view evidence before I took the screenshot. When I
+click \"Return to measurement\", it returns me to the HTTP first byte
+section”. The first new image shows `exchange-4-http` selected and outlined
+in Technical evidence, with Return visible. The second shows the final
+request's **HTTP first byte / Response begins** row and its **View evidence**
+control after the reported Return action. These clarify that the intended
+final HTTP evidence and source row were reached in this follow-up. The
+earlier Target Echo screenshot remains a separate observed record; it should
+not be treated as proof that final HTTP Return failed.
+
+Assessment: **participant-reported navigation to final HTTP evidence and
+back to its measurement is supported by the two images**. Neither image
+shows a visible focus outline on the returned View evidence control. P1 said
+“click”, but did not state whether Return was activated with pointer or
+keyboard; the facilitator did not observe the input method. Therefore this
+does not verify keyboard-only operation or restored keyboard focus. The
+existing isolated headless keyboard checks retain their separate scope.
+
+### Evidence return input method: participant clarification (2026-11-05)
+
+Prompt: “Did you activate **Return to measurement** with the keyboard or
+with the mouse?”
+
+Actual response: “With the mouse cause I dont know how to use the keyboard.”
+
+Assessment: **mouse-operated final HTTP evidence return confirmed by P1's
+self-report; the human keyboard-only task was not performed**. This resolves
+the input-method uncertainty above. Earlier P1 said they could navigate
+with mouse and keyboard generally; the later statement says they do not
+know how to use the keyboard. Their overall keyboard familiarity is unclear.
+Do not count the mouse navigation or screenshots as a keyboard focus check. The isolated
+headless keyboard tests remain automated supporting evidence only. Do not
+coach repeated attempts into an unassisted first-use pass.
+
+### Copy IPv4: first mouse report (2026-11-05)
+
+Prompt: in the controlled completed example, click **Copy IPv4** with the
+mouse and report the copied address and visible confirmation. The facilitator
+named the control and requested mouse operation after P1 said they did not
+know how to use the keyboard. P1's screen and clipboard were not observed.
+
+Actual response: “it copies the IPv4”
+
+Assessment: **general copy-action understanding reported; exact result
+unverified**. P1 did not identify the numeric address, describe a **Copied**
+confirmation, or report pasting or inspecting clipboard contents. This is
+not evidence that copying succeeded in P1's Chrome session, nor a keyboard
+or clipboard-fallback pass. Ask one narrow follow-up about the displayed
+address and feedback without suggesting the expected values.
+
+### Copy confirmation and review pace (2026-11-05)
+
+Prompt: “What words appear on the **Copy IPv4** button immediately after you
+click it?” This followed the mouse copy task; the facilitator named the
+button but did not supply the expected feedback.
+
+Actual response: “It says Copied. How far are we in into this testing stuff?
+Can we speed this up a little bit?”
+
+Assessment: **participant-reported visible copy confirmation passed
+narrowly**. P1 identified the `Copied` label. Clipboard contents and manual
+fallback were not observed; mouse operation does not establish keyboard
+copy. P1 explicitly requested faster pacing. Continue with a small bundled
+set of remaining reading prompts, avoid serial micro-prompts, and leave
+unverified tasks open rather than coaching to a pass.
+
+### Cutoff and stopping: bundled guided recheck (2026-11-05)
+
+After P1 asked to speed up, the facilitator offered one final combined
+question for `i14cutoffstopping`: “What happens to new checks at cutoff, and
+what can happen to checks already started?” P1 had read the revised
+**Stopping…** message and received earlier discussion about cutoff and
+cleanup. This is a guided recheck, not unassisted first-use evidence.
+
+Actual response: “No new checks will start. HopVista is waiting for checks
+already started to end and clear up. A check may receive a reply or end
+without one. You can start another run after this one finishes”
+
+Assessment: **guided recheck passed for the displayed stopping rule and
+next-run condition**. P1 accurately described that new checks stop, existing
+checks can end with or without a reply, and another run can start after this
+one finishes. The response closely follows the revised visible wording and
+prior assistance. It does not establish a maximum cleanup time, observed
+live transition, or first-use understanding from an unfamiliar reader. The
+static replay supplies no fresh native timing evidence.
+
+### Final bundled normal-reading recheck (2026-11-06)
+
+The facilitator restarted the controlled preview at
+`http://127.0.0.1:61405/` and directed P1 to the captured `i11completed`
+result with technical details closed. The prompt asked in one bundle what
+Address lookup (DNS), Connection (TCP) and Encryption (TLS) each time, and what
+“What this does not tell us” leaves unknown about Chrome loading the whole
+page or the cause of a wait. The facilitator supplied no expected answer in
+this prompt. P1 had prior definitions, corrections and UI rechecks, so this is
+an assisted reading. The facilitator did not observe P1's Chrome operation or
+verify the screen state directly; this is a captured replay, not a fresh
+network measurement.
+
+P1's actual response:
+
+> 1. Address lookup is the time spent for finding an IPv4 address for the
+> website name. Connection is the time spent opening a connection to the
+> selected IPv4 address. Encryption it the time spent for setting up encryption
+> and checking the website's security certificate for the HTTPS connection.
+> 2. It doesn't establish the browser timing or what stuff cause the wait
+
+Assessment: **assisted recheck passed for the remaining normal phase meanings
+and finding limit**. P1 accurately describes the three measured steps and
+correctly withholds a browser timing and causal conclusion. “What stuff cause
+the wait” is broad but expresses the relevant limit; it does not identify a
+specific cause or imply that one was measured. Earlier first attempts,
+misunderstandings and assistance remain recorded above. This response is not
+an unassisted first-use pass, a live measurement, or evidence about P1's
+keyboard operation. Together with the earlier narrowly assessed human readings
+and separate accessibility checks, it completes issue #16's stated criteria
+at their recorded scopes. Issue #17 and release acceptance remain separate.
+
+### Review consolidation (2026-11-05)
+
+P1 requested faster pacing, so no further serial participant prompts were
+issued in this session. Assisted/guided readings now cover the selected
+number address, recorded website response, missing versus measured reply
+time, hop-limit versus received unreachable reply, completed-run versus
+complete-measurement distinction, stopping/cleanup wording, private redirect
+policy and reachability limit, and the certificate stop's visible phase/error
+outcomes. The exact words, earlier misses and help remain above; none is an
+unassisted first-use pass. Mouse navigation from final HTTP evidence back to
+its row and visible **Copied** feedback were reported, with screenshot support
+for the navigation. The participant did not perform the keyboard-only task;
+clipboard contents and manual copy fallback were not checked. Some normal
+timing/uncertainty interpretations remain partial, and a live cutoff/cleanup
+transition was not observed. Human acceptance for issue #16 and release
+acceptance remain open. Do not promote automated checks or the controlled
+captures to human or fresh native evidence.

@@ -180,7 +180,7 @@ test('packaged UI submits a real redirected run and opens its evidence', { skip,
     assert.equal(exchange.selected_ip, '127.0.0.1');
     assert.equal(exchange.actual_peer_ip, '127.0.0.1');
     const rendered = page.locator('.exchange').nth(index);
-    assert.match(await rendered.innerText(), /IPv4 127\.0\.0\.1.*loopback.*Actual peer 127\.0\.0\.1/);
+    assert.match(await rendered.innerText(), /IPv4 127\.0\.0\.1.*loopback.*Connected to 127\.0\.0\.1/);
     assert.match(await rendered.locator('.exchange-footer').innerText(), new RegExp(`HTTP status ${exchange.response_status}`));
   }
   assert.ok(family.paths[0].trace.hops.length > 0, 'real native trace evidence');
