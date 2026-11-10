@@ -82,3 +82,20 @@ They exercised real start/poll/cancel/restart APIs, redirected and incomplete
 requests, retained findings, and evidence navigation. The first combined run
 found an old assertion expecting “Actual peer”; updating it for “Connected to”
 retained the same selected/actual-address checks, and the full rerun passed.
+
+## Independent review — 2026-11-09
+
+Two independent read-only reviewers inspected
+`git diff f563919faa55438a6428eb580abd7be7a8786677...63336c6`.
+
+- Standards: **0 actionable findings.** Glossary terminology, Go-owned findings,
+  measurement values, visible uncertainty, native disclosures and existing
+  design tokens are preserved. No actionable baseline code smells were found.
+- Spec: **0 actionable findings.** The approved hierarchy, everyday phase labels,
+  shared path explanation, expandable secondary detail, desktop/narrow layouts,
+  missing-versus-zero distinction, stopping semantics and evidence navigation
+  are retained. Participant evidence keeps its assisted-reading scope.
+
+Neither reviewer ran tests or operated the UI. No production changes were
+required after the earlier passing validation; this addition records review
+only. Nothing was pushed, merged, tagged, uploaded or released.
